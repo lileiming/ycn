@@ -171,6 +171,9 @@ class App:
             self.e.set(e)
         except UnicodeDecodeError as e:
             self.e.set(e)
+        except  IndexError :
+            err = "错误提示：确认复制元素是否Group"
+            self.Text.insert('insert', err)
 
 def get_data_Tag(filename,sheet_name):
     dir_case = filename
@@ -215,7 +218,7 @@ if __name__ == "__main__":
     if (ticks < limitTime):
         #============================================================
         root = Tk()
-        root.title("列表流程图生成工具 V4.00  有效期至"+localtime)
+        root.title("列表流程图生成工具 V4.01  有效期至"+localtime)
         root.geometry('640x400')  # 窗口尺寸
         App(root)
         root.mainloop()
