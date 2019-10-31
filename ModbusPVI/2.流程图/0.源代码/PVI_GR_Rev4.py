@@ -19,15 +19,12 @@
 from tkinter import *
 # 导入ttk
 from tkinter import ttk
-from tkinter import messagebox
 from tkinter import filedialog
 import xlrd
 import os
 import re
-import sys
-import math
 import time
-import tkinter.messagebox 
+import tkinter.messagebox
 
 class App:
     def __init__(self, master):
@@ -101,13 +98,14 @@ class App:
             #listSheet = "DATE"
             listSheet = self.comboxlist.get()
             #print (listSheet)
-            maintxt = open(samplePVI,'r',encoding='utf-8')
+            Maintxt = open(samplePVI,'r',encoding='utf-8')
             OutFile = open(resultDR,'w+',encoding='utf-8')
             
             # 读取所有样本流程图
-            alls = maintxt.read()
+            alls = Maintxt.read()
             # 读取所有样本流程图=====头部
             head1 = (re.findall('<!--P([\w\W]*?)<yiapcspvgbdc0',alls))
+            #正则表达式 两字符串之间的内容。
             #head = ('<!--P' + str(head1[0]) +'Visual Layer" />')
             head = ('<!--P' + str(head1[0]))
             #print(head)
@@ -162,7 +160,7 @@ class App:
              
             OutFile.write(foot)#写入底部
             
-            maintxt.close
+            Maintxt.close
             OutFile.close
             self.Text.insert('insert', "转换结束：结果已输出至 DR_output.xaml")
             self.Text.see(END)
@@ -224,5 +222,3 @@ if __name__ == "__main__":
         root.mainloop()
     else:
         tkinter.messagebox.showinfo('提示','软件过期需要重新编译' )
-        
- ### 测试 github       
