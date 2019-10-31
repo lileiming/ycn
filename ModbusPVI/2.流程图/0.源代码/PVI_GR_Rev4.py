@@ -221,3 +221,5 @@ if __name__ == "__main__":
         root.mainloop()
     else:
         tkinter.messagebox.showinfo('提示','软件过期需要重新编译' )
+        
+ ### 测试 github       
