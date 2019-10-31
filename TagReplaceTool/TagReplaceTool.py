@@ -9,6 +9,8 @@
 # ReV02
 # 操作界面
 
+# Rev02.01
+# UTF-8 代码错误订正
 #==========================================================
 
 from tkinter import *
@@ -21,7 +23,7 @@ import xlrd
 import linecache
 import sys 
 import csv
-
+import re
 
 class App:
 
@@ -69,13 +71,14 @@ class App:
         self.Text.see(END)
         
     def Txt(self):
-        self.Text.insert('insert', 'INFO: ****Start converting csv files.****\n')
+        self.Text.insert('insert', 'INFO: ****Start converting txt files.****\n')
         self.flag = 0
         self.readExcel()
         self.eachFile()
         self.flag = 0   
         self.Text.insert('insert', 'INFO: ****All file Conversion completed.****\n') 
         self.Text.see(END)
+
         
     def reName2txt(self):
         sys.path.append(self.path1)
@@ -158,7 +161,7 @@ class App:
         elif (IOM == 'A' ):
             ANX = NodeSolt[2]
             flienameNS = self.path1+'AN'+'.csv'
-            repeatName = 'AN'+'.csv'
+            repeatName = 'AN'+ANX+'.csv'
             try:
                 os.renames(self.child,flienameNS)
                 self.Text.insert('insert', 'INFO:'+repeatName+'Conversion completing...\n')
@@ -169,9 +172,17 @@ class App:
             self.Text.insert('insert', 'ERROR:'+self.childOnlyName+'Content not recognized\n')
 
     def readTXTfile(self):
+        self.stortNameApp()
         self.flag = 0
         f1 = open(self.child,'r+')
-        s=f1.read()
+        try:
+            s=f1.read()        
+        except UnicodeDecodeError as e:
+                f1.close
+                self.Text.insert('insert', 'WARNING: '+self.ShortName+' is UTF-8 format.\n')
+                f1 = open(self.child,'r+',encoding='utf-8')
+                s=f1.read()  
+
         DRfindNum = s.find('DR0')
 
     #======================================================
@@ -193,17 +204,24 @@ class App:
             repeatName = "DR0"+DR0X+DR00Y+DR000Z+'.txt'
             try:
                os.renames(self.child,flienameNS)
-               self.Text.insert('insert', 'INFO: '+repeatName+'Conversion completing...\n')
+               self.Text.insert('insert', 'INFO: '+self.ShortName+' Conversion completing...\n')
             except WindowsError as e:
-               self.Text.insert('insert', 'ERROR: '+self.child+'Because Double name skip.\n')
+               self.Text.insert('insert', 'ERROR: '+self.ShortName+' Because Double name skip.\n')
         else:
-            self.Text.insert('insert', 'ERROR: '+self.child+' does not conform to the format.\n')
-
+            self.Text.insert('insert', 'WARNING: '+self.ShortName+' does not conform to the DR format.\n')
+            
+    def stortNameApp(self):
+        try:
+            self.ShortName = (re.findall(r"dir/(.*)",self.child))[0]
+        except IndexError as e:
+            self.ShortName = self.child
+        #print(self.ShortName)
+            
                
                
 if __name__ == "__main__":
     root = Tk()
-    root.title("Tag replacement tool V2.0")
+    root.title("Tag replacement tool V2.01")
     root.geometry('640x400')  # Window size
     App(root)
     root.mainloop()
