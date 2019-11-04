@@ -16,38 +16,36 @@
 import xlrd
 import pandas as pd
 #import xlwt
-class App:
-    def __init__(self, master):
-        self.master = master
+class App():
+    def __init__(self):
         self.data = pd.read_excel('slotmap.xlsx',"Sheet1")
         self.MaxIndex = len(self.data.index)
 
     def card(self,Cardtype,Cardnum):
-        self.data = selfdata.sort_values(by=Cardtype, ascending=False)
+        self.data = self.data.sort_values(by=Cardtype, ascending=False)
         self.data.index = range(self.MaxIndex)
         for X in range(Cardnum):
             if self.data.iloc[X, 2] == True:
                 self.data.iloc[X, 2] = str(Cardtype + '-' + self.data.iloc[X, 1])
+                self.data.iloc[X, 3] = 0.0
+                self.data.iloc[X, 4] = 0.0
+                self.data.iloc[X, 5] = 0.0
+                self.data.iloc[X, 6] = 0.0
+        return (self.data)
+
+    def Requeue(self):
+        self.data = self.data.sort_values(by="NO.")
+        self.data.index = range(self.MaxIndex)
+        return (self.data)
+
 
 if __name__ == "__main__":
-    data = pd.read_excel('slotmap.xlsx',"Sheet1")
-    MaxIndex = len(data.index)
+    app = App()
+    app.card("AI",3)
+    app.card("AO",3)
+    app.card("DI",3)
+    app.card("DO",3)
+    data1 = app.Requeue()
 
-    Cardtype = "AI"
-    Cardnum = 3
-    data = data.sort_values(by=Cardtype,ascending=False)
-    data.index = range(MaxIndex)
-    for X in range(Cardnum):
-        if data.iloc[X,2] == True:
-             data.iloc[X,2] = str(Cardtype +'-'+ data.iloc[X,1])
 
-    Cardtype = "AO"
-    Cardnum = 3
-    data = data.sort_values(by=Cardtype,ascending=False)
-    data.index = range(MaxIndex)
-    for X in range(Cardnum):
-        if data.iloc[X,2] == True:
-             data.iloc[X,2] = str(Cardtype +'-'+ data.iloc[X,1])
-
-    #data = data.sort_values(by='AO', ascending=False)
-    print(data)
+    print(data1)
