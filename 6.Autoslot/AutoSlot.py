@@ -5,10 +5,11 @@
 # Script Name	:  auto assign hardware
 # Author		: lileiming@me.com
 # Created		: 2019/11/4
-# Last Modified	: 2019/11/4
-# Version			: 0.1
+# Last Modified	: 2019/11/11
+# Version			: 1.0
 
 # Modifications	: 0.1 frist version
+# Modifications	: 1.0 基本实现卡件排布
 
 # Description		: Automatically assign hardware locations based on big data.
 #==========================================================
@@ -19,83 +20,90 @@ import math
 #import xlwt
 class App():
     def __init__(self):
-        self.Excelfile = 'Sample.xlsx'
-        self.data = pd.read_excel(self.Excelfile,"Sheet0")
-        self.MaxIndex = len(self.data.index)
-        self.NodeSlotList = [[] for col in range(80)]
-        self.NodeSlotCal =  [[] for col in range(80)]
-        self.Card = []
+        self.Excelfile = 'Sample.xlsx'                                          #定义文件名
+        self.data = pd.read_excel(self.Excelfile,"Sheet0")                      #读取样本数据
+        self.MaxIndex = len(self.data.index)                                    #数据索引最大值 14
+        self.NodeSlotList = [[] for col in range(80)]                           #所有样本数据存取 2纬 List
+        self.NodeSlotCal =  [[] for col in range(80)]                           #所有样本数据比例 2纬 List
+        self.Card = []                                                          #需要排布的卡件列表
 
     def myCardNum(self):
+        #需要处理卡件
         total = 0
-        self.rowName = list(self.data.Nodeslot.unique())
-        self.cardTypeNum = len(self.rowName) - 1
+        self.rowName = list(self.data.Nodeslot.unique())                        #需要排布的卡件名目
+        self.cardTypeNum = len(self.rowName) - 1                                #需要排布的卡件类型数量
 
         for _ in range(self.cardTypeNum):
             cardtpye = self.data.iloc[_, 1]
-            cardnum = self.data.iloc[_, 2]
-
-            for i in range(int(cardnum)):
+            cardnum  = self.data.iloc[_, 2]
+            for _ in range(int(cardnum)):
                 self.Card.append(cardtpye)
                 total = total + 1
 
-
-        self.nodeNum = math.ceil (total / 8)
-        self.total = int(self.nodeNum * 8)
+        self.nodeNum = math.ceil (total / 8)                                    #需要node 数量
+        self.total = int(self.nodeNum * 8)                                      #所有空插槽数量
         #print(self.total)
         #print(self.Card)
-        for i in range(self.total):
-            self.data.iloc[12, i+2] = -1
+        for i in range(self.total):                                             #valid 行 标记为 -1 表示允许排卡
+            self.data.iloc[self.cardTypeNum, i+2] = -1
         #print(self.data)
 
     def card(self):
+        #排卡程序，
         self.colName = list(self.data.columns.values)
         #print(self.cardTypeNum)
         for Y in range(self.cardTypeNum):
             if (self.Card != []):
-                #print(self.total)
-                #for X in range(self.total)
-                for Z in range(4): #0~4
-                    for X in range(self.nodeNum):  # Node = 1-10
-                        for W in range(2): # 0~1
-                            Q = 8*X+2*Z+W+2   #先扫描 S1&S2  在扫 S3&S4
+                for Z in range(4):                                              # 0~4
+                    for X in range(self.nodeNum):                               # Node = 1-10
+                        for W in range(2):                                      # 0~1
+                            Q = 8*X+2*Z+W+2                                     #先扫描 S1&S2  在扫 S3&S4
                             #print(Q)
-                            if (self.data.iloc[12,Q] == -1):
+                            if (self.data.iloc[self.cardTypeNum,Q] == -1):
                                 self.data = self.data.sort_values(by=str(self.colName[Q]), ascending=False)
                                 #print(self.colName[X + 2])
                                 nowCard = self.data.iloc[Y, 1]
+
                                 if nowCard in self.Card:
                                     nowIndex = self.Card.index(nowCard)
-                                    #print(nowIndex)
-                                    self.data.iloc[self.cardTypeNum, Q] = self.data.iloc[Y, 1]
-                                    del self.Card[nowIndex]
-                        self.Requeue()
-        print(self.Card)
+                                    del self.Card[nowIndex]                     #排完的卡件，从list里删除
+
+                                    if (nowCard != "ADCV01"):                   #先拍非ADCV01卡
+                                        self.data.iloc[self.cardTypeNum, Q] = nowCard
+                                        print(nowCard)
+                        self.Requeue()                                          #按照序号排一下
+        #print(self.Card)
+        for X in range(self.total):                                             #为拍卡的位置 排ADCV01
+            if (self.data.iloc[self.cardTypeNum, X] == -1):
+                self.data.iloc[self.cardTypeNum, X] = "ADCV01"
 
     def Requeue(self):
+        # 按照序号排序
         self.data = self.data.sort_values(by="NO.")
         self.data.index = range(self.MaxIndex)
-        #return (self.data)
 
     def ReadData(self,sheetName):
+        #读取 单张 Sheet 卡件布置图
         data = pd.read_excel(self.Excelfile, sheetName)
         for X in range(5):
             for Y in range(8):
-                dataF = data.iloc[5*(X+1), (24 + Y)] # F面数据
+                dataF = data.iloc[5*(X+1), (24 + Y)]                            # F面数据
                 self.NodeSlotList[X * 8 + Y].append(dataF)
                 #print(dataF)
         for X in range(5):
             for Y in range(8):
-                dataR = data.iloc[5*(X+1), (42 + Y)] # R面数据
+                dataR = data.iloc[5*(X+1), (42 + Y)]                            # R面数据
                 self.NodeSlotList[X * 8 + Y + 40].append(dataR)
                 #print(dataR)
         #print(self.NodeSlotList)
 
     def ReadAllData(self):
-        for X in self.Sheetnamelist()[1:]:   #读取第2张 Sheet 开始的数据。
+        # 读取 第一张 Sheet 后所有的 Sheet
+        for X in self.Sheetnamelist()[1:]:                                      #读取第2张 Sheet 开始的数据。
             self.ReadData(X)
 
-    def ProCalcu(self): #Proportional calculation 比例计算
+    def ProCalcu(self):
+        #Proportional calculation 比例计算
         Sum = 0.0
         #self.rowName = list(self.data.Nodeslot.unique())
         #print(self.colName)
@@ -103,7 +111,9 @@ class App():
             Sum = 0.0
             len1 = len(self.NodeSlotList[Y])
             #print(len1)
-            for X in self.rowName[0:11]:
+
+            for X in self.rowName[0:self.MaxIndex-2]:
+                #print(X)
                 count1 = self.NodeSlotList[Y].count(X)
                 Cal = ((count1 / len1) * 0.98 + 0.001)* 100
                 Sum = Sum + Cal
@@ -115,6 +125,7 @@ class App():
                 self.data.iloc[(Y), (X+2)] = self.NodeSlotCal[X][Y]
 
     def toFile(self):
+        #输出文件
         try:
             self.data.to_excel('out.xlsx', "Sheet0")
         except PermissionError as e:
@@ -122,6 +133,7 @@ class App():
 
 
     def Sheetnamelist(self):
+        #读取Sheet名
         self.SheetnameDict = pd.read_excel(self.Excelfile,None)
         return list(self.SheetnameDict.keys())
 
