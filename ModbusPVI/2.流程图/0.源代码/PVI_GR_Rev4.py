@@ -38,7 +38,7 @@ class App:
         #top_frame.pack(fill=X,expand=YES,side=TOP,padx=15,pady=0)
         self.e1 = StringVar()
         self.entry = ttk.Entry(top_frame,width=65,textvariable = self.e1)
-        self.e1.set("GRtemp.xaml")
+        self.e1.set('GRtemp.xaml')
         self.entry.pack(fill=X,expand=YES,side=LEFT,pady=10)
         ttk.Button(top_frame,text='参考文档',command=self.open_file).pack(side=LEFT)
 
@@ -47,12 +47,12 @@ class App:
         mid_frame.pack(fill=X,padx=15,pady=0)
         self.e2 = StringVar()
         self.entry2 = ttk.Entry(mid_frame,width=45,textvariable = self.e2)
-        self.e2.set("GR_PVI_list.xls")
+        self.e2.set('GR_PVI_list.xls')
         self.entry2.pack(fill=X,expand=YES,side=LEFT,pady=10)
         self.e3 = StringVar()
         self.comboxlist=ttk.Combobox(mid_frame,width=15,textvariable = self.e3) 
         self.comboxlist.pack(side=LEFT)
-        self.e3.set("DATE1")
+        self.e3.set('DATE1')
         ttk.Button(mid_frame, text='数据列表', command=self.open_file2).pack(side=LEFT)
 
         # 创建中下
@@ -71,7 +71,7 @@ class App:
         self.e = StringVar()
         #self.lable(bot_frame,text = '欢迎使用',width = 60,height = 20).pack(side=LEFT)
         ttk.Label(bot_frame,width = 60,textvariable = self.e).pack(side=LEFT, fill=BOTH, expand=YES,pady=10)
-        self.e.set("转换工具")
+        self.e.set('转换工具')
         ttk.Button(bot_frame, text='转换', command=self.get_entry).pack(side=RIGHT)
 
     def open_file(self):
@@ -112,7 +112,7 @@ class App:
             ##print(head1)
             # 读取所有样本流程图=====内容
             s1 = (re.findall('Function Link Component0" />([\w\W]*)</yiapcspvgbdc0:GroupComponent>',alls))
-            s = (str(s1[0]) +'</yiapcspvgbdc0:GroupComponent>')
+            s = (str(s1[0]) + '</yiapcspvgbdc0:GroupComponent>')
             #print(s)
             # 读取所有样本流程图=====底部
             foot = '</Canvas>'
@@ -134,12 +134,12 @@ class App:
             
             for i in get_data(modbusList,listSheet):
                 for j in datalist_tag:
-                    if j ==datalist_tag[0]:
+                    if j == datalist_tag[0]:
                         TAG = i[j]
                         inValue = j
                         outValue = str(TAG)
                         line = s.replace (inValue,outValue)
-                    if j !=datalist_tag[0]:                    
+                    if j != datalist_tag[0]:
                         TAG = i[j]
                         inValue = j
                         outValue = str(TAG)
@@ -160,8 +160,8 @@ class App:
              
             OutFile.write(foot)#写入底部
             
-            Maintxt.close
-            OutFile.close
+            #Maintxt.close
+            #OutFile.close
             self.Text.insert('insert', "转换结束：结果已输出至 DR_output.xaml")
             self.Text.see(END)
 
@@ -193,7 +193,7 @@ def get_sheet(filename):
     data = xlrd.open_workbook(dir_case)
     sheetN = data.sheet_names()
     return sheetN            
-  
+
 def get_data(filename,sheet_name):
     dir_case = filename
     data = xlrd.open_workbook(dir_case)
@@ -207,18 +207,21 @@ def get_data(filename,sheet_name):
             value = table.cell_value(i,j)
             dict[title] = value
         yield dict
-       
-if __name__ == "__main__":
+
+def limited_time():
     ticks = time.time()
     #print(ticks)
     limitTime = 1572414548+2592000
+    #print(limitTime)
     localtime = time.strftime("%Y/%m/%d", time.localtime(limitTime))
-    if (ticks < limitTime):
-        #============================================================
-        root = Tk()
-        root.title("列表流程图生成工具 V4.01  有效期至"+localtime)
-        root.geometry('640x400')  # 窗口尺寸
-        App(root)
-        root.mainloop()
-    else:
-        tkinter.messagebox.showinfo('提示','软件过期需要重新编译' )
+    if (ticks > limitTime):
+        tkinter.messagebox.showinfo('提示', '软件过期需要重新编译'+localtime)
+        exit()
+
+if __name__ == "__main__":
+    root = Tk()
+    root.title("列表流程图生成工具 V4.01")
+    root.geometry('640x400')  # 窗口尺寸
+    App(root)
+    limited_time()
+    root.mainloop()

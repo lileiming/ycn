@@ -13,17 +13,13 @@ from openpyxl  import load_workbook
 from openpyxl.styles import Font
 from openpyxl.styles import Border,Side
 from openpyxl.styles import PatternFill
-from tkinter import *
-
 
 #子程序=====================================================
 
 class App:
-    def __init__(self, master):
-        self.master = master
-        self.replace()
+    #def __init__(self):
 
-    def sampleAddr(self):   #Sample address
+    def sample_addr(self):   #Sample address
         #self.sampleNo =3
         #self.Redu = 0
         self.MinCol = 3
@@ -31,7 +27,7 @@ class App:
         self.MinRow = 2 + (self.sampleNo-1)*37
         self.MaxRow = 37 + (self.sampleNo-1)*37
         
-    def targetaddr(self):#target address
+    def target_addr(self):#target address
         #self.NodeNo = 2
         #self.SlotNo = 4
         if(self.NodeNo<6):
@@ -45,14 +41,13 @@ class App:
             self.MbMinRow = 3+(self.NodeNo-6)*40
             self.MbMaxRow = 38+(self.NodeNo-6)*40
         
-    def readExcel(self):
-    
+    def read_excel(self):
         self.wb = load_workbook('NodePlan.xlsx')
-        self.ws = self.wb["Sample"]
+        self.ws = self.wb['Sample']
         self.ws_charge = self.wb["卡件IO布置"]
         self.wskj = self.wb["卡件布置图"]
         
-    def carddict(self):
+    def card_dict(self):
         cdict = {'AAI143/R': 1,
                 'AAI543/R': 2,
                 'AAI143': 3,
@@ -82,28 +77,30 @@ class App:
             self.Redu = 0
 
     def replace(self):
-        self.readExcel() 
+        self.read_excel()
         for kjcol in  self.wskj.iter_cols(max_col=62,max_row=95,min_col=62,min_row=16):
+
             for kjcell in  kjcol:
                 self.NodeNo = kjcell.value
                 #print(self.NodeNo)
                 self.SlotNo = self.wskj.cell(kjcell.row,kjcell.column+1).value
                 self.Cardtype = self.wskj.cell(kjcell.row,kjcell.column+2).value
                 #print(self.Cardtype)
-                self.carddict()
+                self.card_dict()
                 
-                print(self.NodeNo,self.SlotNo,self.sampleNo,self.Redu,self.NodeNo,self.SlotNo,self.sampleNo,self.Redu,self.NodeNo,self.SlotNo,self.sampleNo,self.Redu,self.NodeNo,self.SlotNo,self.sampleNo,self.Redu,)
+                print(self.NodeNo,self.SlotNo,self.sampleNo,self.Redu)
                 
                 if self.sampleNo != 0:
-                    self.sampleAddr()
-                    self.targetaddr()
+                    self.sample_addr()
+                    self.target_addr()
                     DifCol = abs(self.MbMinCol - self.MinCol)
                     DifRow = (self.MbMaxRow - self.MaxRow)
                     #print(DifCol)
                     #print(DifRow)
                           
                     for row in  self.ws.iter_cols(max_col=self.MaxCol, max_row=self.MaxRow,min_col=self.MinCol,min_row=self.MinRow):
-                        for cell in  row:
+
+                        for cell in row:
                             #print(cell.value)
                             self.ws_charge.cell(cell.row+DifRow,cell.column+DifCol).value = cell.value
                             #print(cell.row+DifRow ,cell.column+DifCol)
@@ -118,12 +115,11 @@ class App:
                                                                             right=Side(B2.style,B2.color),
                                                                             top=Side(B3.style,B3.color),
                                                                             bottom=Side(B4.style,B4.color))
-                                         
                     self.wb.save('NodePlan.xlsx')   
             print("finish")
     
 #主程序======================================================   
 
-if __name__ == "__main__":
-    root = Tk()
-    App(root)
+if __name__ == '__main__':
+    app = App()
+    app.replace()
