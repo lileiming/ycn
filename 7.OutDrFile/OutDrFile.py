@@ -45,6 +45,7 @@ class DR_FILE_NODE:
             exit()
 
     def close_dr_builder(self):
+        self.__delay()
         if self.drwindowtext != '' :
             dr_builder_window = win32gui.FindWindow(self.drclassname, self.drwindowtext)
             win32gui.PostMessage(dr_builder_window, win32con.WM_CLOSE, 0, 0)
@@ -53,6 +54,7 @@ class DR_FILE_NODE:
             exit()
 
     def active_function_block (self):
+        self.__delay()
         if self.svwindowtext != '' :
             function_block_window = win32gui.FindWindow(self.svclassname, self.svwindowtext)
             win32gui.SetForegroundWindow(function_block_window)
@@ -60,65 +62,64 @@ class DR_FILE_NODE:
             print("Control Drawing Builder is not Open !" )
             exit()
 
-    def out_txt(self):
+    def press_key(self,combination = '',*abc):
+        self.__delay()
         self.keyboard = Controller()
-        time.sleep(self.sleeptime)  # 休眠1秒
-        self.keyboard.press(Key.alt)
-        self.keyboard.press('f')
-        self.keyboard.release('f')
+        if combination != '':
+            self.keyboard.press(combination)
 
-        time.sleep(self.sleeptime)
-        self.keyboard.press('e')
-        self.keyboard.release('e')
+        for _ in abc:
+            print(_)
+            self.press_abc(_)
+            self.__delay()
 
-        time.sleep(self.sleeptime)
-        self.keyboard.press('e')
-        self.keyboard.release('e')
+        if combination != '':
+            self.keyboard.release(combination)
 
-        time.sleep(self.sleeptime)
-        self.keyboard.release(Key.alt)
+    def press_abc(self,_character):
+        keyboard = Controller()
+        keyboard.press(_character)
+        keyboard.release(_character)
+
+    def __delay(self,delaytime = 1):
+        time.sleep(delaytime)
+
+    def out_txt(self):
+        self.press_key(Key.alt,'f','e','e')
         self.keyboard.type(self.shortname)
         print(self.shortname)
         self.shortname = ''
+        self.press_key(Key.alt, 's')
+        self.press_key(Key.left,Key.enter)
+        #self.press_key(Key.enter)
 
-        time.sleep(self.sleeptime)
-        self.keyboard.press(Key.alt)
-        self.keyboard.press('s')
-        self.keyboard.release('s')
-        self.keyboard.release(Key.alt)
-
-        time.sleep(self.sleeptime)
-        self.keyboard.press(Key.left)
-        self.keyboard.release(Key.left)
-
-        time.sleep(self.sleeptime)
-        self.keyboard.press(Key.enter)
-        self.keyboard.release(Key.enter)
 
     def circuit(self,count):
-        #count = 2
-        self.sleeptime = 0.5
-
         for _ in range(count):
-            time.sleep(2)
+            self.__delay(2)
             self.command()
-            time.sleep(self.sleeptime)
             self.active_dr_builder()
-            time.sleep(self.sleeptime)
             self.out_txt()
-            time.sleep(self.sleeptime)
             self.close_dr_builder()
-            time.sleep(self.sleeptime)
             self.active_function_block()
-            time.sleep(self.sleeptime)
-            self.keyboard.press(Key.down)
-            self.keyboard.release(Key.down)
-            time.sleep(self.sleeptime)
-            self.keyboard.press(Key.enter)
-            self.keyboard.release(Key.enter)
+            self.press_key(Key.down,Key.enter)
+            #self.press_key(Key.enter)
+
+    def foo(self,hwnd, mous):
+        if IsWindow(hwnd) and IsWindowEnabled(hwnd) and IsWindowVisible(hwnd):
+            print(GetClassName(hwnd)+'==>'+GetWindowText(hwnd))
+            #print(type(GetClassName(hwnd)))
+        #pass
+    def active_(self):
+        shell = win32com.client.Dispatch("WScript.Shell")
+        #shell.SendKeys('%')
+        shell.Run("C:\CENTUMVP\program\BKHCallSysFunc O " + '18-PDISA-18103 TUN -SM')
+        #pass
 
 if __name__ == "__main__":
     app = DR_FILE_NODE()
-    #EnumWindows(app.allwindowsname, 0)  #遍历所有
-    app.circuit(40)
+    #app.circuit(40)
+    EnumWindows(app.foo, 0)
+    #app.active_()
+
 

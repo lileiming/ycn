@@ -27,7 +27,7 @@ class PROCESS_NODE(YokoRead._FILE_NODE_):
         self.txt_file = txt_file
         self.file_detail = self.read_txt(self.txt_file)
         #print(file_detail)
-        self.find_result = (re.findall(r':FNRM([\w\W]*?)::FNRM', self.file_detail))
+        self.find_result = (re.findall(':FNRM([\w\W]*?)::FNRM', self.file_detail))
 
     def process_key(self):
         #处理关键字
@@ -52,20 +52,25 @@ class PROCESS_NODE(YokoRead._FILE_NODE_):
         #unit_key = 'EUNT:1:%;'
         for _ in self.find_result:
             #print(_)
-            if self.tag_key in _:                #有TAG再处理
+            tag = self.tag_key +';'
+            if tag in _:                #有TAG再处理
                 #print(self.tag_key)
         # Condition 1:
-                range_key = re.search(r'ESCL([\w\W]*?);', _, flags=0).group(0)
-                range_new_key = 'ESCL:1:' + str(upper) + ':' + str(lower) + ';'
-                self.good_result = str(_).replace(range_key, range_new_key, 1)
+                if re.search('ESCL:([\w\W]*?);', _, flags=0) != None:
+                    range_key = re.search('ESCL:([\w\W]*?);', _, flags=0).group(0)
+                    range_new_key = 'ESCL:1:' + str(upper) + ':' + str(lower) + ';'
+                    print(range_key,range_new_key)
+                    self.good_result = str(_).replace(range_key, range_new_key, 1)
         # Condition 2:
-                unit_key = re.search(r'EUNT([\w\W]*?);', _, flags=0).group(0)
-                unit_new_key = 'EUNT:1:' + str(unit) + ';'
-                self.good_result = (self.good_result).replace(unit_key,unit_new_key,1)
+                if re.search('EUNT:([\w\W]*?);', _, flags=0) != None:
+                    unit_key = re.search('EUNT:([\w\W]*?);', _, flags=0).group(0)
+                    unit_new_key = 'EUNT:1:' + str(unit) + ';'
+                    self.good_result = (self.good_result).replace(unit_key,unit_new_key,1)
         #替换完结果：
                 #print(self.good_result)
-                self.file_detail = self.file_detail.replace(_,self.good_result,1)
-                self.recording.append(self.txt_file_name)  #记录处理过的文件
+                if re.search('ESCL:([\w\W]*?);', _, flags=0) != None:
+                    self.file_detail = self.file_detail.replace(_,self.good_result,1)
+                    self.recording.append(self.txt_file_name)  #记录处理过的文件
         self.out_txt(self.outtxt,self.file_detail)
 
     def process_out(self):
@@ -146,8 +151,10 @@ class Windows_NODE(PROCESS_NODE):
         record = set(self.recording)
         for _ in record:
             #print(_)
-            shortname = re.search(r'DR([\w\W]*?)txt', _, flags=0).group(0)
-            self.Text.insert('insert','INFO: '+ shortname + " 转换结束\n")
+            if re.search('DR([\w\W]*?)txt', _, flags=0) != None:
+                shortname = re.search('DR([\w\W]*?)txt', _, flags=0).group(0)
+                print(shortname)
+                self.Text.insert('insert','INFO: '+ shortname + " 转换结束\n")
 
     def command(self):
         path = self.entry.get()
