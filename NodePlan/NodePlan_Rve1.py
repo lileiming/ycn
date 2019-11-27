@@ -72,7 +72,7 @@ class App:
         try:
             self.sampleNo = cdict[str(self.Cardtype)]
             self.Redu = redudict[str(self.Cardtype)]
-        except KeyError as e:
+        except KeyError:
             self.sampleNo = 9
             self.Redu = 0
 
