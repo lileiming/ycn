@@ -134,7 +134,7 @@ class App:
             self.sheetNameT = tuple(sheetName)
             self.comboxlist["values"] = self.sheetNameT 
             self.comboxlist.current(0)
-        except xlrd.biffh.XLRDError as e:
+        except xlrd.biffh.XLRDError:
             self.Text.insert('insert', '错误提示：文件格式错误，现在就只能处理Excel文档')    
 
     def open_combox(self,event):
@@ -158,7 +158,7 @@ class App:
             self.sheetNameR = tuple(sheetName)
             self.comboxlist2["values"] = self.sheetNameR
             self.comboxlist2.current(0)
-        except xlrd.biffh.XLRDError as e:
+        except xlrd.biffh.XLRDError :
             self.Text.insert('insert', '错误提示：文件格式错误，现在就只能处理Excel文档') 
             
     def open_combox2(self,event):
@@ -329,9 +329,9 @@ class App:
 def rowList(sheet,Cindex):
     rowList = []
     rowN=0
-    rowsNum = sheet.nrows
-    colNum = sheet.ncols
-    while (rowN < rowsNum):
+    rowsnum = sheet.nrows
+    #colnum = sheet.ncols
+    while (rowN < rowsnum):
         row_Str = sheet.cell_value(rowN,Cindex)
         rowList.append(row_Str)
         rowN=rowN+1
@@ -341,9 +341,9 @@ def rowList(sheet,Cindex):
 def colList(sheet):
     colList = []
     colN=0
-    rowsNum = sheet.nrows
-    colNum = sheet.ncols    
-    while (colN < colNum):
+    #rowsNum = sheet.nrows
+    colnum = sheet.ncols    
+    while (colN < colnum):
         col_Str = sheet.cell_value(0,colN)
         colList.append(col_Str)
         colN=colN+1
