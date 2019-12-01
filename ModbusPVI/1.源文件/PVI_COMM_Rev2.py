@@ -21,8 +21,9 @@ import os
 import re
 import sys
 import math
+import YokoRead   #自定义模块
 
-class App:
+class App(YokoRead._FILE_NODE_):
     def __init__(self, master):
         self.master = master
         self.initWidgets()
@@ -81,7 +82,7 @@ class App:
         file_path = filedialog.askopenfilename(title=u'选择数据列表', initialdir=(os.path.expanduser('H:/')))
         file_text = file_path
         self.entry2.insert('insert', file_text)
-        sheetName = get_sheet(file_text)
+        sheetName = self.get_sheet(file_text)
         sheetNameT = tuple(sheetName)
         self.comboxlist["values"] = sheetNameT
         self.comboxlist.current(0)
@@ -108,7 +109,7 @@ class App:
             self.Text.delete(0.0,END)
             self.Text.insert('insert', "=============转换开始===============\n")  
             
-            for i in get_data(modbusList,listSheet):
+            for i in self.get_data_2line(modbusList,listSheet):
             #===========参数   
                 CHKN = i['CHKN'] 
                 ETAG = i['ETAG']
@@ -201,8 +202,6 @@ class App:
                 self.Text.insert('insert', ">>>"+ETAG+"---"+CNCT+"---"+str(HI)+"---"+str(LO)+"\n")
                 
             f2.write(foot)  
-            f1.close
-            f2.close
             #messagebox.showinfo(title='通知', message="转换结束")
             self.Text.insert('insert', "=============转换结束===============\n")
             self.Text.see(END)
@@ -213,30 +212,10 @@ class App:
         except UnicodeDecodeError as e:
             self.e.set(e)  
   
-def get_data(filename,sheet_name):
-    dir_case = filename
-    data = xlrd.open_workbook(dir_case)
-    table = data.sheet_by_name(sheet_name)
-    nor = table.nrows
-    nol = table.ncols
-    dict = {}
-    for i in range(1,nor):
-        for j in range(nol):
-            title = table.cell_value(0,j)
-            value = table.cell_value(i,j)
-            dict[title] = value
-        yield dict
-        
-def get_sheet(filename):
-    dir_case = filename
-    data = xlrd.open_workbook(dir_case)
-    sheetN = data.sheet_names()
-    return sheetN
-
-
 if __name__ == "__main__":
     root = Tk()
     root.title("modbus列表生成工具 V2.0")
     root.geometry('640x400')  # 窗口尺寸
     App(root)
+    YokoRead._ALRM_NODE_.limited_time(root)
     root.mainloop()

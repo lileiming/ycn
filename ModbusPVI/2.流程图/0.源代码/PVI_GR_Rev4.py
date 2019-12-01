@@ -180,5 +180,5 @@ if __name__ == "__main__":
     root.title("列表流程图生成工具 V4.01")
     root.geometry('640x400')  # 窗口尺寸
     App(root)
-    YokoRead._ALRM_NODE_.limited_time
+    YokoRead._ALRM_NODE_.limited_time(root)
     root.mainloop()

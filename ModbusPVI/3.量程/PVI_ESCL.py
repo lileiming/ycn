@@ -164,10 +164,13 @@ class Windows_NODE(PROCESS_NODE):
         self.process_out()
         self.print_record()
 
+
+
+
 if __name__ == "__main__":
         root = Tk()
         root.title("量程替换工具 V1.00")
         root.geometry('640x400')  # 窗口尺寸
         Windows_NODE(root)
-        YokoRead._ALRM_NODE_.limited_time
+        YokoRead._ALRM_NODE_.limited_time(root)
         root.mainloop()

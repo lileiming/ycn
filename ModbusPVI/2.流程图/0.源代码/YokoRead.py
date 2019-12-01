@@ -2,6 +2,7 @@ import os
 import xlrd
 import re
 import time
+from tkinter import ttk
 from tkinter import filedialog
 import tkinter.messagebox
 
@@ -41,6 +42,20 @@ class  _FILE_NODE_:
             # print(title)
             dict[title] = title
         yield dict
+    
+    def get_data_2line(self,filename,sheet_name):
+        dir_case = filename
+        data = xlrd.open_workbook(dir_case)
+        table = data.sheet_by_name(sheet_name)
+        nor = table.nrows
+        nol = table.ncols
+        dict = {}
+        for i in range(1,nor):
+            for j in range(nol):
+                title = table.cell_value(0,j)
+                value = table.cell_value(i,j)
+                dict[title] = value
+            yield dict
 
     def get_data(self,filename, sheet_name):
         dir_case = filename
@@ -67,4 +82,4 @@ class _ALRM_NODE_:
         if (ticks > limitTime):
             tkinter.messagebox.showinfo('提示', '软件过期需要重新编译'+localtime)
             exit()
-        pass
+        
