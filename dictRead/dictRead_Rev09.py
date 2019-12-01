@@ -62,6 +62,7 @@ class App:
         self.comboxlist.bind("<<ComboboxSelected>>",self.open_combox)
         self.tope2.set("目标sheet")
 
+        
         ## 目标文件PID_TAG框
         self.tope3 = StringVar()
         self.comboxlist1=ttk.Combobox(top_frame,width=25,textvariable = self.tope3) 
@@ -70,7 +71,9 @@ class App:
         
         ## 同文件选择框
         self.intVar = BooleanVar() 
+        #should_auto = BooleanVar() 
         self.check1 = Checkbutton(top_frame,text = "同文件",variable = self.intVar,command = self.change).pack(side=LEFT)
+        #self.check1.select()
         self.ckeckchange = 0
         
         ## 目标文件选择按钮
@@ -96,6 +99,7 @@ class App:
         self.comboxlist3.pack(side=LEFT,padx=10,pady=10)
         self.mide3.set("参考TAG")
         ttk.Button(mid_frame1 , text='参考文件', command=self.open_file2).pack(side=RIGHT,padx=5)
+        
         
         # 创建第三层
         mid_frame2 = LabelFrame(self.master,height = 60,width = 615,text="结果")

@@ -87,9 +87,6 @@ class Windows_NODE(PROCESS_NODE):
     def __init__(self, master):
         self.master = master
         self.initWidgets()
-        help_doc = '本程序为量程替换工具 \n 使用方法：\n1.通过按钮选择需要替换的DR文件目录，默认为IN目录。\n2.通过按钮选择数据列表文件，使用下拉菜单选择相对应的表格（sheet）.\n\
-3.点击按钮开始执行量程替换'
-        self.Text.insert('insert',help_doc)
 
     def initWidgets(self):
         # 创建顶部
@@ -152,12 +149,11 @@ class Windows_NODE(PROCESS_NODE):
     def print_record(self):
         #打印替换的文件
         record = set(self.recording)
-        self.Text.delete(0.0,END)
         for _ in record:
             #print(_)
             if re.search(r'DR([\w\W]*?)txt', _, flags=0) != None:
                 shortname = re.search(r'DR([\w\W]*?)txt', _, flags=0).group(0)
-                #print(shortname)
+                print(shortname)
                 self.Text.insert('insert','INFO: '+ shortname + " 转换结束\n")
 
     def command(self):
@@ -167,6 +163,9 @@ class Windows_NODE(PROCESS_NODE):
         self.__init1__(excelname,listSheet,path)
         self.process_out()
         self.print_record()
+
+
+
 
 if __name__ == "__main__":
         root = Tk()
