@@ -168,7 +168,26 @@ class Windows_NODE(PROCESS_NODE):
         self.process_out()
         self.print_record()
 
+def foo(lower_input,upper_input):
+        #input = 0.0
+        output = []
+        upper_input1 = float(upper_input)
+        lower_input1 = float(lower_input)
+
+        if upper_input1 < 10 :
+            output.append( "{:.3f}".format(lower_input1))
+            output.append( "{:.3f}".format(upper_input1))
+        if 10 <= upper_input1 < 100 :
+            output.append( "{:.2f}".format(lower_input1))
+            output.append( "{:.2f}".format(upper_input1))
+        if 100 <= upper_input1:
+            output.append( "{:.1f}".format(lower_input1))
+            output.append( "{:.1f}".format(upper_input1))
+        return output
+
+
 if __name__ == "__main__":
+ 
         root = Tk()
         root.title("量程替换工具 V1.00")
         root.geometry('640x400')  # 窗口尺寸
