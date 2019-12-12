@@ -6,6 +6,8 @@
 # 基本实现 量程和单位的替换
 # Rev02
 # 使用自定义模块
+# Rev03
+# 增加量程 4位有效数字
 #==========================================================
 from tkinter import *
 from tkinter import ttk
@@ -42,7 +44,26 @@ class PROCESS_NODE(YokoRead._FILE_NODE_):
             upper = i['UPPER']
             unit  = i['UNIT']
             #print(self.tag_key,lower,upper,unit )
-            self.range_rep(upper,lower,unit)
+            valid4= self.valid_node(lower,upper)
+            #print(valid4[0],valid4[1])
+            self.range_rep(valid4[1],valid4[0],unit)
+
+    def valid_node(self,lower_input, upper_input):
+        # input = 0.0
+        output = []
+        upper_input1 = float(upper_input)
+        lower_input1 = float(lower_input)
+
+        if upper_input1 < 10:
+            output.append("{:.3f}".format(lower_input1))
+            output.append("{:.3f}".format(upper_input1))
+        if 10 <= upper_input1 < 100:
+            output.append("{:.2f}".format(lower_input1))
+            output.append("{:.2f}".format(upper_input1))
+        if 100 <= upper_input1:
+            output.append("{:.1f}".format(lower_input1))
+            output.append("{:.1f}".format(upper_input1))
+        return output
 
     def range_rep(self,upper,lower,unit):
         #量程单位处理子程序
@@ -59,7 +80,7 @@ class PROCESS_NODE(YokoRead._FILE_NODE_):
                 if re.search(r'ESCL:([\w\W]*?);', _, flags=0) != None:
                     range_key = re.search(r'ESCL:([\w\W]*?);', _, flags=0).group(0)
                     range_new_key = 'ESCL:1:' + str(upper) + ':' + str(lower) + ';'
-                    print(range_key,range_new_key)
+                    #print(range_key,range_new_key)
                     self.good_result = str(_).replace(range_key, range_new_key, 1)
         # Condition 2:
                 if re.search(r'EUNT:([\w\W]*?);', _, flags=0) != None:
@@ -159,6 +180,7 @@ class Windows_NODE(PROCESS_NODE):
                 shortname = re.search(r'DR([\w\W]*?)txt', _, flags=0).group(0)
                 #print(shortname)
                 self.Text.insert('insert','INFO: '+ shortname + " 转换结束\n")
+                self.Text.update()
 
     def command(self):
         path = self.entry.get()
@@ -168,22 +190,7 @@ class Windows_NODE(PROCESS_NODE):
         self.process_out()
         self.print_record()
 
-def foo(lower_input,upper_input):
-        #input = 0.0
-        output = []
-        upper_input1 = float(upper_input)
-        lower_input1 = float(lower_input)
 
-        if upper_input1 < 10 :
-            output.append( "{:.3f}".format(lower_input1))
-            output.append( "{:.3f}".format(upper_input1))
-        if 10 <= upper_input1 < 100 :
-            output.append( "{:.2f}".format(lower_input1))
-            output.append( "{:.2f}".format(upper_input1))
-        if 100 <= upper_input1:
-            output.append( "{:.1f}".format(lower_input1))
-            output.append( "{:.1f}".format(upper_input1))
-        return output
 
 
 if __name__ == "__main__":
