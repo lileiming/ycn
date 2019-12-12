@@ -1,12 +1,18 @@
+# -*- coding:utf-8 -*-
+#!/usr/bin/python
+# python 3.7
+#==========================================================
+# Rev01
+# 实现截图反色及转换为PNG格式
+
+#==========================================================
 import cv2 as cv
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 import os
-import re
 import time
- 
-
+import YokoRead   #自定义模块
 
 class Windows_NODE():
     def __init__(self, master):
@@ -21,9 +27,22 @@ class Windows_NODE():
         top_frame.pack(fill=X, padx=15, pady=0)
         self.e1 = StringVar()
         self.entry = ttk.Entry(top_frame, width=65, textvariable=self.e1)
-        self.e1.set('IN')
+        self.e1.set('IN/')
         self.entry.pack(fill=X, expand=YES, side=LEFT, pady=10)
         ttk.Button(top_frame, text='图片目录', command=self.open_dir).pack(side=LEFT)
+
+        # 创建中部
+        mid_frame = LabelFrame(self.master, text='功能选择')
+        mid_frame.pack(fill=X, padx=15, pady=0)
+        ## 同文件选择框
+        self.intVar = BooleanVar()
+        self.intVar1 = BooleanVar()
+        self.intVar.set(True)
+        self.intVar1.set(True)
+        # should_auto = BooleanVar()
+        self.check1 = Checkbutton(mid_frame, text="反色", variable=self.intVar).pack(side=LEFT)
+        self.check2 = Checkbutton(mid_frame, text="转换为png", variable=self.intVar1).pack(side=LEFT)
+        self.ckeckchange = 1
 
         # 创建中下
         bot_frame1 = LabelFrame(self.master, text='结果')
@@ -46,39 +65,46 @@ class Windows_NODE():
     def open_dir(self):
         self.entry.delete(0,END)
         dir_path = filedialog.askdirectory(title=u'选择图片文件夹')
-        self.path0 = dir_path
-        path1 = self.path0+'/'
+        path0 = dir_path
+        path1 = path0+'/'
         self.entry.insert('insert', path1)
 
+
     def command(self):
-        bmp_in_files = os.listdir(self.path0)
+        self.Text.insert(END, "==============转换开始============\n")
+        self.Text.update()
+        path = self.entry.get()
+        bmp_in_files = os.listdir(path)
         for _bmp in bmp_in_files:
           if '.bmp' in _bmp or '.jpg' in _bmp:
-            bmpname = self.path0 + '/' + _bmp
-            #print(self.bmpname)
-            image = cv.imread(bmpname,1)
+            bmpname = path + _bmp
+            image = cv.imread(bmpname, 1)
             self.inverse_color(image)
             #self.show_img(self.inver_bmp)
-            split_bmpname = os.path.splitext(bmpname)
-            pngname = split_bmpname[0] + '.png'
-            print(pngname)
+            if self.intVar1.get():
+                split_bmpname = os.path.splitext(bmpname)
+                pngname = split_bmpname[0] + '.png'
+                pass
+            else:
+                pngname = bmpname
             cv.imwrite(pngname, self.inver_bmp)
-            self.foo(pngname)
-            
-            
-    def foo(self,show):
-      self.Text.insert(END,'INFO: '+ show + " 转换结束\n")
-      time.sleep(10)
-      
-      pass
+            self.text_update(pngname)
+        self.text_update('0')
 
+    def text_update(self,show):
+        if show == '0':
+            self.Text.insert(END, "==============转换结束============\n")
+        else:
+            self.Text.insert(END,'INFO: '+ show + " 转换结束\n")
+        self.Text.update()
 
     def inverse_color(self,image):
         height,width,temp = image.shape
         img2 = image.copy()
-        for i in range(height):
-            for j in range(width):
-                img2[i,j] = (255-image[i,j][0],255-image[i,j][1],255-image[i,j][2]) 
+        if self.intVar.get():
+            for i in range(height):
+                for j in range(width):
+                    img2[i,j] = (255-image[i,j][0],255-image[i,j][1],255-image[i,j][2])
         self.inver_bmp = img2
 
     def show_img(self,img):
@@ -94,4 +120,7 @@ if __name__ == "__main__":
   root.title("图片批量反色工具 V1.00")
   root.geometry('640x400')  # 窗口尺寸
   Windows_NODE(root)
+  #root.update()
+  #root.after(1000)
+  YokoRead._ALRM_NODE_.limited_time(root)
   root.mainloop()   
