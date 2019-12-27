@@ -96,121 +96,149 @@ class App(YokoRead._FILE_NODE_):
             listSheet = self.comboxlist.get()
             #print (listSheet)
             f1 = open(samplePVI,'r')
-            f2 = open(resultDR,'a')
+            f2 = open(resultDR,'w')
             s = f1.read()
-            head = "\n:::SOURCE\n:ACOM\n1:ID:FCDRW,2.00:0;\n"\
+            s1 = (re.findall(r'::FHED\n([\w\W]*)::::SOURCE', s))
+            #print(s1[0])
+            head = ":::SOURCE\n:ACOM\n1:ID:FCDRW,2.00:0;\n"\
                    "2:DT:2019,09,27,15,46,16:1569570376:BKEEdtCtlDrw:6.60;\n"\
                    "3:RC:2019,09,27,15,46,16:1569570376:BKEEdtCtlDrw:6.60;\n"\
                    "::ACOM\n:FDFL\n::FDFL\n:FHED\n1:IT:::1600,1072:1;\n2:CLT:HJ:1;\n"\
-                   "3:CLT:HG:2;\n4:CLT:DJ:1;\n5:CLT:DG:1;\n::FHED\n\n"
+                   "3:CLT:HG:2;\n4:CLT:DJ:1;\n5:CLT:DG:1;\n::FHED\n"
                    
-            foot ="\n::::SOURCE"        
-            f2.write(head)  
+            foot ="::::SOURCE"
+            f2.write(head)
             self.Text.delete(0.0,END)
-            self.Text.insert('insert', "=============转换开始===============\n")  
-            
+            self.Text.insert('insert', "=============转换开始===============\n")
+            #================
+            model = 'PVI'
+            #================
             for i in self.get_data_2line(modbusList,listSheet):
-            #===========参数   
-                CHKN = i['CHKN'] 
-                ETAG = i['ETAG']
-                ETCM = i['ETCM']
-                CNCT = i['CNCT']
-                LO = i['LO']
-                HI = i['HI']
-                UNIT = i['UNIT']
-                SSIK = i['SSIK']
-                SSIB = i['SSIB']
-                
-        ###   No     
-                inValue = "7:CHKN:1:1;"
-                outValue = "7:CHKN:1:"+str(CHKN)+";"
-                line = s.replace (inValue,outValue)
-        
-                inValue = "3:RCHK:1:@1;"
-                outValue = "3:RCHK:1:@"+str(CHKN)+";"
-                line = line.replace (inValue,outValue)
-
-                inValue = "5:GCNC:3:1$8,$6,8,AN;"
-                outValue = "5:GCNC:3:"+str(CHKN)+"$8,$6,8,AN;"
-                line = line.replace (inValue,outValue)
-        
-        ### 位置
-                if(CHKN>0 and CHKN<41):
-                    if (CHKN>40):
+            #===========参数
+        ###   No
+                if 'CHKN' in i:
+                    CHKN = i['CHKN']
+                    if (CHKN > 40):
                         break
-                    CHKNX = CHKN%10
-                    if(CHKNX!=0):
-                        COW = math.floor(CHKN/10)
-                        PVIX= CHKNX*150-100
-                        PVIY= 100+COW*200
-                    if(CHKNX==0):   
-                        COW = math.floor(CHKN/10)-1
-                        PVIX= 9*150+50
-                        PVIY= 100+COW*200      
-                    #print(str(PVIX)+"-"+str(PVIY))
-                    inValue = "8:GBLK:50,100:S1;"
-                    outValue = "8:GBLK:"+str(PVIX)+","+str(PVIY)+":S1;"
-                    line = line.replace (inValue,outValue)
-        
-                    PIOX= PVIX - 36
-                    PIOY= PVIY + 120
-                    #print(str(PIOX)+"-"+str(PIOY))
-                
-                    inValue = "4:GBLK:14,220:S1:$5;"
-                    outValue = "4:GBLK:"+str(PIOX)+","+str(PIOY)+":S1:$5;"
-                    line = line.replace (inValue,outValue)
-            
-        ### Name
-                inValue = "2:ETAG:1:COMM01;"
-                outValue = "2:ETAG:1:"+ETAG+";"
-                line = line.replace (inValue,outValue)
-                inValue = "6:RCNC:1::COMM01.IN:O;"
-                outValue = "6:RCNC:1::"+ETAG+".IN:O;"
-                line = line.replace (inValue,outValue)
+                    inValue = self.get_linestr(s, model, 'CHKN')
+                    outValue = ":CHKN:1:"+str(CHKN)+";"
+                    line = s1[0].replace (inValue,outValue)
 
-        ### 注释  
-                inValue = "4:ETCM:1:AAAAAAAA;"
-                outValue = "4:ETCM:1:"+ETCM+";"
-                line = line.replace (inValue,outValue)  
-            
-        ### PIO地址
-                inValue = "9:CNCT:1:IN:%WW0001:I;"
-                outValue = "9:CNCT:1:IN:"+CNCT+":I;"
-                line = line.replace (inValue,outValue)
+                    inValue = self.get_linestr(s, 'PIO', 'RCHK')
+                    outValue = ":RCHK:1:@"+str(CHKN)+";"
+                    line = line.replace (inValue,outValue)
 
-                inValue = "1:RTAG:1:%WW0001;"
-                outValue = "1:RTAG:1:"+CNCT+";"
-                line = line.replace (inValue,outValue)
-        
-        ### 量程
-                inValue = "16:ESCL:1:100.0:0.0;"
-                outValue = "16:ESCL:1:"+str(HI)+":"+str(LO)+";"
-                line = line.replace (inValue,outValue)
-        
-        ### 单位
-                inValue = "21:EUNT:1:%;"
-                outValue = "21:EUNT:1:"+UNIT+";"
-                line = line.replace (inValue,outValue)   
-        
-        ### 比例系数
-                inValue = "20:SSI!:1:1.000:1.000:106.25:-6.25;"
-                outValue = "20:SSI!:1:"+str(SSIK)+":"+str(SSIB)+":106.25:-6.25;"
-                line = line.replace (inValue,outValue)
-                f2.write(line)
-        ### Text显示 
-        
-                self.Text.insert('insert', ">>>"+ETAG+"---"+CNCT+"---"+str(HI)+"---"+str(LO)+"\n")
-                
-            f2.write(foot)  
-            #messagebox.showinfo(title='通知', message="转换结束")
+                    inValue = self.get_linestr(s, 'PIO', 'GCNC')
+                    outValue = ":GCNC:3:"+str(CHKN)+"$8,$6,8,AN;"
+                    line = line.replace (inValue,outValue)
+            ### 位置
+                    if(CHKN>0 and CHKN<41):
+                        if (CHKN>40):
+                            break
+                        CHKNX = CHKN%10
+                        if(CHKNX!=0):
+                            COW = math.floor(CHKN/10)
+                            PVIX= int(CHKNX*150-100)
+                            PVIY= 100+COW*200
+                        if(CHKNX==0):
+                            COW = math.floor(CHKN/10)-1
+                            PVIX= 9*150+50
+                            PVIY= 100+COW*200
+                        #print(str(PVIX)+"-"+str(PVIY))
+                        inValue = self.get_linestr(s,model,'GBLK')
+                        outValue = ":GBLK:"+str(PVIX)+","+str(PVIY)+":S1;"
+                        line = line.replace (inValue,outValue)
+                        #print(outValue)
+                        PIOX= PVIX - 36
+                        PIOY= PVIY + 120
+                        #print(str(PIOX)+"-"+str(PIOY))
+                        inValue = self.get_linestr(s,'PIO','GBLK')
+                        outValue = ":GBLK:"+str(PIOX)+","+str(PIOY)+":S1:$5;"
+                        line = line.replace (inValue,outValue)
+            ### Name
+                    if 'ETAG' in i:
+                        ETAG = i['ETAG']
+                        inValue = self.get_linestr(s, model, 'ETAG')
+                        outValue = ":ETAG:1:"+ETAG+";"
+                        line = line.replace (inValue,outValue)
+
+                        inValue = self.get_linestr(s,'PIO','RCNC')
+                        outValue = ":RCNC:1::"+ETAG+".IN:O;"
+                        line = line.replace (inValue,outValue)
+            ### 注释
+                    if 'ETCM' in i:
+                        ETCM = i['ETCM']
+                        inValue = self.get_linestr(s, model, 'ETCM')
+                        outValue = ":ETCM:1:"+ETCM+";"
+                        line = line.replace (inValue,outValue)
+            ### PIO地址
+                    if 'CNCT' in i:
+                        CNCT = i['CNCT']
+                        inValue = self.get_linestr(s, model, 'CNCT')
+                        outValue = ":CNCT:1:IN:"+CNCT+":I;"
+                        line = line.replace (inValue,outValue)
+
+                        inValue = self.get_linestr(s, 'PIO', 'RTAG')
+                        outValue = ":RTAG:1:"+CNCT+";"
+                        line = line.replace (inValue,outValue)
+            ### 量程
+                    if 'LO' in i and 'HI' in i:
+                        LO = i['LO']
+                        HI = i['HI']
+                        inValue = self.get_linestr(s, model, 'HI')
+                        outValue = ":ESCL:1:" + str(HI) + ":" + str(LO) + ";"
+                        line = line.replace(inValue, outValue)
+            ### 单位
+                    if 'UNIT' in i:
+                        UNIT = i['UNIT']
+                        inValue = self.get_linestr(s, model, 'EUNT')
+                        outValue = ":EUNT:1:" + UNIT + ";"
+                        line = line.replace(inValue, outValue)
+            ### 比例系数
+                    if 'SSIK' in i and 'SSIB' in i:
+                        SSIK = i['SSIK']
+                        SSIB = i['SSIB']
+                        inValue = self.get_linestr(s, model, 'SSI!')
+                        outValue = ":SSI!:1:" + str(SSIK) + ":" + str(SSIB) + ":106.25:-6.25;"
+                        line = line.replace(inValue, outValue)
+            ### 写入文件
+                    f2.write(line)
+        ### Text显示
+                self.Text.insert('insert', ">>>"+ETAG+"\n")
+                self.Text.update()
+
+            f2.write(foot)
+                #messagebox.showinfo(title='通知', message="转换结束")
             self.Text.insert('insert', "=============转换结束===============\n")
+            self.Text.update()
             self.Text.see(END)
             self.e.set("转换结束：结果已输出至 DR_output.txt")  
             #root.destroy() 
         except FileNotFoundError as e:
             self.e.set(e)
         except UnicodeDecodeError as e:
-            self.e.set(e)  
+            self.e.set(e)
+    pass
+
+    def get_linestr(self,ds,model,CODE):
+        funrm = ['PVI','SI-1ALM']
+        fref = ['PIO']
+        if model in funrm:
+            findallstr = r':FNRM\n([\w\W]*)::FNRM'
+            pass
+        if model in fref:
+            findallstr = r':FREF\n([\w\W]*)::FREF'
+            pass
+        ds1 = (re.findall(findallstr, ds))
+        #print(ds1)
+        dline = ds1[0]
+        dline1 = re.split(r'[\n]\s*', dline)
+        for _ in dline1:
+            if CODE in _:
+                linestr = str(_)
+                lastlinestr = linestr[1:len(linestr)]
+        return  lastlinestr
+    pass
   
 if __name__ == "__main__":
     root = Tk()
