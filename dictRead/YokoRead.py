@@ -11,21 +11,20 @@ class  _FILE_NODE_:
 #    def __init__(self):
     def read_txt(self,txt_file_name):
         #读取txt文档
-        file_data = open(txt_file_name,'r')
-        file_detail = file_data.read()
+        with open(txt_file_name,'r') as file_data:
+            file_detail = file_data.read()
         return file_detail
 
     def out_txt(self,txt_file_name,out_result):
         out_file_name = txt_file_name
-        out_file = open(out_file_name, 'w+', encoding='GBK')  #保存为ANSI格式
-        out_file.write(out_result)
-        out_file.close()
+        with open(out_file_name, 'w+', encoding='GBK') as out_file: #保存为ANSI格式
+            out_file.write(out_result)
         pass
 
     def get_sheet(self,filename):
         dir_case = filename
-        data = xlrd.open_workbook(dir_case)
-        sheetN = data.sheet_names()
+        with xlrd.open_workbook(dir_case) as data:
+            sheetN = data.sheet_names()
         return sheetN
 
     def get_data_Tag(self,filename, sheet_name):

@@ -229,6 +229,7 @@ class App:
                     TAG_Z_OUT = str(TAG_Z) +'\n'
                     self.Text.insert('insert', TAG_Z_OUT)
                     self.Text.update()
+                    self.Text.see(END)
                     #Excel坐标============================================
                     NewTagRow_Str = list_TAG[TAG_index][0]
                     NewTagcol_Str = list_TAG[TAG_index][1]
@@ -246,6 +247,7 @@ class App:
         except Exception as e:
             self.Text.insert('insert', e)
             self.Text.update()
+            self.Text.see(END)
               
     def ExcelComp(self):    #比较功能
         try:
