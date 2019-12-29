@@ -71,15 +71,18 @@ class  _FILE_NODE_:
                 dict[title] = value
             yield dict
 
+
 class _ALRM_NODE_:
-    #报警模块
+    # 报警模块
     def limited_time(self):
         ticks = time.time()
-        #print(ticks)
-        limitTime = 1575166842+2592000
-        #print(limitTime)
+        print(ticks)
+        limitTime = 1577633342 + 2592000
         localtime = time.strftime("%Y/%m/%d", time.localtime(limitTime))
+        # print(localtime)
         if (ticks > limitTime):
-            tkinter.messagebox.showinfo('提示', '软件过期需要重新编译'+localtime)
+            tkinter.messagebox.showinfo('提示', '软件过期需要重新编译' + localtime)
             exit()
+        return localtime
+
         
