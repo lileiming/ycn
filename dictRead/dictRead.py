@@ -100,7 +100,7 @@ class App:
         mid_frame2 = LabelFrame(self.master,height = 60,width = 615,text="结果")
         mid_frame2.pack(side=TOP,padx=0,pady=5)
         self.Scroll = Scrollbar(mid_frame2)
-        self.Text = Text(mid_frame2,width=83,height=6,yscrollcommand = self.Scroll.set)
+        self.Text = Text(mid_frame2,width=83,height=20,yscrollcommand = self.Scroll.set)
         self.Text.pack(side=LEFT,padx=0,pady=5)
         self.Scroll = Scrollbar(mid_frame2)
         self.Scroll.pack(side = LEFT, fill = Y)
@@ -339,10 +339,10 @@ class App:
           
 if __name__ == "__main__":
     root = Tk()
-    root.title("IO_list修正工具  Ver1.0")
-    root.geometry('640x400')  # 窗口尺寸
+    root.geometry('640x600')  # 窗口尺寸
     App(root)
-    YokoRead._ALRM_NODE_.limited_time(root)
+    limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+    root.title("IO_list修正工具  Ver1.0"+"    到期日:"+limit_time)
     root.mainloop()
      
         
