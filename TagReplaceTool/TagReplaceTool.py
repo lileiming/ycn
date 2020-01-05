@@ -2,7 +2,6 @@
 #!/usr/bin/python
 # python 3.7
 #==========================================================
-# 用户 多个重复设备的复制工作。
 
 # Rev01
 # 读取模板
@@ -53,34 +52,60 @@ class App:
         ttk.Button(mid_frame,text='Select Directory',command=self.open_dir).pack(side=LEFT,padx=15)
         ttk.Button(mid_frame,text='Replace CSV file',command=self.Csv).pack(side=RIGHT,padx=15)
         ttk.Button(mid_frame,text='Replace Txt file',command=self.Txt).pack(side=RIGHT,padx=15)
+
+    def text_insert(self,flag):
+
+        if flag == 'path1':
+            self.Text.insert('insert', 'File directory：\n' + self.path1 + '\n')
+            pass
+
+        if flag == 'csv':
+            self.Text.insert('insert', 'INFO: ****Start converting csv files.****\n')
+            pass
+
+        if flag == 'completed':
+            self.Text.insert('insert', 'INFO: ****All file Conversion completed.****\n')
+            self.Text.see(END)
+            pass
+
+        if flag == 'txt':
+            self.Text.insert('insert', 'INFO: ****Start converting txt files.****\n')
+            pass
+
+        if flag == 'error':
+            self.Text.insert('insert', 'ERROR：File format error'+'\n')
+            pass
+
+        self.Text.update()
+
+
+        pass
         
     def open_dir(self):
         self.Text.delete(0.0,END)
         dir_path = filedialog.askdirectory(title=u'Select file directory')
         self.path0 = dir_path
         self.path1 = self.path0+'/'
-        self.Text.insert('insert', 'File directory：\n'+self.path1+'\n')
+        self.text_insert('path1')
                   
     def Csv(self):
-        self.Text.insert('insert', 'INFO: ****Start converting csv files.****\n')
+        self.text_insert('csv')
         self.flag = 1
         self.reName2txt()
         self.readExcel()
         self.eachFile()
-        self.flag = 0   
-        self.Text.insert('insert', 'INFO: ****All file Conversion completed.****\n') 
-        self.Text.see(END)
-        
+        self.flag = 0
+        self.text_insert('completed')
+
+
     def Txt(self):
-        self.Text.insert('insert', 'INFO: ****Start converting txt files.****\n')
+        self.text_insert('txt')
         self.flag = 0
         self.readExcel()
         self.eachFile()
         self.flag = 0   
-        self.Text.insert('insert', 'INFO: ****All file Conversion completed.****\n') 
-        self.Text.see(END)
+        self.text_insert('completed')
 
-        
     def reName2txt(self):
         sys.path.append(self.path1)
         csvFiles = os.listdir(self.path0)
@@ -92,7 +117,7 @@ class App:
                 newnamedir=self.path1 + newname
                 os.rename(self.filenamedir,newnamedir)
             else:
-                self.Text.insert('insert', 'ERROR：File format error'+'\n')
+                self.text_insert('error')
         
     def readExcel(self):
         filename = "replaceExc.xlsx"
@@ -122,8 +147,8 @@ class App:
                 self.readTXTfile()
                 
     def readfile(self):
-        f1 = open(self.child,'r+')
-        s=f1.read()
+        with open(self.child,'r+')as f1:
+            s = f1.read()
         f1.seek(0,0)
         line = s.replace (self.inValue[0],self.outValue[0])
         num = 1
@@ -146,8 +171,10 @@ class App:
             try:
                 os.renames(self.child,flienameNS)
                 self.Text.insert('insert', 'INFO:'+repeatName+' Conversion completing...\n')
+                self.Text.update()
             except WindowsError as e:
                 self.Text.insert('insert', 'ERROR:'+repeatName+' Because Double name skip\n')
+                self.Text.update()
                     
         elif (IOM == 'S' ):
             SWX = NodeSolt[3]
@@ -156,8 +183,10 @@ class App:
             try:
                 os.renames(self.child,flienameNS)
                 self.Text.insert('insert', 'INFO:'+repeatName+'Conversion completing...\n')
+                self.Text.update()
             except WindowsError as e:
                 self.Text.insert('insert', 'ERROR:'+repeatName+' Because Double name skip\n')
+                self.Text.update()
                 
         elif (IOM == 'A' ):
             ANX = NodeSolt[2]
@@ -166,11 +195,14 @@ class App:
             try:
                 os.renames(self.child,flienameNS)
                 self.Text.insert('insert', 'INFO:'+repeatName+'Conversion completing...\n')
+                self.Text.update()
             except WindowsError as e:
                 self.Text.insert('insert', 'ERROR:'+repeatName+' Because Double name skip\n')
+                self.Text.update()
                 
         else:
-            self.Text.insert('insert', 'ERROR:'+self.childOnlyName+'Content not recognized\n')
+            self.Text.insert('insert', 'ERROR:'+self.child+'Content not recognized\n')
+            self.Text.update()
 
     def readTXTfile(self):
         self.stortNameApp()
@@ -179,8 +211,8 @@ class App:
         try:
             s=f1.read()        
         except UnicodeDecodeError as e:
-                f1.close
                 self.Text.insert('insert', 'WARNING: '+self.ShortName+' is UTF-8 format.\n')
+                self.Text.update()
                 f1 = open(self.child,'r+',encoding='utf-8')
                 s=f1.read()  
 
@@ -206,10 +238,13 @@ class App:
             try:
                os.renames(self.child,flienameNS)
                self.Text.insert('insert', 'INFO: '+self.ShortName+' Conversion completing...\n')
+               self.Text.update()
             except WindowsError as e:
                self.Text.insert('insert', 'ERROR: '+self.ShortName+' Because Double name skip.\n')
+               self.Text.update()
         else:
             self.Text.insert('insert', 'WARNING: '+self.ShortName+' does not conform to the DR format.\n')
+            self.Text.update()
             
     def stortNameApp(self):
         try:
@@ -217,9 +252,7 @@ class App:
         except IndexError as e:
             self.ShortName = self.child
         #print(self.ShortName)
-            
-               
-               
+
 if __name__ == "__main__":
     root = Tk()
     root.title("Tag replacement tool V2.01")
