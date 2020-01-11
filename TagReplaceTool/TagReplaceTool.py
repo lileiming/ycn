@@ -58,27 +58,21 @@ class App:
         if flag == 'path1':
             self.Text.insert('insert', 'File directory：\n' + self.path1 + '\n')
             pass
-
         if flag == 'csv':
             self.Text.insert('insert', 'INFO: ****Start converting csv files.****\n')
             pass
-
         if flag == 'completed':
             self.Text.insert('insert', 'INFO: ****All file Conversion completed.****\n')
             self.Text.see(END)
             pass
-
         if flag == 'txt':
             self.Text.insert('insert', 'INFO: ****Start converting txt files.****\n')
             pass
-
         if flag == 'error':
             self.Text.insert('insert', 'ERROR：File format error'+'\n')
             pass
 
         self.Text.update()
-
-
         pass
         
     def open_dir(self):
@@ -96,7 +90,6 @@ class App:
         self.eachFile()
         self.flag = 0
         self.text_insert('completed')
-
 
     def Txt(self):
         self.text_insert('txt')
@@ -156,7 +149,7 @@ class App:
             line = line.replace (self.inValue[num-1],self.outValue[num-1])
             num = num +1
         f1.write(line)
-        f1.close()
+        #f1.close()
         
         self.startNo = s.index('%')
 
@@ -171,10 +164,8 @@ class App:
             try:
                 os.renames(self.child,flienameNS)
                 self.Text.insert('insert', 'INFO:'+repeatName+' Conversion completing...\n')
-                self.Text.update()
             except WindowsError as e:
                 self.Text.insert('insert', 'ERROR:'+repeatName+' Because Double name skip\n')
-                self.Text.update()
                     
         elif (IOM == 'S' ):
             SWX = NodeSolt[3]
@@ -183,11 +174,9 @@ class App:
             try:
                 os.renames(self.child,flienameNS)
                 self.Text.insert('insert', 'INFO:'+repeatName+'Conversion completing...\n')
-                self.Text.update()
             except WindowsError as e:
                 self.Text.insert('insert', 'ERROR:'+repeatName+' Because Double name skip\n')
-                self.Text.update()
-                
+
         elif (IOM == 'A' ):
             ANX = NodeSolt[2]
             flienameNS = self.path1+'AN'+'.csv'
@@ -195,14 +184,11 @@ class App:
             try:
                 os.renames(self.child,flienameNS)
                 self.Text.insert('insert', 'INFO:'+repeatName+'Conversion completing...\n')
-                self.Text.update()
             except WindowsError as e:
                 self.Text.insert('insert', 'ERROR:'+repeatName+' Because Double name skip\n')
-                self.Text.update()
-                
         else:
             self.Text.insert('insert', 'ERROR:'+self.child+'Content not recognized\n')
-            self.Text.update()
+        self.Text.update()
 
     def readTXTfile(self):
         self.stortNameApp()
@@ -238,20 +224,15 @@ class App:
             try:
                os.renames(self.child,flienameNS)
                self.Text.insert('insert', 'INFO: '+self.ShortName+' Conversion completing...\n')
-               self.Text.update()
             except WindowsError as e:
                self.Text.insert('insert', 'ERROR: '+self.ShortName+' Because Double name skip.\n')
-               self.Text.update()
         else:
             self.Text.insert('insert', 'WARNING: '+self.ShortName+' does not conform to the DR format.\n')
-            self.Text.update()
+        self.Text.update()
             
     def stortNameApp(self):
-        try:
-            self.ShortName = (re.findall(r"dir/(.*)",self.child))[0]
-        except IndexError as e:
-            self.ShortName = self.child
-        #print(self.ShortName)
+        self.ShortName = os.path.basename(self.child)
+
 
 if __name__ == "__main__":
     root = Tk()
