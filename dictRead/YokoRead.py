@@ -114,7 +114,7 @@ class _ALRM_NODE_:
     def limited_time(self):
         ticks = time.time()
         #print(ticks)
-        limitTime = 1577633342+2592000
+        limitTime = 1580220256+2592000
         localtime = time.strftime("%Y/%m/%d", time.localtime(limitTime))
         #print(localtime)
         if (ticks > limitTime):

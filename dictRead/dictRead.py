@@ -47,7 +47,7 @@ class App:
         self.master = master
         self.initWidgets()
         self.yk = YokoRead._FILE_NODE_
-        
+
     def initWidgets(self):
         # 创建第一层
         top_frame = LabelFrame(self.master,height = 150,width = 615,text="目标文件")
@@ -59,18 +59,18 @@ class App:
         self.entry.pack(fill=X,expand=0,side=TOP,padx=0,pady=10)
         ## 目标文件Sheet框
         self.tope2 = StringVar()
-        self.comboxlist=ttk.Combobox(top_frame,width=25,textvariable = self.tope2) 
+        self.comboxlist=ttk.Combobox(top_frame,width=25,textvariable = self.tope2)
         self.comboxlist.pack(side=LEFT)
         self.comboxlist.bind("<<ComboboxSelected>>",self.open_combox)
         self.tope2.set("目标sheet")
         ## 目标文件PID_TAG框
         self.tope3 = StringVar()
-        self.comboxlist1=ttk.Combobox(top_frame,width=25,textvariable = self.tope3) 
+        self.comboxlist1=ttk.Combobox(top_frame,width=25,textvariable = self.tope3)
         self.comboxlist1.pack(side=LEFT,padx=10,pady=10)
         self.tope3.set("目标TAG")
         ## 同文件选择框
-        self.intVar = BooleanVar() 
-        #should_auto = BooleanVar() 
+        self.intVar = BooleanVar()
+        #should_auto = BooleanVar()
         self.check1 = Checkbutton(top_frame,text = "同文件",variable = self.intVar,command = self.change).pack(side=LEFT)
         #self.check1.select()
         self.ckeckchange = 0
@@ -84,14 +84,14 @@ class App:
         self.entry2 = ttk.Entry(mid_frame1,width=85,textvariable = self.mide1)
         self.mide1.set("参考文件")
         self.entry2.pack(fill=X,expand=0,side=TOP,padx=0,pady=10)
-        
+
         self.mide2 = StringVar()
-        self.comboxlist2=ttk.Combobox(mid_frame1,width=25,textvariable = self.mide2) 
+        self.comboxlist2=ttk.Combobox(mid_frame1,width=25,textvariable = self.mide2)
         self.comboxlist2.pack(side=LEFT)
         self.comboxlist2.bind("<<ComboboxSelected>>",self.open_combox2)
         self.mide2.set("参考sheet")
         self.mide3 = StringVar()
-        self.comboxlist3=ttk.Combobox(mid_frame1,width=25,textvariable = self.mide3) 
+        self.comboxlist3=ttk.Combobox(mid_frame1,width=25,textvariable = self.mide3)
         self.comboxlist3.pack(side=LEFT,padx=10,pady=10)
         self.mide3.set("参考TAG")
         ttk.Button(mid_frame1 , text='参考文件', command=self.open_file2).pack(side=RIGHT,padx=5)
@@ -111,7 +111,8 @@ class App:
         bot_frame.pack(side=TOP,padx=0,pady=5)
         ttk.Button(bot_frame, text='校队', command=self.ExcelComp).pack(side=LEFT,padx=10)
         ttk.Button(bot_frame, text='替换', command=self.ExcelSave).pack(side=LEFT,padx=10)
-        
+        ttk.Button(bot_frame, text='查看结果', command=self.OpenExcel).pack(side=LEFT, padx=10)
+
     def change(self):
         self.entry2.delete(0,END)
         self.ckeckchange = self.intVar.get()
@@ -336,6 +337,14 @@ class App:
         sheet = data.sheet_by_name(SheetName)
         col_name = yk.colList(root,sheet)
         return col_name
+
+    def OpenExcel(self):
+        try:
+            os.startfile(self.entry.get())
+        except FileNotFoundError :
+            self.Text.insert('insert', '错误提示：文件不存在')
+            pass
+
           
 if __name__ == "__main__":
     root = Tk()
@@ -343,6 +352,7 @@ if __name__ == "__main__":
     App(root)
     limit_time = YokoRead._ALRM_NODE_.limited_time(root)
     root.title("IO_list修正工具  Ver1.0"+"    到期日:"+limit_time)
+
     root.mainloop()
      
         
