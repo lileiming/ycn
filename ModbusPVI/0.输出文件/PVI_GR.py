@@ -30,6 +30,8 @@ import YokoRead   #自定义模块
 class Windows_NODE(YokoRead._FILE_NODE_):
     def __init__(self, master):
         self.master = master
+        #self.here = os.path.abspath(os.path.dirname(__file__))
+        self.here = os.getcwd()
         self.initWidgets()
         help_doc = '本程序为流程图数据块快速复制组态工具。 \n 使用方法：\n1.通过参考文档按钮选择需要复制的流程图样本，默认为GRtemp.xaml。\n2.通过按钮选择数据列表文件，使用下拉菜单选择相对应的表格（sheet）.\n\
 3.点击开始按钮执行程序复制'
@@ -82,14 +84,14 @@ class Windows_NODE(YokoRead._FILE_NODE_):
 
     def open_file(self):
         self.entry.delete(0,END)
-        file_path = filedialog.askopenfilename(title=u'选择参考文档', initialdir=(os.path.expanduser('H:/')))
+        file_path = filedialog.askopenfilename(title=u'选择参考文档', initialdir=self.here)
         file_text = file_path
         self.entry.insert('insert', file_text)
         pass
 
     def open_file2(self):
         self.entry2.delete(0,END)
-        file_path = filedialog.askopenfilename(title=u'选择数据列表', initialdir=(os.path.expanduser('H:/')))
+        file_path = filedialog.askopenfilename(title=u'选择数据列表', initialdir=self.here)
         file_text = file_path
         self.entry2.insert('insert', file_text)
         sheetName = self.get_sheet(file_text)

@@ -17,17 +17,20 @@ import YokoRead   #自定义模块
 class Windows_NODE():
     def __init__(self, master):
         self.master = master
+        self.here = 'C:/CENTUMVP/his/save/bmp/'
         self.initWidgets()
-        help_doc = '本程序为截图反色工具 \n 使用方法：\n1.通过按钮选择需要反色的图片目录，默认为IN目录。\n2.点击按钮开始执行图片反色\n'
+        help_doc = '本程序为截图反色工具 \n 使用方法：\n1.通过按钮选择需要反色的图片目录，默认为IN目录。\n2.点击确认按钮开始执行图片反色\n'
         self.Text.insert('insert',help_doc)
+        pass
 
     def initWidgets(self):
         # 创建顶部
         top_frame = LabelFrame(self.master, text='图片目录', height=150, width=615)
-        top_frame.pack(fill=X, padx=15, pady=0)
+        top_frame.pack(fill=X, padx=15, pady=5)
         self.e1 = StringVar()
         self.entry = ttk.Entry(top_frame, width=65, textvariable=self.e1)
-        self.e1.set('IN/')
+        print(self.here)
+        self.e1.set(self.here)
         self.entry.pack(fill=X, expand=YES, side=LEFT, pady=10)
         ttk.Button(top_frame, text='图片目录', command=self.open_dir).pack(side=LEFT)
 
@@ -59,12 +62,12 @@ class Windows_NODE():
         bot_frame.pack(fill=X, side=TOP, padx=15, pady=8)
         self.e = StringVar()
         ttk.Label(bot_frame, width=60, textvariable=self.e).pack(side=LEFT, fill=BOTH, expand=YES, pady=10)
-        self.e.set('组态工具集')
-        ttk.Button(bot_frame, text='图片反色', command=self.command).pack(side=RIGHT)
+        self.e.set('懒惰、不耐烦、傲慢')
+        ttk.Button(bot_frame, text='确定', command=self.command).pack(side=RIGHT)
 
     def open_dir(self):
         self.entry.delete(0,END)
-        dir_path = filedialog.askdirectory(title=u'选择图片文件夹')
+        dir_path = filedialog.askdirectory(title=u'选择图片文件夹',initialdir = self.here)
         path0 = dir_path
         path1 = path0+'/'
         self.entry.insert('insert', path1)
@@ -97,6 +100,7 @@ class Windows_NODE():
         else:
             self.Text.insert(END,'INFO: '+ show + " 转换结束\n")
         self.Text.update()
+        self.Text.see(END)
 
     def inverse_color(self,image):
         height,width,temp = image.shape
@@ -112,15 +116,12 @@ class Windows_NODE():
       cv.imshow("Image",img)
       cv.waitKey(0)
       #释放窗口
-      #cv.destroyAllWindows() 
-    
-if __name__ == "__main__":
+      #cv.destroyAllWindows()
 
-  root = Tk()
-  root.title("图片批量反色工具 V1.00")
-  root.geometry('640x400')  # 窗口尺寸
-  Windows_NODE(root)
-  #root.update()
-  #root.after(1000)
-  YokoRead._ALRM_NODE_.limited_time(root)
-  root.mainloop()   
+if __name__ == "__main__":
+    root = Tk()
+    root.geometry('640x400')  # 窗口尺寸
+    Windows_NODE(root)
+    limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+    root.title("图片批量反色工具 V1.00"+"    到期日:"+limit_time)
+    root.mainloop()

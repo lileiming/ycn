@@ -45,7 +45,10 @@ import YokoRead
 class App:
     def __init__(self, master):
         self.master = master
+        self.here = os.getcwd()
         self.initWidgets()
+        help_doc = 'Don\'t Repeat Youself!!\n 懒惰、不耐烦、傲慢 程序员的三大美德！'
+        self.Text.insert('insert', help_doc)
         self.yk = YokoRead._FILE_NODE_
 
     def initWidgets(self):
@@ -123,7 +126,7 @@ class App:
         self.Text.delete(0.0,END)
         try:
             self.entry.delete(0,END)
-            file_path = filedialog.askopenfilename(title=u'选择参考文档', initialdir=(os.path.expanduser('H:/')))
+            file_path = filedialog.askopenfilename(title=u'选择参考文档', initialdir=self.here)
             file_text = file_path
             self.entry.insert('insert', file_text)
             sheetName = self.yk.get_sheet(root,file_text)
@@ -147,7 +150,7 @@ class App:
             if (self.ckeckchange):
                 file_path =self.entry.get() 
             else:
-                file_path = filedialog.askopenfilename(title=u'选择数据列表', initialdir=(os.path.expanduser('H:/')))
+                file_path = filedialog.askopenfilename(title=u'选择数据列表', initialdir=self.here)
             file_text = file_path
             self.entry2.insert('insert', file_text)
             sheetName = self.yk.get_sheet(root,file_text)

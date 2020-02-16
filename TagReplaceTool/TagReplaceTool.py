@@ -29,6 +29,7 @@ class App:
 
     def __init__(self, master):
         self.master = master
+        self.here = os.getcwd()
         self.initWidgets()
         
     def initWidgets(self):
@@ -77,7 +78,7 @@ class App:
         
     def open_dir(self):
         self.Text.delete(0.0,END)
-        dir_path = filedialog.askdirectory(title=u'Select file directory')
+        dir_path = filedialog.askdirectory(title=u'Select file directory', initialdir=self.here)
         self.path0 = dir_path
         self.path1 = self.path0+'/'
         self.text_insert('path1')

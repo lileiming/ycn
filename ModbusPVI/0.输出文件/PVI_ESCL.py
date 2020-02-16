@@ -108,10 +108,12 @@ class PROCESS_NODE(YokoRead._FILE_NODE_):
 class Windows_NODE(PROCESS_NODE):
     def __init__(self, master):
         self.master = master
+        self.here = os.getcwd()
         self.initWidgets()
         help_doc = '本程序为量程替换工具 \n 使用方法：\n1.通过按钮选择需要替换的DR文件目录，默认为IN目录。\n2.通过按钮选择数据列表文件，使用下拉菜单选择相对应的表格（sheet）.\n\
 3.点击按钮开始执行量程替换'
         self.Text.insert('insert',help_doc)
+
 
     def initWidgets(self):
         # 创建顶部
@@ -156,14 +158,14 @@ class Windows_NODE(PROCESS_NODE):
 
     def open_dir(self):
         self.entry.delete(0,END)
-        dir_path = filedialog.askdirectory(title=u'选择DR文件夹')
+        dir_path = filedialog.askdirectory(title=u'选择DR文件夹',initialdir=self.here)
         path0 = dir_path
         path1 = path0+'/'
         self.entry.insert('insert', path1)
 
     def open_file2(self):
         self.entry2.delete(0,END)
-        file_path = filedialog.askopenfilename(title=u'选择数据列表', initialdir=(os.path.expanduser('H:/')))
+        file_path = filedialog.askopenfilename(title=u'选择数据列表', initialdir=self.here)
         file_text = file_path
         self.entry2.insert('insert', file_text)
         sheetName = self.get_sheet(file_text)
