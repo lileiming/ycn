@@ -5,25 +5,26 @@
 import tkinter
 from tkinter import *
 
-
 #===================自定义模块==============================
 import YokoRead
 import PVI_GR    #流程图复制工具
 import PVI_COMM  #功能块复制工具
 import PVI_ESCL  #量程修改工具
-
+import PVI_invter   #截图反色工具
 
 class myWindow():
     def __init__(self, root, myTitle, flag):
         self.top = tkinter.Toplevel(root, width=640, height=400)
         self.top.title(myTitle)
         self.top.attributes('-topmost', 1)
-        if flag==1:
+        if flag == 1:
             PVI_GR.Windows_NODE(self.top)
-        elif flag==2:
+        elif flag == 2:
             PVI_COMM.Windows_NODE(self.top)
-        elif flag==3:
+        elif flag == 3:
             PVI_ESCL.Windows_NODE(self.top)
+        elif flag == 4:
+            PVI_invter.Windows_NODE(self.top)
     pass
 pass
 
@@ -43,6 +44,8 @@ class Windows_NODE():
         self.button2.place(x=70, y=100, height=40, width=160)
         self.button3 = tkinter.Button(root, text='量程修改工具', command=self.buttonClick3)
         self.button3.place(x=70, y=160, height=40, width=160)
+        self.button4 = tkinter.Button(root, text='截图反色工具', command=self.buttonClick4)
+        self.button4.place(x=70, y=220, height=40, width=160)
         pass
 
     def buttonClick1(self):
@@ -53,7 +56,6 @@ class Windows_NODE():
             self.window1.set(0)
         pass
     pass
-
 
     def buttonClick2(self):
         if self.window1.get()==0:
@@ -68,6 +70,15 @@ class Windows_NODE():
         if self.window1.get()==0:
             self.window1.set(1)
             w1 = myWindow(root, '量程修改工具', 3)
+            self.button1.wait_window(w1.top)
+            self.window1.set(0)
+        pass
+    pass
+
+    def buttonClick4(self):
+        if self.window1.get()==0:
+            self.window1.set(1)
+            w1 = myWindow(root, '截图反色工具', 4)
             self.button1.wait_window(w1.top)
             self.window1.set(0)
         pass

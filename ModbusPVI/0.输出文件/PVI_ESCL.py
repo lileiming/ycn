@@ -153,7 +153,7 @@ class Windows_NODE(PROCESS_NODE):
         bot_frame.pack(fill=X, side=TOP, padx=15, pady=8)
         self.e = StringVar()
         ttk.Label(bot_frame, width=60, textvariable=self.e).pack(side=LEFT, fill=BOTH, expand=YES, pady=10)
-        self.e.set('组态工具集')
+        self.e.set('懒惰、不耐烦、傲慢')
         ttk.Button(bot_frame, text='量程替换', command=self.command).pack(side=RIGHT)
 
     def open_dir(self):

@@ -75,7 +75,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.e = StringVar()
         #self.lable(bot_frame,text = '欢迎使用',width = 60,height = 20).pack(side=LEFT)
         ttk.Label(bot_frame,width = 60,textvariable = self.e).pack(side=LEFT, fill=BOTH, expand=YES,pady=10)
-        self.e.set("转换工具")
+        self.e.set('懒惰、不耐烦、傲慢')
         ttk.Button(bot_frame, text='开始', command=self.get_entry).pack(side=RIGHT)
 
     def open_file(self):
