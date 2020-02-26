@@ -13,6 +13,7 @@ from tkinter import filedialog
 import os
 import time
 import YokoRead   #自定义模块
+import threading
 
 class Windows_NODE():
     def __init__(self, master):
@@ -63,8 +64,8 @@ class Windows_NODE():
         self.e = StringVar()
         ttk.Label(bot_frame, width=60, textvariable=self.e).pack(side=LEFT, fill=BOTH, expand=YES, pady=10)
         self.e.set('懒惰、不耐烦、傲慢')
-        ttk.Button(bot_frame, text='确定', command=self.command).pack(side=RIGHT)
-
+        ttk.Button(bot_frame, text='确定', command=lambda :self.thread_it(self.command)).pack(side=RIGHT)
+        # lambda :thread_it(music, songs)
     def open_dir(self):
         self.entry.delete(0,END)
         dir_path = filedialog.askdirectory(title=u'选择图片文件夹',initialdir = self.here)
@@ -112,11 +113,21 @@ class Windows_NODE():
         self.inver_bmp = img2
 
     def show_img(self,img):
-      cv.namedWindow("Image")
-      cv.imshow("Image",img)
-      cv.waitKey(0)
-      #释放窗口
-      #cv.destroyAllWindows()
+        cv.namedWindow("Image")
+        cv.imshow("Image",img)
+        cv.waitKey(0)
+        #释放窗口
+        #cv.destroyAllWindows()
+
+    def thread_it(self,func,*args):
+        # 创建
+        t = threading.Thread(target=func, args=args) 
+        # 守护 !!!
+        t.setDaemon(True) 
+        # 启动
+        t.start()
+        # 阻塞--卡死界面！
+
 
 if __name__ == "__main__":
     root = Tk()
