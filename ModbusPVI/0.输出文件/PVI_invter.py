@@ -4,7 +4,7 @@
 #==========================================================
 # Rev01
 # 实现截图反色及转换为PNG格式
-
+#https://blog.csdn.net/qq_42572322/article/details/89401474?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
 #==========================================================
 import cv2 as cv
 from tkinter import *
