@@ -5,6 +5,7 @@
 # Rev01
 # 实现截图反色及转换为PNG格式
 #https://blog.csdn.net/qq_42572322/article/details/89401474?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
+#https://blog.csdn.net/derek881122/article/details/101875726?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
 #==========================================================
 import cv2 as cv
 from tkinter import *
@@ -94,6 +95,7 @@ class Windows_NODE():
             cv.imwrite(pngname, self.inver_bmp)
             self.text_update(pngname)
         self.text_update('0')
+        time.sleep(3)
 
     def text_update(self,show):
         if show == '0':
