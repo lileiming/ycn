@@ -14,7 +14,8 @@ import PVI_invter   #截图反色工具
 
 class myWindow():
     def __init__(self, root, myTitle, flag):
-        self.top = tkinter.Toplevel(root, width=640, height=400)
+        self.top = tkinter.Toplevel(root)
+        self.top.geometry('640x400+550+200')
         self.top.title(myTitle)
         self.top.attributes('-topmost', 1)
         if flag == 1:
@@ -86,7 +87,7 @@ class Windows_NODE():
 
 if __name__ == "__main__":
     root = Tk()
-    root.geometry('640x400')  # 窗口尺寸
+    root.geometry('320x400+200+200')  # 窗口尺寸
     Windows_NODE(root)
     limit_time = YokoRead._ALRM_NODE_.limited_time(root)
     root.title("组态工具箱 V0.1"+"    到期日:"+limit_time)

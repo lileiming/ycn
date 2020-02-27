@@ -20,12 +20,11 @@ from tkinter import *
 # 导入ttk
 from tkinter import ttk
 from tkinter import filedialog
-import xlrd
 import os
 import re
 import time
-import tkinter.messagebox
 import YokoRead   #自定义模块
+import threading
 
 class Windows_NODE(YokoRead._FILE_NODE_):
     def __init__(self, master):
@@ -79,7 +78,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         #self.lable(bot_frame,text = '欢迎使用',width = 60,height = 20).pack(side=LEFT)
         ttk.Label(bot_frame,width = 60,textvariable = self.e).pack(side=LEFT, fill=BOTH, expand=YES,pady=10)
         self.e.set('懒惰、不耐烦、傲慢')
-        ttk.Button(bot_frame, text='开始', command=self.get_entry).pack(side=RIGHT)
+        ttk.Button(bot_frame, text='开始', command=lambda: self.thread_it(self.get_entry)).pack(side=RIGHT)
         pass
 
     def open_file(self):
@@ -178,6 +177,16 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         except  IndexError :
             err = "错误提示：确认复制元素是否Group"
             self.Text.insert('insert', err)
+        time.sleep(2)
+
+    def thread_it(self,func,*args):
+        # 创建
+        t = threading.Thread(target=func, args=args)
+        # 守护 !!!
+        t.setDaemon(True)
+        # 启动
+        t.start()
+        # 阻塞--卡死界面！
 
 if __name__ == "__main__":
     root = Tk()

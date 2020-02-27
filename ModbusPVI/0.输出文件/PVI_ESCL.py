@@ -16,6 +16,8 @@ from tkinter import filedialog
 import os
 import re
 import YokoRead   #自定义模块
+import threading
+import time
 
 class PROCESS_NODE(YokoRead._FILE_NODE_):
     # 处理模块
@@ -111,7 +113,7 @@ class Windows_NODE(PROCESS_NODE):
         self.here = os.getcwd()
         self.initWidgets()
         help_doc = '本程序为量程替换工具 \n 使用方法：\n1.通过按钮选择需要替换的DR文件目录，默认为IN目录。\n2.通过按钮选择数据列表文件，使用下拉菜单选择相对应的表格（sheet）.\n\
-3.点击按钮开始执行量程替换'
+3.点击按钮开始执行量程替换\n\n'
         self.Text.insert('insert',help_doc)
 
 
@@ -154,7 +156,8 @@ class Windows_NODE(PROCESS_NODE):
         self.e = StringVar()
         ttk.Label(bot_frame, width=60, textvariable=self.e).pack(side=LEFT, fill=BOTH, expand=YES, pady=10)
         self.e.set('懒惰、不耐烦、傲慢')
-        ttk.Button(bot_frame, text='量程替换', command=self.command).pack(side=RIGHT)
+        ttk.Button(bot_frame, text='量程替换', command=lambda: self.thread_it(self.command)).pack(side=RIGHT)
+
 
     def open_dir(self):
         self.entry.delete(0,END)
@@ -176,7 +179,7 @@ class Windows_NODE(PROCESS_NODE):
     def print_record(self):
         #打印替换的文件
         record = set(self.recording)
-        self.Text.delete(0.0,END)
+        #self.Text.delete(0.0,END)
         for _ in record:
             #print(_)
             if re.search(r'DR([\w\W]*?)txt', _, flags=0) != None:
@@ -192,6 +195,16 @@ class Windows_NODE(PROCESS_NODE):
         self.__init1__(excelname,listSheet,path)
         self.process_out()
         self.print_record()
+        time.sleep(1)
+
+    def thread_it(self,func,*args):
+        # 创建
+        t = threading.Thread(target=func, args=args)
+        # 守护 !!!
+        t.setDaemon(True)
+        # 启动
+        t.start()
+        # 阻塞--卡死界面！
 
 if __name__ == "__main__":
  

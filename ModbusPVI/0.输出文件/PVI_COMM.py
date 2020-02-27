@@ -16,14 +16,14 @@
 from tkinter import *
 # 导入ttk
 from tkinter import ttk
-from tkinter import messagebox
 from tkinter import filedialog
-import xlrd
 import os
 import re
-import sys
 import math
 import YokoRead   #自定义模块
+import threading
+import time
+
 
 class Windows_NODE(YokoRead._FILE_NODE_):
     def __init__(self, master):
@@ -76,7 +76,8 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         #self.lable(bot_frame,text = '欢迎使用',width = 60,height = 20).pack(side=LEFT)
         ttk.Label(bot_frame,width = 60,textvariable = self.e).pack(side=LEFT, fill=BOTH, expand=YES,pady=10)
         self.e.set('懒惰、不耐烦、傲慢')
-        ttk.Button(bot_frame, text='开始', command=self.get_entry).pack(side=RIGHT)
+        ttk.Button(bot_frame, text='开始', command=lambda: self.thread_it(self.get_entry)).pack(side=RIGHT)
+
 
     def open_file(self):
         self.entry.delete(0,END)
@@ -227,6 +228,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             self.e.set(e)
         except UnicodeDecodeError as e:
             self.e.set(e)
+        time.sleep(2)
         pass
 
     def get_linestr(self,ds,model,CODE):
@@ -249,6 +251,15 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                 find_all_str = linestr[1:len(linestr)]
         return  find_all_str
         pass
+
+    def thread_it(self,func,*args):
+        # 创建
+        t = threading.Thread(target=func, args=args)
+        # 守护 !!!
+        t.setDaemon(True)
+        # 启动
+        t.start()
+        # 阻塞--卡死界面！
   
 if __name__ == "__main__":
     root = Tk()

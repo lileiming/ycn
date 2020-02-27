@@ -113,8 +113,8 @@ class _ALRM_NODE_:
     #报警模块
     def limited_time(self):
         ticks = time.time()
-        #print(ticks)
-        limitTime = 1580220256+2592000
+        print(ticks)
+        limitTime = 1582780703+2592000
         localtime = time.strftime("%Y/%m/%d", time.localtime(limitTime))
         #print(localtime)
         if (ticks > limitTime):
