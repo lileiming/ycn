@@ -78,7 +78,6 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.e.set('懒惰、不耐烦、傲慢')
         ttk.Button(bot_frame, text='开始', command=lambda: self.thread_it(self.get_entry)).pack(side=RIGHT)
 
-
     def open_file(self):
         self.entry.delete(0,END)
         file_path = filedialog.askopenfilename(title=u'选择参考文档', initialdir=self.here)

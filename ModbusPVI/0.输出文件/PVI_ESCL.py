@@ -46,6 +46,9 @@ class PROCESS_NODE(YokoRead._FILE_NODE_):
             lower = i['LOWER']
             upper = i['UPPER']
             unit  = i['UNIT']
+
+            #alarm_level = i['EALA'] #28: EALA:1: 5; 功能块报警等级
+
             #print(self.tag_key,lower,upper,unit )
             valid4= self.valid_node(lower,upper)
             #print(valid4[0],valid4[1])
@@ -157,7 +160,6 @@ class Windows_NODE(PROCESS_NODE):
         ttk.Label(bot_frame, width=60, textvariable=self.e).pack(side=LEFT, fill=BOTH, expand=YES, pady=10)
         self.e.set('懒惰、不耐烦、傲慢')
         ttk.Button(bot_frame, text='量程替换', command=lambda: self.thread_it(self.command)).pack(side=RIGHT)
-
 
     def open_dir(self):
         self.entry.delete(0,END)
