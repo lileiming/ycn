@@ -14,7 +14,6 @@ import PVI_invter   #截图反色工具
 import Out_DrFile #DR文件自动导出
 import TagReplaceTool #快速替换工具
 
-
 class myWindow():
     def __init__(self, root, myTitle, flag):
         self.top = tkinter.Toplevel(root)
@@ -33,8 +32,8 @@ class myWindow():
             Out_DrFile.Windows_NODE(self.top)
         elif flag == 6:
             TagReplaceTool.Windows_NODE(self.top)
+        pass
     pass
-pass
 
 class Windows_NODE():
     def __init__(self, master):
@@ -76,6 +75,7 @@ class Windows_NODE():
             self.button1.wait_window(w1.top)
             self.window1.set(0)
         pass
+    pass
 
 if __name__ == "__main__":
     root = Tk()
@@ -84,6 +84,7 @@ if __name__ == "__main__":
     limit_time = YokoRead._ALRM_NODE_.limited_time(root)
     root.title("组态工具箱 V0.1"+"    到期日:"+limit_time)
     root.mainloop()
+    pass
 
 
 
