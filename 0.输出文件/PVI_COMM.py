@@ -95,14 +95,14 @@ class Windows_NODE(YokoRead._FILE_NODE_):
     def get_entry(self):
         try:
             samplePVI = self.entry.get()
-            resultDR = 'DR_output.txt'
+            #resultDR = 'DR_output.txt'
             modbusList = self.entry2.get()
             #listSheet = "DATE"
             listSheet = self.comboxlist.get()
             #print (listSheet)
             # 数据读取
             samplefile = open(samplePVI,'r')
-            resultfile = open(resultDR,'w')
+            #resultfile = open(resultDR,'w')
             # 数据剥离
             sample_content = samplefile.read()
             sample_stripping = (re.findall(r'::FHED\n([\w\W]*)::::SOURCE', sample_content)) #样本剥离
@@ -111,7 +111,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             head = sample_stripping_head[0]
             foot ="::::SOURCE"
             #处理开始
-            resultfile.write(head)
+            #resultfile.write(head)
             self.Text.delete(0.0,END)
             self.Text.insert('insert', "=============复制开始===============\n")
             #================
@@ -123,7 +123,16 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         ###   No
                 if 'CHKN' in i:
                     CHKN = i['CHKN']
+                    CHKN_pagenum = int(CHKN/40) + 1
+                    CHKN = CHKN % 40
+                    if (CHKN == 1):
+                        print(CHKN)
+                        resultDR = 'DR_output'+str(CHKN_pagenum)+'.txt'
+                        resultfile = open(resultDR,'w')
+                        resultfile.write(head)
+
                     if (CHKN > 40):
+                        print(int(CHKN/40))
                         break
                     inValue = self.get_linestr(sample_content, model, 'CHKN')
                     outValue = ":CHKN:1:"+str(CHKN)+";"
