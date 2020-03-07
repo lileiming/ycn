@@ -20,9 +20,9 @@ from tkinter import filedialog
 import os
 import xlrd
 import sys
+from time import sleep
 import YokoRead   #自定义模块
-import threading
-import time
+from YokoRead import time_Decorator,thread_Decorator
 
 class Windows_NODE(YokoRead._FILE_NODE_):
 
@@ -66,8 +66,8 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         bot_frame = LabelFrame(self.master)
         bot_frame.pack(fill=X,side=TOP,padx=15,pady=10)
         ttk.Button(bot_frame,text='选择目标文件夹',command=self.open_dir).pack(side=LEFT,padx=10,pady=10)
-        ttk.Button(bot_frame,text='替换 CSV 文件',command=lambda: self.thread_it(self.Csv)).pack(side=RIGHT,padx=10)
-        ttk.Button(bot_frame,text='替换 Txt 文件',command=lambda: self.thread_it(self.Txt)).pack(side=RIGHT,padx=10)
+        ttk.Button(bot_frame,text='替换 CSV 文件',command=self.Csv).pack(side=RIGHT,padx=10)
+        ttk.Button(bot_frame,text='替换 Txt 文件',command=self.Txt).pack(side=RIGHT,padx=10)
 
     def text_insert(self,flag):
 
@@ -107,7 +107,9 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         sheetNameT = tuple(sheetName)
         self.comboxlist["values"] = sheetNameT
         self.comboxlist.current(0)
-                  
+
+    @thread_Decorator
+    @time_Decorator
     def Csv(self):
         self.text_insert('csv')
         self.flag = 1
@@ -116,8 +118,10 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.eachFile()
         self.flag = 0
         self.text_insert('completed')
-        time.sleep(1)
+        sleep(1)
 
+    @thread_Decorator
+    @time_Decorator
     def Txt(self):
         self.text_insert('txt')
         self.flag = 0
@@ -125,7 +129,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.eachFile()
         self.flag = 0   
         self.text_insert('completed')
-        time.sleep(1)
+        sleep(1)
 
     def reName2txt(self):
         sys.path.append(self.path1)

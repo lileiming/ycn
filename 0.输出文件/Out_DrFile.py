@@ -12,8 +12,9 @@ from win32gui import *
 import win32gui, win32con, win32com.client
 from tkinter import *
 from tkinter import ttk
-import time
+from time import sleep
 import YokoRead   #自定义模块
+from YokoRead import time_Decorator,thread_Decorator
 
 
 class Windows_NODE(YokoRead._FILE_NODE_):
@@ -51,9 +52,11 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.e1.set("0")
         self.entry.pack(side=LEFT, pady=10)
         #yoko_fn = YokoRead._FILE_NODE_
-        ttk.Button(bot_frame, text='导出', command=lambda: self.thread_it(self.start)).pack(side=RIGHT, padx=10)
+        ttk.Button(bot_frame, text='导出', command=self.start).pack(side=RIGHT, padx=10)
 
     #lambda: self.thread_it(self.start)
+    @thread_Decorator
+    @time_Decorator
     def start(self):
         try:
             num = int(self.entry.get())
@@ -87,6 +90,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                 self.drclassname = GetClassName(hwnd)
                 #self.shortname = re.search('DR([\w\W\[0-9]{4}]*?)', self.drwindowtext, flags=0).group(0)
                 self.shortname = re.search('[\w\W\[0-9]{6}]*?(?=.edf)', self.drwindowtext, flags=0).group(0)
+
 
     def command(self):
         self.svwindowtext = ''
@@ -145,7 +149,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         keyboard.release(_character)
 
     def __delay(self,delaytime = 0.2):
-        time.sleep(delaytime)
+        sleep(delaytime)
 
     def out_txt(self):
         self.press_key(Key.alt,'f','e','e')
@@ -159,14 +163,14 @@ class Windows_NODE(YokoRead._FILE_NODE_):
     def circuit(self,count):   #循环流程
         self.Text.insert(END, '==============导出开始============\n')
         for _ in range(count):
-            self.__delay(2)
+            self.__delay(1)
             self.command()
             self.active_dr_builder()
             self.out_txt()
             self.close_dr_builder()
             self.active_function_block()
             #self.__delay(5)  or  self.listener_() # 按空格键 程序继续
-            self.__delay(2)
+            self.__delay(1)
             self.press_key(Key.down,Key.enter)
 
         self.text_update('0')

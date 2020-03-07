@@ -1,0 +1,1137 @@
+:::SOURCE
+:ACOM
+1:ID:FCDRW,2.00:0;
+2:CO:顶轴油泵压力联锁自检;
+3:DT:2020,01,01,13,18,52:1577855932:BKEEdtCtlDrw:6.60;
+4:RC:2020,01,01,13,18,52:1577855932:BKEEdtCtlDrw:6.60;
+::ACOM
+:FDFL
+::FDFL
+:FHED
+1:IT:::1600,1072:1;
+2:CLT:HJ:1;
+3:CLT:HG:2;
+4:CLT:DJ:1;
+5:CLT:DG:1;
+::FHED
+:FFPB
+1:REV3K:1:1;
+41:BKRV:2;
+9:TPFX:1:;
+2:ETAG:1:FCS0105_92PB1;
+3:EINS:1:PBS5C;
+4:ETCM:1:润滑油压力联锁自检PB;
+5:ETIM:1:4;
+6:ELIM:1:3;
+7:CHKN:1:1;
+10:ESCA:1:S;
+11:MSBP:1:NO;
+12:CMPM:1:NO;
+13:SWCV:1:BACK;
+14:PHLK:1:DASH;
+15:CAFL:1:YES;
+16:CACV:1:NO;
+17:CAVP:1:SWITCH;
+18:BTA2:1:RADIO;
+19:MBOT:1:2;
+20:HLPM:1:0000;
+21:UPPG:1:;
+22:FPSW:1:LAMPBUTN:开始:开始:W:R;
+23:FPSW:2:NO:OFF:ON:W:R;
+24:FPSW:3:LAMPBUTN:停止:停止:W:R;
+25:FPSW:4:NO:OFF:ON:W:R;
+26:FPSW:5:NO:OFF:ON:W:R;
+27:DBLA:1:NO;
+28:CASM:1:NO;
+29:TCAS:1:CAS;
+30:UPPL:1:;
+31:EALA:1:4;
+32:ILCN:1:YES;
+33:CNCT:1:Q01:FCS0105_92PB1.MV01:I;
+34:CNCT:1:Q03:FCS0105_92PB1.MV03:I;
+35:CNCT:1:B01:FCS0105_92PB1.MV01:O;
+36:CNCT:1:B03:FCS0105_92PB1.MV03:O;
+37:QNCN:1:FCS0105_92PB1.MV01;
+38:QNCN:3:FCS0105_92PB1.MV03;
+39:BNCN:1:FCS0105_92PB1.MV01;
+40:BNCN:3:FCS0105_92PB1.MV03;
+8:GBLK:180,264:S1;
+::FFPB
+:FIBD
+1:REV3K:1:1;
+67:BKRV:2;
+10:TPFX:1:;
+2:ETAG:1:FCS0105_92LC3;
+3:EINS:1:LC64;
+4:ETCM:1:自检备妥;
+5:ETIM:1:4;
+6:ELIM:1:4;
+7:CHKN:1:2;
+11:MSBP:1:YES;
+12:HLPM:1:0000;
+13:UPPG:1:;
+14:DBLA:1:NO;
+15:UPPL:1:;
+16:EALA:1:4;
+17:ILCN:1:YES;
+19:TENK:1:MTX;
+20:TMNL:1:T:1:0;
+21:ESCA:1:S;
+22:MTRX:1:@LOC:B25,S10001::,FCS0105_92PB1.MV01.1:@FROM:@TO:1,K25,20;
+23:MTRX:1:@LOC:L25,S45011:7:@FROM:1,K25,1:@TO:1,O25,1;
+24:MTRX:1:@LOC:O25,S70010::,FCS0105_92SFC1.BSTS.RUN:@FROM:1,L25,1:@TO;
+25:MTRX:1:@LOC:K25,S40001:5:@FROM:20,I05,1:20,B25,1:@TO:1,L25,1;
+26:MTRX:1:@LOC:B28,S10001::,FCS0105_92PB1.MV03.1:@FROM:@TO:1,K28,20;
+27:MTRX:1:@LOC:K28,S40001:6:@FROM:20,B28,1:@TO:1,L28,1;
+28:MTRX:1:@LOC:B02,S10001::,2CFA01CBA010CM12.PV.ON:@FROM:@TO:1,F02,20;
+29:MTRX:1:@LOC:B03,S10001::,2MKA16CS101C22.PV.ON:@FROM:@TO:1,F02,20;
+30:MTRX:1:@LOC:F02,S40001:1:@FROM:20,B02,1:20,B03,1:@TO:1,I05,20;
+31:MTRX:1:@LOC:N05,S70010::,FCS0105DR92SW30.PV.L:@FROM:1,I05,1:@TO;
+32:MTRX:1:@LOC:B05,S10001::,2W1Q1CM8.PV.ON:@FROM:@TO:1,F05,20;
+33:MTRX:1:@LOC:F05,S41001:2:@FROM:20,B05,1:@TO:1,I05,20;
+34:MTRX:1:@LOC:I05,S40001:4:@FROM:20,F02,1:20,F05,1:20,F12,1:@TO:1,N05,1:1,K25,20;
+35:MTRX:1:@LOC:F12,S40001:3:@FROM:20,B11,1:20,B12,1:20,B13,1:@TO:1,I05,20;
+36:MTRX:1:@LOC:B11,S10001::,2MKV30AP001.PV.0:@FROM:@TO:1,F12,20;
+37:MTRX:1:@LOC:B12,S10001::,2MKV30AP002.PV.0:@FROM:@TO:1,F12,20;
+38:MTRX:1:@LOC:B13,S10001::,2MKV30AP003.PV.0:@FROM:@TO:1,F12,20;
+39:MTRX:1:@LOC:L28,S45011:8:@FROM:1,K28,1:@TO:1,M29,1:1,O27,1:1,O28,1;
+40:MTRX:1:@LOC:O27,S70010::,FCS0105_92SFC1.BSTS.PAUS:@FROM:1,L28,1:@TO;
+41:MTRX:1:@LOC:O28,S70010::,FCS0105_92SFC1.STEPNO.1:@FROM:1,L28,1:@TO;
+42:MTRX:1:@LOC:O29,S70010::,FCS0105_92SFC1.BSTS.STOP:@FROM:1,M29,1:@TO;
+43:MTRX:1:@LOC:M29,S43011,sec.,1,:9:@FROM:1,L28,1:@TO:1,O29,1;
+44:CLT:HJ:1;
+45:CLT:HG:2;
+46:GMTR:$22:1,3,A;
+47:GMTR:$23:1,1,A;
+48:GMTR:$25:1,1,A;
+49:GMTR:$26:1,3,A;
+50:GMTR:$27:1,1,A;
+51:GMTR:$28:1,3,A;
+52:GMTR:$29:1,5,A,328,80,328,56;
+53:GMTR:$30:1,1,A,520,48,520,136;
+54:GMTR:$32:1,3,A;
+55:GMTR:$33:1,3,A;
+56:GMTR:$34:1,1,A:1,1,A,648,144,648,776;
+57:GMTR:$35:1,5,A,524,368,524,152;
+58:GMTR:$36:1,1,A,328,336,328,360;
+59:GMTR:$37:1,3,A;
+60:GMTR:$38:1,5,A,328,400,328,376;
+61:GMTR:$39:1,1,A,768,880,768,912:1,1,A,828,880,828,848:1,1,A;
+62:GMTR:$43:1,1,A;
+63:BKTX:788,103,1044,123:顶轴油压力联锁自检备妥:16:Courier New:l,,,,44,42;
+64:BKTX:16,14,272,34:零转速:16:Courier New:l,,,,44,42;
+65:BKTX:16,110,272,130:并网开关分位:16:Courier New:l,,,,44,42;
+66:BKTX:16,302,272,322:顶轴油泵停止:16:Courier New:l,,,,44,42;
+67:BKTX:815,887,843,917:0S:16:Courier New:l,,,,44,42;
+8:GBLK:180,136:S1::$9;
+9:GBCM:172,108:ETCM;
+::FIBD
+:FIBD
+1:REV3K:1:1;
+108:BKRV:2;
+10:TPFX:1:;
+2:ETAG:1:FCS0105_92LC1;
+3:EINS:1:LC64;
+4:ETCM:1:自检条件判断;
+5:ETIM:1:4;
+6:ELIM:1:4;
+7:CHKN:1:3;
+11:MSBP:1:YES;
+12:HLPM:1:0000;
+13:UPPG:1:;
+14:DBLA:1:NO;
+15:UPPL:1:;
+16:EALA:1:4;
+17:ILCN:1:YES;
+19:TENK:1:MTX;
+20:TMNL:1:T:1:0;
+21:ESCA:1:S;
+22:MTRX:1:@LOC:B02,S10001::,2MKV30CP001A.PV.ON:@FROM:@TO:1,F02,20;
+23:MTRX:1:@LOC:B03,S10001::,2MKV30CP001B.PV.ON:@FROM:@TO:1,F02,20;
+24:MTRX:1:@LOC:F02,S40001:5:@FROM:20,B02,1:20,B03,1:@TO:1,I07,20;
+25:MTRX:1:@LOC:M07,S70010::,FCS0105DR92SW21.PV.L:@FROM:1,I07,1:@TO;
+26:MTRX:1:@LOC:I07,S40001:14:@FROM:20,F02,1:20,F05,1:20,F08,1:20,F11,1:@TO:1,M07,1;
+27:MTRX:1:@LOC:B05,S10001::,2MKV30CP002A.PV.ON:@FROM:@TO:1,F05,20;
+28:MTRX:1:@LOC:B06,S10001::,2MKV30CP002B.PV.ON:@FROM:@TO:1,F05,20;
+29:MTRX:1:@LOC:F05,S40001:6:@FROM:20,B05,1:20,B06,1:@TO:1,I07,20;
+30:MTRX:1:@LOC:F08,S40001:7:@FROM:20,B08,1:20,B09,1:@TO:1,I07,20;
+31:MTRX:1:@LOC:B08,S10001::,2MKV30CP003A.PV.ON:@FROM:@TO:1,F08,20;
+32:MTRX:1:@LOC:B09,S10001::,2MKV30CP003B.PV.ON:@FROM:@TO:1,F08,20;
+33:MTRX:1:@LOC:F11,S40001:8:@FROM:20,B11,1:20,B12,1:@TO:1,I07,20;
+34:MTRX:1:@LOC:B11,S10001::,2MKV21CP001A.PV.ON:@FROM:@TO:1,F11,20;
+35:MTRX:1:@LOC:B12,S10001::,2MKV21CP001B.PV.ON:@FROM:@TO:1,F11,20;
+36:MTRX:1:@LOC:F15,S40001:9:@FROM:20,B15,1:20,B16,1:@TO:1,I17,20;
+37:MTRX:1:@LOC:B15,S10001::,2MKV30CP004A.PV.ON:@FROM:@TO:1,F15,20;
+38:MTRX:1:@LOC:B16,S10001::,2MKV30CP004B.PV.ON:@FROM:@TO:1,F15,20;
+39:MTRX:1:@LOC:F18,S40001:10:@FROM:20,E18,1:20,E19,1:@TO:1,I17,20;
+40:MTRX:1:@LOC:B18,S10001::,2MKV30CP007A.PV.ON:@FROM:@TO:1,E18,1;
+41:MTRX:1:@LOC:B19,S10001::,2MKV30CP007B.PV.ON:@FROM:@TO:1,E19,1;
+42:MTRX:1:@LOC:E18,S42021:1:@FROM:1,B18,1:@TO:1,F18,20;
+43:MTRX:1:@LOC:E19,S42021:2:@FROM:1,B19,1:@TO:1,F18,20;
+44:MTRX:1:@LOC:I17,S40001:15:@FROM:20,F15,1:20,F18,1:@TO:1,M17,1;
+45:MTRX:1:@LOC:M17,S70010::,FCS0105DR92SW22.PV.L:@FROM:1,I17,1:@TO;
+46:MTRX:1:@LOC:F22,S40001:11:@FROM:20,B22,1:20,B23,1:@TO:1,M22,1;
+47:MTRX:1:@LOC:B23,S10001::,2MKV30CP007B.PV.ON:@FROM:@TO:1,F22,20;
+48:MTRX:1:@LOC:B22,S10001::,2MKV30CP007A.PV.ON:@FROM:@TO:1,F22,20;
+49:MTRX:1:@LOC:M22,S70010::,FCS0105DR92SW23.PV.L:@FROM:1,F22,1:@TO;
+50:MTRX:1:@LOC:F27,S40001:12:@FROM:20,B27,1:20,B28,1:@TO:1,I29,20;
+51:MTRX:1:@LOC:B27,S10001::,2MKV30CP005A.PV.ON:@FROM:@TO:1,F27,20;
+52:MTRX:1:@LOC:B28,S10001::,2MKV30CP005B.PV.ON:@FROM:@TO:1,F27,20;
+53:MTRX:1:@LOC:I29,S40001:16:@FROM:20,F27,1:20,F30,1:@TO:1,M29,1;
+54:MTRX:1:@LOC:F30,S40001:13:@FROM:20,E30,1:20,E31,1:@TO:1,I29,20;
+55:MTRX:1:@LOC:B31,S10001::,2MKV30CP007B.PV.ON:@FROM:@TO:1,E31,1;
+56:MTRX:1:@LOC:B30,S10001::,2MKV30CP007A.PV.ON:@FROM:@TO:1,E30,1;
+57:MTRX:1:@LOC:E30,S42021:3:@FROM:1,B30,1:@TO:1,F30,20;
+58:MTRX:1:@LOC:E31,S42021:4:@FROM:1,B31,1:@TO:1,F30,20;
+59:MTRX:1:@LOC:M29,S70010::,FCS0105DR92SW24.PV.L:@FROM:1,I29,1:@TO;
+60:CLT:HJ:1;
+61:CLT:HG:2;
+62:GMTR:$22:1,3,A;
+63:GMTR:$23:1,5,A,328,80,328,56;
+64:GMTR:$24:1,1,A,520,48,520,200;
+65:GMTR:$26:1,1,A;
+66:GMTR:$27:1,3,A;
+67:GMTR:$28:1,5,A,328,176,328,152;
+68:GMTR:$29:1,2,A,524,144,524,204;
+69:GMTR:$30:1,4,A,520,240,520,212;
+70:GMTR:$31:1,3,A;
+71:GMTR:$32:1,5,A,328,272,328,248;
+72:GMTR:$33:1,5,A,524,336,524,216;
+73:GMTR:$34:1,3,A;
+74:GMTR:$35:1,5,A,328,368,328,344;
+75:GMTR:$36:1,1,A,520,464,520,520;
+76:GMTR:$37:1,3,A;
+77:GMTR:$38:1,5,A,328,496,328,472;
+78:GMTR:$39:1,5,A,520,560,520,536;
+79:GMTR:$40:1,1,A;
+80:GMTR:$41:1,1,A;
+81:GMTR:$42:1,3,A;
+82:GMTR:$43:1,5,A,328,592,328,568;
+83:GMTR:$44:1,1,A;
+84:GMTR:$46:1,1,A;
+85:GMTR:$47:1,5,A,328,720,328,696;
+86:GMTR:$48:1,3,A;
+87:GMTR:$50:1,1,A,520,848,520,904;
+88:GMTR:$51:1,3,A;
+89:GMTR:$52:1,5,A,328,880,328,856;
+90:GMTR:$53:1,1,A;
+91:GMTR:$54:1,5,A,520,944,520,920;
+92:GMTR:$55:1,1,A;
+93:GMTR:$56:1,1,A;
+94:GMTR:$57:1,3,A;
+95:GMTR:$58:1,5,A,328,976,328,952;
+96:BKTX:16,14,272,34:顶轴油交流油泵A入口压力高:16:Courier New:l,,,,44,42;
+97:BKTX:731,173,987,193:顶轴油压力联锁自检条件1:16:Courier New:l,,,,43,42;
+98:BKTX:17,108,273,128:顶轴油交流油泵B入口压力高:16:Courier New:l,,,,44,42;
+99:BKTX:18,207,274,227:顶轴油直流油泵入口压力高:16:Courier New:l,,,,44,42;
+100:BKTX:18,303,274,323:交流润滑油泵A出口压力正常:16:Courier New:l,,,,44,42;
+101:BKTX:18,431,314,451:顶轴油交流油泵A出口压力正常:16:Courier New:l,,,,44,42;
+102:BKTX:18,527,314,547:顶轴油泵出口母管压力低:16:Courier New:l,,,,44,42;
+103:BKTX:731,493,987,513:顶轴油压力联锁自检条件2:16:Courier New:l,,,,43,42;
+104:BKTX:18,655,314,675:顶轴油泵出口母管压力低:16:Courier New:l,,,,44,42;
+105:BKTX:731,653,987,673:顶轴油压力联锁自检条件3:16:Courier New:l,,,,43,42;
+106:BKTX:18,815,314,835:顶轴油交流油泵B出口压力正常:16:Courier New:l,,,,44,42;
+107:BKTX:18,911,314,931:顶轴油泵出口母管压力低:16:Courier New:l,,,,44,42;
+108:BKTX:731,877,987,897:顶轴油压力联锁自检条件4:16:Courier New:l,,,,43,42;
+8:GBLK:348,136:S1::$9;
+9:GBCM:396,108:ETCM;
+::FIBD
+:FIBD
+1:REV3K:1:1;
+66:BKRV:2;
+9:TPFX:1:;
+2:ETAG:1:FCS0105_92LC2;
+3:EINS:1:LC64;
+4:ETCM:1:自检条件判断;
+5:ETIM:1:4;
+6:ELIM:1:4;
+7:CHKN:1:4;
+10:MSBP:1:YES;
+11:HLPM:1:0000;
+12:UPPG:1:;
+13:DBLA:1:NO;
+14:UPPL:1:;
+15:EALA:1:4;
+16:ILCN:1:YES;
+18:TENK:1:MTX;
+19:TMNL:1:T:1:0;
+20:ESCA:1:S;
+21:MTRX:1:@LOC:M02,S70010::,FCS0105DR92SW25.PV.L:@FROM:1,F02,1:@TO;
+22:MTRX:1:@LOC:F06,S41001:6:@FROM:20,B06,1:20,B07,1:@TO:1,M06,1;
+23:MTRX:1:@LOC:B06,S10001::,2MKV30CP008.PV.ON:@FROM:@TO:1,F06,20;
+24:MTRX:1:@LOC:B07,S10001::,2MKV30CP009.PV.ON:@FROM:@TO:1,F06,20;
+25:MTRX:1:@LOC:M06,S70010::,FCS0105DR92SW26.PV.L:@FROM:1,F06,1:@TO;
+26:MTRX:1:@LOC:F02,S40001:5:@FROM:20,E02,1:20,E03,1:@TO:1,M02,1;
+27:MTRX:1:@LOC:B03,S10001::,2MKV30CP009.PV.ON:@FROM:@TO:1,E03,1;
+28:MTRX:1:@LOC:B02,S10001::,2MKV30CP008.PV.ON:@FROM:@TO:1,E02,1;
+29:MTRX:1:@LOC:E02,S42021:1:@FROM:1,B02,1:@TO:1,F02,20;
+30:MTRX:1:@LOC:E03,S42021:2:@FROM:1,B03,1:@TO:1,F02,20;
+31:MTRX:1:@LOC:M10,S70010::,FCS0105DR92SW27.PV.L:@FROM:1,H10,1:@TO;
+32:MTRX:1:@LOC:F10,S40001:7:@FROM:20,E10,1:20,E11,1:@TO:1,H10,20;
+33:MTRX:1:@LOC:E10,S42021:3:@FROM:1,B10,1:@TO:1,F10,20;
+34:MTRX:1:@LOC:E11,S42021:4:@FROM:1,B11,1:@TO:1,F10,20;
+35:MTRX:1:@LOC:B10,S10001::,2MKV30CP008.PV.ON:@FROM:@TO:1,E10,1;
+36:MTRX:1:@LOC:B11,S10001::,2MKV30CP009.PV.ON:@FROM:@TO:1,E11,1;
+37:MTRX:1:@LOC:B13,S10001::,2MKV30CP006A.PV.ON:@FROM:@TO:1,F13,20;
+38:MTRX:1:@LOC:B14,S10001::,2MKV30CP006B.PV.ON:@FROM:@TO:1,F13,20;
+39:MTRX:1:@LOC:F13,S40001:8:@FROM:20,B13,1:20,B14,1:@TO:1,H10,20;
+40:MTRX:1:@LOC:H10,S40001:9:@FROM:20,F10,1:20,F13,1:@TO:1,M10,1;
+41:CLT:HJ:1;
+42:CLT:HG:2;
+43:GMTR:$22:1,1,A;
+44:GMTR:$23:1,3,A;
+45:GMTR:$24:1,5,A,328,208,328,184;
+46:GMTR:$26:1,1,A;
+47:GMTR:$27:1,1,A;
+48:GMTR:$28:1,1,A;
+49:GMTR:$29:1,3,A;
+50:GMTR:$30:1,5,A,328,80,328,56;
+51:GMTR:$32:1,3,A;
+52:GMTR:$33:1,3,A;
+53:GMTR:$34:1,5,A,328,336,328,312;
+54:GMTR:$35:1,1,A;
+55:GMTR:$36:1,1,A;
+56:GMTR:$37:1,3,A;
+57:GMTR:$38:1,5,A,328,432,328,408;
+58:GMTR:$39:1,5,A,456,400,456,312;
+59:GMTR:$40:1,1,A;
+60:BKTX:731,13,987,33:顶轴油压力联锁自检条件5:16:Courier New:l,,,,43,42;
+61:BKTX:18,143,314,163:顶轴油泵出口母管压力低低:16:Courier New:l,,,,44,42;
+62:BKTX:731,141,987,161:顶轴油压力联锁自检条件6:16:Courier New:l,,,,43,42;
+63:BKTX:18,15,314,35:顶轴油泵出口母管压力低低:16:Courier New:l,,,,44,42;
+64:BKTX:731,269,987,289:顶轴油压力联锁自检条件7:16:Courier New:l,,,,43,42;
+65:BKTX:18,271,314,291:顶轴油泵出口母管压力低低:16:Courier New:l,,,,44,42;
+66:BKTX:18,367,314,387:顶轴油直流油泵出口压力正常:16:Courier New:l,,,,44,42;
+8:GBLK:440,136:S1;
+::FIBD
+:FCSF
+1:REV3K:1:1;
+36:BKRV:2;
+10:TPFX:1:;
+2:ETAG:1:FCS0105_92SFC1;
+3:EINS:1:_SFCSW;
+4:ETCM:1:顶轴油压力联锁自检;
+5:ETIM:1:2;
+6:ELIM:1:4;
+7:CHKN:1:5;
+11:MSBP:1:NO;
+12:SMMA:1:YES;
+13:PSST:1:TOP;
+14:LBNO:1:DIR;
+15:BCLR:1:R:R;
+16:QSPM:1:2;
+17:ISPM:1:2;
+18:QSAM:1:5;
+19:ISAM:1:5;
+20:RSPN:1:1;
+21:HLPM:1:0000;
+22:UPPG:1:;
+23:TRS!:1:YES;
+24:LBL4:1:RUN\,PAUSE\,STOP\,RUN2;
+25:SBEX:1:TIMESHARE;
+26:DBLA:1:NO;
+27:UPPL:1:;
+28:EALA:1:2;
+33:CCST:HISR;
+# ============== Plane 1 =================
+:SFC:1
+1:CMNT:1:MAIN;
+# -------------- Plane Data --------------
+2:SFCR:1:3:3:IST:0:1:初始化:SEBOL:;
+3:SFCR:2:3:4:TR:0:1::SEBOL;
+4:SFCR:3:7:4:INTR:0:0:STOP:2:AS:STOP;
+5:SFCR:4:3:5:ST:0:2:交流润A泵运行30S:SEBOL:;
+6:SFCR:5:3:6:TR:0:2::SEBOL;
+7:SFCR:6:3:7:ST:0:3::SEBOL:;
+8:SFCR:7:3:8:LINK24:0:0;
+9:SFCR:8:4:8:LINK37:0:0;
+10:SFCR:9:5:8:LINK37:0:0;
+11:SFCR:10:6:8:LINK32:0:0;
+12:SFCR:11:3:9:TR:0:3:压力OK:SEBOL;
+13:SFCR:12:6:9:TR:0:4:压力AL:SEBOL;
+14:SFCR:13:3:10:ST:0:4:交流顶轴A泵运5S:SEBOL:;
+15:SFCR:14:6:10:ST:0:5:取消自检 报警:SEBOL:;
+16:SFCR:15:3:11:TR:0:5::SEBOL;
+17:SFCR:16:3:12:ST:0:6::SEBOL:;
+18:SFCR:17:3:13:LINK24:0:0;
+19:SFCR:18:4:13:LINK37:0:0;
+20:SFCR:19:5:13:LINK37:0:0;
+21:SFCR:20:6:13:LINK32:0:0;
+22:SFCR:21:3:14:TR:0:6:压力OK:SEBOL;
+23:SFCR:22:6:14:TR:0:7:压力AL:SEBOL;
+24:SFCR:23:3:15:ST:0:7:MKV30AA131得电:SEBOL:;
+25:SFCR:24:6:15:ST:0:8:取消自检 报警:SEBOL:;
+26:SFCR:25:3:16:LINK36:0:0;
+27:SFCR:26:3:17:LINK24:0:0;
+28:SFCR:27:4:17:LINK37:0:0;
+29:SFCR:28:5:17:LINK37:0:0;
+30:SFCR:29:6:17:LINK32:0:0;
+31:SFCR:30:3:18:TR:0:8:压力OK:SEBOL;
+32:SFCR:31:6:18:TR:0:9:压力AL:SEBOL;
+33:SFCR:32:3:19:ST:0:9::SEBOL:;
+34:SFCR:33:6:19:ST:0:10:取消自检 报警:SEBOL:;
+35:SFCR:34:3:20:TR:0:10::SEBOL;
+36:SFCR:35:3:21:ST:0:11:启顶轴B泵延2s:SEBOL:;
+37:SFCR:36:3:22:TR:0:11::SEBOL;
+38:SFCR:37:3:23:ST:0:12:停顶轴A泵延2s:SEBOL:;
+39:SFCR:38:3:24:LINK24:0:0;
+40:SFCR:39:4:24:LINK37:0:0;
+41:SFCR:40:5:24:LINK37:0:0;
+42:SFCR:41:6:24:LINK32:0:0;
+43:SFCR:42:3:25:TR:0:12:压力OK:SEBOL;
+44:SFCR:43:6:25:TR:0:13:压力AL:SEBOL;
+45:SFCR:44:3:26:ST:0:13::SEBOL:;
+46:SFCR:45:6:26:ST:0:14:取消自检 报警:SEBOL:;
+47:SFCR:46:3:27:LINK24:0:0;
+48:SFCR:47:4:27:LINK37:0:0;
+49:SFCR:48:5:27:LINK37:0:0;
+50:SFCR:49:6:27:LINK32:0:0;
+51:SFCR:50:3:28:TR:0:14:压力OK:SEBOL;
+52:SFCR:51:6:28:TR:0:15:压力AL:SEBOL;
+53:SFCR:52:3:29:ST:0:15:AA132/133得电:SEBOL:;
+54:SFCR:53:6:29:ST:0:16:取消自检 报警:SEBOL:;
+55:SFCR:54:3:30:LINK24:0:0;
+56:SFCR:55:4:30:LINK37:0:0;
+57:SFCR:56:5:30:LINK37:0:0;
+58:SFCR:57:6:30:LINK32:0:0;
+59:SFCR:58:3:31:TR:0:16:压力Ok:SEBOL;
+60:SFCR:59:6:31:TR:0:17:压力AL:SEBOL;
+61:SFCR:60:3:32:ST:0:17::SEBOL:;
+62:SFCR:61:6:32:ST:0:18:取消自检 报警:SEBOL:;
+63:SFCR:62:3:33:TR:0:18::SEBOL;
+64:SFCR:63:3:34:ST:0:19:启直流顶轴泵延2S:SEBOL:;
+65:SFCR:64:3:35:TR:0:19::SEBOL;
+66:SFCR:65:3:36:ST:0:20:停顶轴B泵延2S:SEBOL:;
+67:SFCR:66:3:37:LINK24:0:0;
+68:SFCR:67:4:37:LINK37:0:0;
+69:SFCR:68:5:37:LINK37:0:0;
+70:SFCR:69:6:37:LINK32:0:0;
+71:SFCR:70:3:38:TR:0:20:压力OK:SEBOL;
+72:SFCR:71:6:38:TR:0:21:压力AL:SEBOL;
+73:SFCR:72:3:39:ST:0:21::SEBOL:;
+74:SFCR:73:6:39:ST:0:22:取消自检 报警:SEBOL:;
+75:SFCR:74:3:40:TR:0:22::SEBOL;
+76:SFCR:75:3:41:ST:0:23:停直流顶轴泵:SEBOL:;
+77:SFCR:76:3:42:TR:0:23::SEBOL;
+78:SFCR:77:3:43:ST:0:24::SEBOL:;
+79:SFCR:78:3:44:TR:0:24::SEBOL;
+80:SFCR:79:3:45:ST:0:25:停交流润滑A泵:SEBOL:;
+# SEBOL Statement ------------------------
+81:STST,1;
+********************************************************************************
+* 
+* <Include File>
+* 	
+#include <std.h>
+#include <smode.h>
+#include <sbsts.h>
+#include <salarm.h>
+
+***** < COLOR CODE > *****
+
+#define	BLACK		0
+#define	RED			1
+#define	GREEN		2
+#define	YELLOW		3
+#define	BLUE		4	
+#define	MAGENTA		5	
+#define	CYAN		6
+#define	WHITE		7
+#define	STELBLUE	8	
+
+* 
+* <Global Function Block>
+* 
+	global block SIO-22 AAP001 alias 2MKV21AP001	
+	global block SIO-22 AP001 alias 2MKV30AP001	
+	global block SIO-22 AP002 alias 2MKV30AP002	
+	global block SIO-22 AP003 alias 2MKV30AP003
+
+	global block SO-1 AA131 alias 2MKV30AA131
+	global block SO-1 AA132 alias 2MKV30AA132
+	global block SO-1 AA133 alias 2MKV30AA133
+
+
+	global block TM	TM1 alias FCS0105_92TM1
+	global block TM	TM2 alias FCS0105_92TM2
+	global block TM	TM3 alias FCS0105_92TM3
+	global block TM	TM4 alias FCS0105_92TM4
+	global block TM	TM5 alias FCS0105_92TM5
+	global block TM	TM6 alias FCS0105_92TM6
+	global block TM	TM7 alias FCS0105_92TM7
+	global block TM	TM8 alias FCS0105_92TM8
+	global block TM	TM9 alias FCS0105_92TM9
+	global block TM	TM10 alias FCS0105_92TM10
+
+	global block %SW	AAP001JC alias 2MKV21AP001SW13
+	global block %SW	AP001JC alias 2MKV30AP001SW13
+	global block %SW	AP002JC alias 2MKV30AP002SW13
+	global block %SW	AP003JC alias 2MKV30AP003SW13
+	global block %SW  AA131JC alias 2MKV30AA131SW13
+	global block %SW  AA132JC alias 2MKV30AA132SW13
+	global block %SW  AA133JC alias 2MKV30AA133SW13
+
+	global block %SW PT1 alias FCS0105DR92SW21
+	global block %SW PT2 alias FCS0105DR92SW22
+	global block %SW PT3 alias FCS0105DR92SW23
+	global block %SW PT4 alias FCS0105DR92SW24
+	global block %SW PT5 alias FCS0105DR92SW25
+	global block %SW PT6 alias FCS0105DR92SW26
+	global block %SW PT7 alias FCS0105DR92SW27
+
+	global block %AN AN1 alias FCS0105DR92AN1
+	global block %AN AN2 alias FCS0105DR92AN2
+	global block %AN AN3 alias FCS0105DR92AN3
+	global block %AN AN4 alias FCS0105DR92AN4
+	global block %AN AN5 alias FCS0105DR92AN5
+	global block %AN AN6 alias FCS0105DR92AN6
+	global block %AN AN7 alias FCS0105DR92AN7
+
+	global block _SFCSW SFC alias FCS0105_92SFC1
+	global block PBS5C PB alias 	FCS0105_92PB1
+
+
+
+82:STFN,1;
+83:STST,2;
+**启交流润滑A泵**同时判定泵运行状态**
+
+IF(AAP001JC.PV==0) THEN  	
+
+[ AAP001.MODE.CSV = "AUT",OPEN ]
+wait until ( AAP001.PV==2 )
+
+END IF
+
+
+**交流润滑油泵A运行30s**
+
+IF(AAP001JC.PV==0  AND AAP001.PV==2) THEN  	
+
+	[ TM1.OP = TMSTAT ]
+	wait until ( TM1.BSTS == "CTUP" )
+
+END IF
+84:STFN,2;
+85:STST,3;
+86:STFN,3;
+87:STST,4;
+**启交流顶轴A泵**同时判定泵运行状态**
+
+IF(AP001JC.PV==0) THEN  	
+
+[ AP001.MODE.CSV = "AUT",OPEN ]
+wait until ( AP001.PV==2 )
+
+END IF
+
+**交流顶轴泵A运行5s**
+
+IF(AP001JC.PV==0  AND AP001.PV==2) THEN  	
+
+	[ TM2.OP = TMSTAT ]
+	wait until ( TM2.BSTS == "CTUP" )
+
+END IF
+
+
+88:STFN,4;
+89:STST,5;
+AN1.PV = 1
+delay 2000
+SFC.BSTS = "STOP"
+90:STFN,5;
+91:STST,6;
+92:STFN,6;
+93:STST,7;
+
+**打开MKV30AA131**
+
+IF(AA131JC.PV==0) THEN
+AA131.MV = 2
+wait until ( AA131.MV == 2 )
+END IF
+
+delay 2000  !延时2s判断压力
+94:STFN,7;
+95:STST,8;
+AN2.PV = 1
+delay 2000
+SFC.BSTS = "STOP"
+96:STFN,8;
+97:STST,9;
+
+	[ TM3.OP = TMSTAT ]
+	wait until ( TM3.BSTS == "CTUP" )
+98:STFN,9;
+99:STST,10;
+AN3.PV = 1
+delay 2000
+SFC.BSTS = "STOP"
+100:STFN,10;
+101:STST,11;
+
+	[ TM3.OP = TMSTAT ]
+	wait until ( TM3.BSTS == "CTUP" )
+
+**联锁启交流顶轴B泵**同时判定泵运行状态**
+
+	wait until ( AP002.PV == 2 )
+
+IF(AA131JC.PV==0) THEN
+    AA131.MV = 0
+	wait until ( AA131.MV == 0 )
+END IF
+
+   	[ TM4.OP = TMSTAT ]
+	wait until ( TM4.BSTS == "CTUP" )
+
+
+102:STFN,11;
+103:STST,12;
+IF( AP001JC.PV == 0 ) THEN
+
+[ AP001.MODE.CSV = "AUT",CLOSE ]
+wait until ( AP001.PV ==0 )
+
+END IF
+
+IF (AP001JC.PV==0 AND AP001.PV==0) THEN
+
+   	[ TM5.OP = TMSTAT ]
+	wait until ( TM5.BSTS == "CTUP" )
+
+END IF
+104:STFN,12;
+105:STST,13;
+106:STFN,13;
+107:STST,14;
+AN4.PV = 1
+delay 2000
+SFC.BSTS = "STOP"
+108:STFN,14;
+109:STST,15;
+
+**打开MKV30AA132\MKV30AA133**
+
+IF(AA132JC.PV==0) THEN
+AA132.MV = 2
+END IF
+
+IF(AA133JC.PV==0) THEN
+AA133.MV = 2
+END IF
+
+wait until ( AA132.MV == 2 )
+wait until ( AA133.MV == 2 )
+
+delay 2000  !延时1s判断压力
+110:STFN,15;
+111:STST,16;
+AN5.PV = 1
+delay 2000
+SFC.BSTS = "STOP"
+112:STFN,16;
+113:STST,17;
+114:STFN,17;
+115:STST,18;
+AN6.PV = 1
+delay 2000
+SFC.BSTS = "STOP"
+116:STFN,18;
+117:STST,19;
+   	[ TM6.OP = TMSTAT ]
+	wait until ( TM6.BSTS == "CTUP" )
+
+**联锁启直流顶轴泵**同时判定泵运行状态**
+
+
+	wait until ( AP003.PV == 2 )
+
+IF(AA132JC.PV==0) THEN
+   AA132.MV = 0 
+END IF
+
+IF(AA133JC.PV==0) THEN
+   AA133.MV = 0 
+END IF
+
+	wait until ( AA132.MV == 0 ) 
+	wait until ( AA133.MV == 0 )
+
+	[ TM7.OP = TMSTAT ]
+	wait until ( TM7.BSTS == "CTUP" )
+
+
+
+
+
+
+
+
+118:STFN,19;
+119:STST,20;
+
+IF( AP002JC.PV == 0 ) THEN
+
+[ AP002.MODE.CSV = "AUT",CLOSE ]
+wait until ( AP002.PV ==0 )
+
+END IF
+
+IF (AP002JC.PV==0 AND AP002.PV==0) THEN
+
+   	[ TM8.OP = TMSTAT ]
+	wait until ( TM8.BSTS == "CTUP" )
+
+END IF
+120:STFN,20;
+121:STST,21;
+122:STFN,21;
+123:STST,22;
+AN7.PV = 1
+delay 2000
+SFC.BSTS = "STOP"
+124:STFN,22;
+125:STST,23;
+
+	[ TM9.OP = TMSTAT ]
+	wait until ( TM9.BSTS == "CTUP" )
+
+
+IF( AP003JC.PV == 0 ) THEN
+
+[ AP003.MODE.CSV = "AUT",CLOSE ]
+wait until ( AP003.PV ==0 )
+
+END IF
+
+IF (AP003JC.PV==0 AND AP003.PV==0) THEN
+
+   	[ TM10.OP = TMSTAT ]
+	wait until ( TM10.BSTS == "CTUP" )
+
+END IF
+
+
+126:STFN,23;
+127:STST,24;
+128:STFN,24;
+129:STST,25;
+
+IF(AAP001JC.PV==0) THEN  	
+
+[ AAP001.MODE.CSV = "AUT",CLOSE ]
+wait until ( AAP001.PV == 0 )
+
+END IF
+
+
+SFC.BSTS = "STOP"
+130:STFN,25;
+# Transision Statement -------------------
+131:TTST,1;
+132:TTFN,1;
+133:TTST,2;
+134:TTFN,2;
+135:TTST,3;
+PT1.PV==1
+136:TTFN,3;
+137:TTST,4;
+PT1.PV==0
+138:TTFN,4;
+139:TTST,5;
+140:TTFN,5;
+141:TTST,6;
+PT2.PV==1
+142:TTFN,6;
+143:TTST,7;
+PT2.PV==0
+144:TTFN,7;
+145:TTST,8;
+PT3.PV==1
+146:TTFN,8;
+147:TTST,9;
+PT3.PV==0
+148:TTFN,9;
+149:TTST,10;
+150:TTFN,10;
+151:TTST,11;
+152:TTFN,11;
+153:TTST,12;
+PT4.PV==1
+154:TTFN,12;
+155:TTST,13;
+PT4.PV==0
+156:TTFN,13;
+157:TTST,14;
+PT5.PV==1
+158:TTFN,14;
+159:TTST,15;
+PT5.PV==0
+160:TTFN,15;
+161:TTST,16;
+PT6.PV==1
+162:TTFN,16;
+163:TTST,17;
+PT6.PV==1
+164:TTFN,17;
+165:TTST,18;
+166:TTFN,18;
+167:TTST,19;
+168:TTFN,19;
+169:TTST,20;
+PT7.PV==1
+170:TTFN,20;
+171:TTST,21;
+PT7.PV==0
+172:TTFN,21;
+173:TTST,22;
+174:TTFN,22;
+175:TTST,23;
+176:TTFN,23;
+177:TTST,24;
+178:TTFN,24;
+::SFC:1
+# ============== Plane 2 =================
+:SFC:2
+# -------------- Plane Data --------------
+179:SFCR:1:2:3:IST:0:1:自检停止初始化:SEBOL:;
+# SEBOL Statement ------------------------
+180:STST,1;
+
+[ AP001.MODE.CSV = "AUT",CLOSE ]
+[ AP002.MODE.CSV = "AUT",CLOSE ]
+[ AP003.MODE.CSV = "AUT",CLOSE ]
+
+wait until (AP001.PV==0 AND AP002.PV==0 AND AP003.PV==0)
+
+[ AAP001.MODE.CSV = "AUT",CLOSE ]
+
+    AA131.MV = 0
+    AA132.MV = 0
+    AA133.MV = 0 
+
+	[ TM1.OP = TMSTOP ]
+	[ TM2.OP = TMSTOP ]
+	[ TM3.OP = TMSTOP ]
+	[ TM4.OP = TMSTOP ]
+	[ TM5.OP = TMSTOP ]
+	[ TM6.OP = TMSTOP ]
+	[ TM7.OP = TMSTOP ]
+	[ TM8.OP = TMSTOP ]
+	[ TM9.OP = TMSTOP ]
+	[ TM10.OP = TMSTOP ]
+
+	[ TM1.PV = 0 ]
+	[ TM2.PV = 0 ]
+	[ TM3.PV = 0 ]
+	[ TM4.PV = 0 ]
+	[ TM5.PV = 0 ]
+	[ TM6.PV = 0 ]
+	[ TM7.PV = 0 ]
+	[ TM8.PV = 0 ]
+	[ TM9.PV = 0 ]
+	[ TM10.PV = 0 ]
+
+PB.MV03=1
+
+**复位报警信息**
+delay 3000
+
+AN1.PV = 0
+AN2.PV = 0
+AN3.PV = 0
+AN4.PV = 0
+AN5.PV = 0
+AN6.PV = 0
+AN7.PV = 0
+
+
+181:STFN,1;
+::SFC:2
+34:CCFN:HISR;
+29:CCST:SDIT;
+@PRODUCTS,YOKOGAWA,CENTUM
+@ID,BKEEdtCtlDrw
+@SHEET,,System Definition
+@DATE,2020/01/01,13:18
+@No.,Data item,Comment,Display position,Y
+1,OMOD,OMOD,DEF,0
+2,CMOD,CMOD,DEF,0
+3,PREBSTS,PREBSTS,DEF,0
+4,AFLS,AFLS,DEF,0
+5,AF,AF,DEF,0
+6,AOFS,AOFS,DEF,0
+7,ERRC,ERRC,DEF,0
+8,ERRE,ERRE,DEF,0
+9,ERRL,ERRL,DEF,0
+10,ERRF,ERRF,DEF,0
+11,STEPNO,STEPNO,DEF,0
+12,IPHASE,IPHASE,DEF,0
+13,OPMK,OPMK,DEF,0
+14,SAID,SAID,DEF,0
+15,UAID,UAID,DEF,0
+16,SEMA,SEMA,DEF,0
+17,ERRS,ERRS,DEF,0
+18,ERRP,ERRP,DEF,0
+30:CCFN:SDIT;
+31:CCST:UDIT;
+@PRODUCTS,YOKOGAWA,CENTUM
+@ID,BKEEdtCtlDrw
+@SHEET,,User Definition
+@DATE,2020/01/01,13:18
+@No.,Data Item,Data Type,Array1,Array2,Comment,Engineering Unit Symbol,Lvl,Display Format,Entry Method,Display Position,Y,Check,Low Limit,High Limit,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+1,MASSAGE1,CHR16,0,0,,(None),4,16,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+2,MASSAGE2,CHR16,0,0,,(None),4,16,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+3,MASSAGE3,CHR16,0,0,,(None),4,16,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+4,MASSAGE4,CHR16,0,0,,(None),4,16,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+5,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+6,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+7,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+10,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+11,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+12,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+13,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+14,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+15,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+16,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+17,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+18,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+19,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+20,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+21,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+22,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+23,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+24,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+25,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+26,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+27,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+28,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+29,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+30,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+31,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+32,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+32:CCFN:UDIT;
+35:FALM:1:USER10;
+8:GBLK:348,264:S1::$9;
+9:GBCM:336,236:ETCM;
+::FCSF
+:FNRM
+1:REV3K:1:1;
+19:BKRV:2;
+2:ETAG:1:FCS0105_92TM1;
+3:EINS:1:TM;
+4:ETCM:1:;
+5:ETIM:1:2;
+6:ELIM:1:3;
+7:CHKN:1:6;
+9:ESCA:1:S;
+10:MSBP:1:NO;
+11:EALA:1:2;
+12:ILCN:1:YES;
+13:TKSW:1:SEC;
+14:PACT:1:NO;
+15:HLPM:1:0000;
+16:UPPG:1:;
+17:UPPL:1:;
+18:DBLA:1:NO;
+8:GBLK:584,140:S1;
+::FNRM
+:FNRM
+1:REV3K:1:1;
+19:BKRV:2;
+2:ETAG:1:FCS0105_92TM2;
+3:EINS:1:TM;
+4:ETCM:1:;
+5:ETIM:1:2;
+6:ELIM:1:3;
+7:CHKN:1:7;
+9:ESCA:1:S;
+10:MSBP:1:NO;
+11:EALA:1:2;
+12:ILCN:1:YES;
+13:TKSW:1:SEC;
+14:PACT:1:NO;
+15:HLPM:1:0000;
+16:UPPG:1:;
+17:UPPL:1:;
+18:DBLA:1:NO;
+8:GBLK:656,176:S1;
+::FNRM
+:FNRM
+1:REV3K:1:1;
+19:BKRV:2;
+2:ETAG:1:FCS0105_92TM3;
+3:EINS:1:TM;
+4:ETCM:1:;
+5:ETIM:1:2;
+6:ELIM:1:3;
+7:CHKN:1:8;
+9:ESCA:1:S;
+10:MSBP:1:NO;
+11:EALA:1:2;
+12:ILCN:1:YES;
+13:TKSW:1:SEC;
+14:PACT:1:NO;
+15:HLPM:1:0000;
+16:UPPG:1:;
+17:UPPL:1:;
+18:DBLA:1:NO;
+8:GBLK:728,212:S1;
+::FNRM
+:FNRM
+1:REV3K:1:1;
+19:BKRV:2;
+2:ETAG:1:FCS0105_92TM4;
+3:EINS:1:TM;
+4:ETCM:1:;
+5:ETIM:1:2;
+6:ELIM:1:3;
+7:CHKN:1:9;
+9:ESCA:1:S;
+10:MSBP:1:NO;
+11:EALA:1:2;
+12:ILCN:1:YES;
+13:TKSW:1:SEC;
+14:PACT:1:NO;
+15:HLPM:1:0000;
+16:UPPG:1:;
+17:UPPL:1:;
+18:DBLA:1:NO;
+8:GBLK:800,248:S1;
+::FNRM
+:FNRM
+1:REV3K:1:1;
+19:BKRV:2;
+2:ETAG:1:FCS0105_92TM5;
+3:EINS:1:TM;
+4:ETCM:1:;
+5:ETIM:1:2;
+6:ELIM:1:3;
+7:CHKN:1:10;
+9:ESCA:1:S;
+10:MSBP:1:NO;
+11:EALA:1:2;
+12:ILCN:1:YES;
+13:TKSW:1:SEC;
+14:PACT:1:NO;
+15:HLPM:1:0000;
+16:UPPG:1:;
+17:UPPL:1:;
+18:DBLA:1:NO;
+8:GBLK:872,284:S1;
+::FNRM
+:FNRM
+1:REV3K:1:1;
+19:BKRV:2;
+2:ETAG:1:FCS0105_92TM6;
+3:EINS:1:TM;
+4:ETCM:1:;
+5:ETIM:1:2;
+6:ELIM:1:3;
+7:CHKN:1:11;
+9:ESCA:1:S;
+10:MSBP:1:NO;
+11:EALA:1:2;
+12:ILCN:1:YES;
+13:TKSW:1:SEC;
+14:PACT:1:NO;
+15:HLPM:1:0000;
+16:UPPG:1:;
+17:UPPL:1:;
+18:DBLA:1:NO;
+8:GBLK:944,320:S1;
+::FNRM
+:FNRM
+1:REV3K:1:1;
+19:BKRV:2;
+2:ETAG:1:FCS0105_92TM7;
+3:EINS:1:TM;
+4:ETCM:1:;
+5:ETIM:1:2;
+6:ELIM:1:3;
+7:CHKN:1:12;
+9:ESCA:1:S;
+10:MSBP:1:NO;
+11:EALA:1:2;
+12:ILCN:1:YES;
+13:TKSW:1:SEC;
+14:PACT:1:NO;
+15:HLPM:1:0000;
+16:UPPG:1:;
+17:UPPL:1:;
+18:DBLA:1:NO;
+8:GBLK:1016,356:S1;
+::FNRM
+:FNRM
+1:REV3K:1:1;
+19:BKRV:2;
+2:ETAG:1:FCS0105_92TM8;
+3:EINS:1:TM;
+4:ETCM:1:;
+5:ETIM:1:2;
+6:ELIM:1:3;
+7:CHKN:1:13;
+9:ESCA:1:S;
+10:MSBP:1:NO;
+11:EALA:1:2;
+12:ILCN:1:YES;
+13:TKSW:1:SEC;
+14:PACT:1:NO;
+15:HLPM:1:0000;
+16:UPPG:1:;
+17:UPPL:1:;
+18:DBLA:1:NO;
+8:GBLK:1088,388:S1;
+::FNRM
+:FNRM
+1:REV3K:1:1;
+19:BKRV:2;
+2:ETAG:1:FCS0105_92TM9;
+3:EINS:1:TM;
+4:ETCM:1:;
+5:ETIM:1:2;
+6:ELIM:1:3;
+7:CHKN:1:14;
+9:ESCA:1:S;
+10:MSBP:1:NO;
+11:EALA:1:2;
+12:ILCN:1:YES;
+13:TKSW:1:SEC;
+14:PACT:1:NO;
+15:HLPM:1:0000;
+16:UPPG:1:;
+17:UPPL:1:;
+18:DBLA:1:NO;
+8:GBLK:1160,424:S1;
+::FNRM
+:FNRM
+1:REV3K:1:1;
+19:BKRV:2;
+2:ETAG:1:FCS0105_92TM10;
+3:EINS:1:TM;
+4:ETCM:1:;
+5:ETIM:1:2;
+6:ELIM:1:3;
+7:CHKN:1:15;
+9:ESCA:1:S;
+10:MSBP:1:NO;
+11:EALA:1:2;
+12:ILCN:1:YES;
+13:TKSW:1:SEC;
+14:PACT:1:NO;
+15:HLPM:1:0000;
+16:UPPG:1:;
+17:UPPL:1:;
+18:DBLA:1:NO;
+8:GBLK:1232,460:S1;
+::FNRM
+:FPRI
+1:BKTX:12,12,1588,36:FCS0105 | DR0092:10:System:l,,,,7,0,T;
+2:BKTX:12,1036,1588,1060: DRAWN BY\:Yokogawa:10:System:l,,,,7,0,T;
+3:BKTX:428,308,591,338:初始化不能置SFC为RUN:16:Courier New:c,,,,2,0,T;
+::FPRI
+::::SOURCE

@@ -11,9 +11,9 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 import os
-import time
 import YokoRead   #自定义模块
-import threading
+from time import sleep
+from YokoRead import time_Decorator,thread_Decorator
 
 class Windows_NODE(YokoRead._FILE_NODE_):
     def __init__(self, master):
@@ -68,7 +68,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.e = StringVar()
         ttk.Label(bot_frame, width=60, textvariable=self.e).pack(side=LEFT, fill=BOTH, expand=YES, pady=10)
         self.e.set('程序员美德：懒惰、不耐烦、傲慢')
-        ttk.Button(bot_frame, text='确定', command=lambda :self.thread_it(self.command)).pack(side=RIGHT)
+        ttk.Button(bot_frame, text='确定', command=self.command).pack(side=RIGHT)
 
     def open_dir(self):
         self.entry.delete(0,END)
@@ -77,6 +77,8 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         path1 = path0+'/'
         self.entry.insert('insert', path1)
 
+    @thread_Decorator
+    @time_Decorator
     def command(self):
         self.Text.insert(END, "==============转换开始============\n")
         self.Text.update()
@@ -97,6 +99,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             cv.imwrite(png_name, self.inver_bmp)
             self.text_update(png_name)
         self.text_update('0')
+        sleep(1)
 
     def text_update(self,show):
         if show == '0':

@@ -13,6 +13,7 @@ import PVI_ESCL  #量程修改工具
 import PVI_invter   #截图反色工具
 import Out_DrFile #DR文件自动导出
 import TagReplaceTool #快速替换工具
+import TaglistTool #Tag_list维护工具
 
 class myWindow():
     def __init__(self, root, myTitle, flag):
@@ -32,6 +33,9 @@ class myWindow():
             Out_DrFile.Windows_NODE(self.top)
         elif flag == 6:
             TagReplaceTool.Windows_NODE(self.top)
+        elif flag == 7:
+            self.top.geometry('640x600+100+200')
+            TaglistTool.Windows_NODE(self.top)
         pass
     pass
 
@@ -60,9 +64,12 @@ class Windows_NODE():
         title5 = 'DR文件自动导出工具'
         self.button5 = tkinter.Button(root, text= title5 , command=lambda :self.button_fun(title5,5))
         self.button5.place(x=30, y=280, height=40, width=160)
-        title6 = '快速替换工具'
+        title6 = 'Tag快速替换工具'
         self.button6 = tkinter.Button(root, text= title6 , command=lambda :self.button_fun(title6,6))
         self.button6.place(x=230, y=40, height=40, width=160)
+        title7 = 'TagList维护工具'
+        self.button6 = tkinter.Button(root, text=title7, command=lambda: self.button_fun(title7,7))
+        self.button6.place(x=230, y=100, height=40, width=160)
         title6 = '预留'
         self.button6 = tkinter.Button(root, text= title6 , command=lambda :self.button_fun(title6,6))
         self.button6.place(x=430, y=40, height=40, width=160)
