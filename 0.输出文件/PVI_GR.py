@@ -78,9 +78,23 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         # 创建底部
         bot_frame = LabelFrame(self.master)
         bot_frame.pack(fill=X,side=TOP,padx=15,pady=8)
-        self.e = StringVar()
-        ttk.Label(bot_frame,width = 60,textvariable = self.e).pack(side=LEFT, fill=BOTH, expand=YES,pady=10)
-        self.e.set('懒惰、不耐烦、傲慢')
+
+        self.e11 = StringVar()
+        ttk.Label(bot_frame,width = 6,textvariable = self.e11).pack(side=LEFT,padx=5,pady=5)
+        self.e11.set('间隔数:')
+        self.e12 = StringVar()
+        self.entry12= ttk.Entry(bot_frame,width=5,textvariable = self.e12)
+        self.entry12.pack(side=LEFT, pady=5)
+        self.e12.set('50')
+
+        self.e13 = StringVar()
+        ttk.Label(bot_frame,width = 6,textvariable = self.e13).pack(side=LEFT,padx=5,pady=5)
+        self.e13.set('行间距:')
+        self.e14 = StringVar()
+        self.entry14 = ttk.Entry(bot_frame, width=5, textvariable=self.e14)
+        self.entry14.pack(side=LEFT, pady=5)
+        self.e14.set('15')
+
         ttk.Button(bot_frame, text='开始', command=self.command).pack(side=RIGHT)
         pass
 
@@ -136,6 +150,8 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             OutFile.write(head)   #写入头部
             line = ""
             TAG = ""
+            gapNum = int(self.entry12.get())
+            outValueGap = int(self.entry14.get())
             for i in (self.get_data(modbusList,listSheet)):
                 for j in datalist_tag:
                     if j == datalist_tag[0]:
@@ -150,11 +166,13 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                         line = line.replace (inValue,outValue)
                 pass
                 #修改坐标===
+                x = int(LeftDataCount/gapNum)
+
                 inValue = LeftData[0]
-                outValue = 'Canvas.Left="'+ str(LeftDataCount*10+100) +'"'
+                outValue = 'Canvas.Left="'+ str(LeftDataCount*2+20) +'"'
                 line = line.replace (inValue,outValue)
                 inValue = TopData[0]
-                outValue = 'Canvas.Top="'+ str(LeftDataCount*15+100) +'"'
+                outValue = 'Canvas.Top="'+ str((LeftDataCount+x)*outValueGap+20) +'"'
                 line = line.replace (inValue,outValue)
                 LeftDataCount += 1
                 pass
@@ -173,7 +191,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         except UnicodeDecodeError as e:
             self.e.set(e)
         except  IndexError :
-            err = "错误提示：确认复制元素是否Group"
+            err = "\n错误提示：确认复制元素是否Group"
             self.Text.insert('insert', err)
         sleep(2)
 

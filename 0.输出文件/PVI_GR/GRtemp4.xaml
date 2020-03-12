@@ -5,8 +5,8 @@
     MaxWidth="10000"
     HorizontalAlignment="Center"
     VerticalAlignment="Center"
-    Width="746"
-    Height="431"
+    Width="1226"
+    Height="821"
     Background="#FFA9A9A9"
     Tag="MaxId=1"
     yiapcspvgbdc:ComponentProperties.Name="Canvas0"
@@ -17,7 +17,7 @@
     yiapcspvgbd:GridOptions.GridIsActive="True"
     yiapcspvgcp:GraphicFileProperties.RefreshRate="1"
     yiapcspvgcp:GraphicFileProperties.GraphicFileType="Graphic"
-    yiapcspvgcp:GraphicFileProperties.ScalingMode="FixedRatio" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:rcsr="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Common.BrushExtension;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Common.iPCSBrushExtension" xmlns:yiapcspvggn="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.GenericName;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.GenericName" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:yiapcspvgbdc="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer.Component;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer" xmlns:yiapcspvgdl="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.DataLink;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.DataLink" xmlns:yiapcspvgflc="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.FunctionLink.Control;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.FunctionLink.Control" xmlns:yiapcspvgbdc0="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer.Component;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer.Component" xmlns:yiapcspvgccdc="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Components.Controls.DomainControls;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Components.Controls.DomainControls" xmlns:s="clr-namespace:System;assembly=mscorlib,Version=4.0.0.0,Culture=neutral,PublicKeyToken=b77a5c561934e089" xmlns:yiapcspvggnc="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.GenericName.Common;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.GenericName" xmlns:yiapcspvgdldm="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.DataLink.DataModel;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.DataLink.DataModel" xmlns:yiapcspvgbd="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer" xmlns:yiapcspvgcp="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Common.Persistency;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Common.Persistency" xmlns:yiapcspvgbml="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Module.Layer;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Module.Core">
+    yiapcspvgcp:GraphicFileProperties.ScalingMode="FixedRatio" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:rcsr="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Common.BrushExtension;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Common.iPCSBrushExtension" xmlns:yiapcspvggn="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.GenericName;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.GenericName" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:yiapcspvgbdc="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer.Component;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer" xmlns:yiapcspvgdl="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.DataLink;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.DataLink" xmlns:yiapcspvgflc="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.FunctionLink.Control;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.FunctionLink.Control" xmlns:yiapcspvgbdc0="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer.Component;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer.Component" xmlns:yiapcspvgccbsc="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Components.Controls.BasicShapeControls;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Components.Controls.BasicShapeControls" xmlns:yiapcspvgdldm="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.DataLink.DataModel;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.DataLink.DataModel" xmlns:yiapcspvgbd="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer" xmlns:yiapcspvgcp="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Common.Persistency;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Common.Persistency" xmlns:yiapcspvgbml="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Module.Layer;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Module.Core">
     <yiapcspvgbml:CanvasLayerProperty.Layers>
         <yiapcspvgbml:CanvasLayers
             ActiveLayerID="Normal Drawing Layer 1">
@@ -64,92 +64,53 @@
     <yiapcspvgbdc0:GroupComponent
         Information="{x:Null}"
         Visibility="Visible"
-        Width="534.7265625"
-        Height="15.97"
-        Canvas.Left="40"
-        Canvas.Top="50"
-        Panel.ZIndex="109"
+        Width="70.4"
+        Height="15.86"
+        Canvas.Left="160"
+        Canvas.Top="90"
+        Panel.ZIndex="103"
         yiapcspvgbdc:ComponentProperties.Name="Group0"
         yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1">
-        <yiapcspvgccdc:ProcessDataCharacter
+        <yiapcspvgccbsc:Text
             FontSize="14"
             Visibility="Visible"
             Focusable="False"
-            FontFamily="新宋体"
-            Height="15.97"
-            Width="48.7265625"
-            Tag=""
-            ActualDisplayType="Numeric"
-            Alignment="Right"
-            DecimalPlaces="1"
-            DisplayType="Numeric"
-            EngineerUnitLength="5"
-            Foreground="#FFFF0000"
-            NumberOfDigit="5"
-            ShowEngineerUnit="Hidden"
-            IsSpecifiedAlignment="True"
-            Canvas.Left="333"
+            FontFamily="Courier New"
+            MinHeight="0"
+            MinWidth="0"
+            Padding="0,0,0,0"
+            Foreground="#FFFFFFFF"
+            Tag="Id=1"
+            ScaleX="1"
+            ScaleY="1"
+            Canvas.Left="20"
             Canvas.Top="0"
             Panel.ZIndex="101"
-            yiapcspvgbdc:ComponentProperties.Name="DataCharacter0"
+            yiapcspvgbdc:ComponentProperties.Name="Text0"
             yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1">
-            <yiapcspvgccdc:ProcessDataCharacter.Value>
-                <s:Double>NaN</s:Double>
-            </yiapcspvgccdc:ProcessDataCharacter.Value>
             <yiapcspvggn:GenericNameComponent.GenericName>
-                <yiapcspvggn:GenericName
-                    GenericNames="$Tag">
-                    <yiapcspvggn:GenericName.BindingSets>
-                        <yiapcspvggnc:BindingSetList
-                            Capacity="4">
-                            <yiapcspvggn:BindingSet
-                                SetNumber="1">
-                                <yiapcspvggn:BindingSet.Bindings>
-                                    <yiapcspvggnc:GNBindingList
-                                        Capacity="4">
-                                        <yiapcspvggn:GNBinding
-                                            GenericName="$TAG"
-                                            Value="AAABBBCCC" />
-                                    </yiapcspvggnc:GNBindingList>
-                                </yiapcspvggn:BindingSet.Bindings>
-                            </yiapcspvggn:BindingSet>
-                            <yiapcspvggn:BindingSet />
-                        </yiapcspvggnc:BindingSetList>
-                    </yiapcspvggn:GenericName.BindingSets>
-                </yiapcspvggn:GenericName>
+                <yiapcspvggn:GenericName />
             </yiapcspvggn:GenericNameComponent.GenericName>
             <yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
                 <yiapcspvgdldm:DataLinkModifiers
                     Capacity="4">
                     <yiapcspvgdldm:DataLinkModifier
                         Name="DataLink0">
-                        <yiapcspvgdldm:DataLinkModifier.DataLinks>
-                            <yiapcspvgdldm:DataLinkList
-                                Capacity="4">
-                                <yiapcspvgdldm:SimpleDataLink
-                                    PropertyName="Value"
-                                    Value="$TAG.HH" />
-                            </yiapcspvgdldm:DataLinkList>
-                        </yiapcspvgdldm:DataLinkModifier.DataLinks>
                         <yiapcspvgdldm:DataLinkModifier.Modifier>
                             <yiapcspvgdldm:Modifier>
                                 <yiapcspvgdldm:Modifier.Conditions>
                                     <yiapcspvgdldm:ConditionsList
                                         Capacity="4">
                                         <yiapcspvgdldm:Condition
-                                            Expression="$TAG.HH &gt; $TAG.SH OR $TAG.HH == $TAG.SH"
+                                            Expression="TESTST16.PV==&quot;AAABBBCCC&quot;"
                                             ID="1">
                                             <yiapcspvgdldm:Condition.ActionTypes>
                                                 <yiapcspvgdldm:ColorChange
                                                     ColorChangeType="NormalColorChange"
-                                                    Color="#00FFFFFF"
+                                                    Color="#FFFF0000"
                                                     PropertyName="Foreground" />
                                                 <yiapcspvgdldm:Blinking
                                                     PropertyName="Foreground" />
-                                                <yiapcspvgdldm:Set
-                                                    AttributeName="Visibility"
-                                                    AttributeType="System.Windows.Visibility, PresentationCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
-                                                    To="{x:Static Visibility.Hidden}" />
                                             </yiapcspvgdldm:Condition.ActionTypes>
                                         </yiapcspvgdldm:Condition>
                                     </yiapcspvgdldm:ConditionsList>
@@ -158,525 +119,26 @@
                         </yiapcspvgdldm:DataLinkModifier.Modifier>
                     </yiapcspvgdldm:DataLinkModifier>
                 </yiapcspvgdldm:DataLinkModifiers>
-            </yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
-        </yiapcspvgccdc:ProcessDataCharacter>
-        <yiapcspvgccdc:ProcessDataCharacter
+            </yiapcspvgdl:DataLinkComponent.DataLinkModifiers>DDDEEE</yiapcspvgccbsc:Text>
+        <yiapcspvgccbsc:Text
             FontSize="14"
             Visibility="Visible"
             Focusable="False"
-            FontFamily="新宋体"
-            Height="15.97"
-            Width="48.7265625"
+            FontFamily="Courier New"
+            MinHeight="0"
+            MinWidth="0"
+            Padding="0,0,0,0"
+            Foreground="#FFFFFFFF"
             Tag=""
-            ActualDisplayType="Numeric"
-            Alignment="Right"
-            DecimalPlaces="1"
-            DisplayType="Numeric"
-            EngineerUnitLength="5"
-            Foreground="#FFFFFF00"
-            NumberOfDigit="5"
-            ShowEngineerUnit="Hidden"
-            IsSpecifiedAlignment="True"
-            Canvas.Left="384"
-            Canvas.Top="0"
-            Panel.ZIndex="102"
-            yiapcspvgbdc:ComponentProperties.Name="DataCharacter0"
-            yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1">
-            <yiapcspvgccdc:ProcessDataCharacter.Value>
-                <s:Double>NaN</s:Double>
-            </yiapcspvgccdc:ProcessDataCharacter.Value>
-            <yiapcspvggn:GenericNameComponent.GenericName>
-                <yiapcspvggn:GenericName
-                    GenericNames="$Tag">
-                    <yiapcspvggn:GenericName.BindingSets>
-                        <yiapcspvggnc:BindingSetList
-                            Capacity="4">
-                            <yiapcspvggn:BindingSet
-                                SetNumber="1">
-                                <yiapcspvggn:BindingSet.Bindings>
-                                    <yiapcspvggnc:GNBindingList
-                                        Capacity="4">
-                                        <yiapcspvggn:GNBinding
-                                            GenericName="$TAG"
-                                            Value="AAABBBCCC" />
-                                    </yiapcspvggnc:GNBindingList>
-                                </yiapcspvggn:BindingSet.Bindings>
-                            </yiapcspvggn:BindingSet>
-                            <yiapcspvggn:BindingSet />
-                        </yiapcspvggnc:BindingSetList>
-                    </yiapcspvggn:GenericName.BindingSets>
-                </yiapcspvggn:GenericName>
-            </yiapcspvggn:GenericNameComponent.GenericName>
-            <yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
-                <yiapcspvgdldm:DataLinkModifiers
-                    Capacity="4">
-                    <yiapcspvgdldm:DataLinkModifier
-                        Name="DataLink0">
-                        <yiapcspvgdldm:DataLinkModifier.DataLinks>
-                            <yiapcspvgdldm:DataLinkList
-                                Capacity="4">
-                                <yiapcspvgdldm:SimpleDataLink
-                                    PropertyName="Value"
-                                    Value="$TAG.PH" />
-                            </yiapcspvgdldm:DataLinkList>
-                        </yiapcspvgdldm:DataLinkModifier.DataLinks>
-                        <yiapcspvgdldm:DataLinkModifier.Modifier>
-                            <yiapcspvgdldm:Modifier>
-                                <yiapcspvgdldm:Modifier.Conditions>
-                                    <yiapcspvgdldm:ConditionsList
-                                        Capacity="4">
-                                        <yiapcspvgdldm:Condition
-                                            Expression="$TAG.PH &gt; $TAG.SH OR $TAG.PH == $TAG.SH"
-                                            ID="1">
-                                            <yiapcspvgdldm:Condition.ActionTypes>
-                                                <yiapcspvgdldm:ColorChange
-                                                    ColorChangeType="NormalColorChange"
-                                                    Color="#00FFFFFF"
-                                                    PropertyName="Foreground" />
-                                                <yiapcspvgdldm:Blinking
-                                                    PropertyName="Foreground" />
-                                                <yiapcspvgdldm:Set
-                                                    AttributeName="Visibility"
-                                                    AttributeType="System.Windows.Visibility, PresentationCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
-                                                    To="{x:Static Visibility.Hidden}" />
-                                            </yiapcspvgdldm:Condition.ActionTypes>
-                                        </yiapcspvgdldm:Condition>
-                                    </yiapcspvgdldm:ConditionsList>
-                                </yiapcspvgdldm:Modifier.Conditions>
-                            </yiapcspvgdldm:Modifier>
-                        </yiapcspvgdldm:DataLinkModifier.Modifier>
-                    </yiapcspvgdldm:DataLinkModifier>
-                </yiapcspvgdldm:DataLinkModifiers>
-            </yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
-        </yiapcspvgccdc:ProcessDataCharacter>
-        <yiapcspvgccdc:ProcessDataCharacter
-            FontSize="14"
-            Visibility="Visible"
-            Focusable="False"
-            FontFamily="新宋体"
-            Height="15.97"
-            Width="48.7265625"
-            Tag=""
-            ActualDisplayType="Numeric"
-            Alignment="Right"
-            DecimalPlaces="1"
-            DisplayType="Numeric"
-            EngineerUnitLength="5"
-            Foreground="#FFFFFF00"
-            NumberOfDigit="5"
-            ShowEngineerUnit="Hidden"
-            IsSpecifiedAlignment="True"
-            Canvas.Left="435"
-            Canvas.Top="0"
-            Panel.ZIndex="103"
-            yiapcspvgbdc:ComponentProperties.Name="DataCharacter0"
-            yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1">
-            <yiapcspvgccdc:ProcessDataCharacter.Value>
-                <s:Double>NaN</s:Double>
-            </yiapcspvgccdc:ProcessDataCharacter.Value>
-            <yiapcspvggn:GenericNameComponent.GenericName>
-                <yiapcspvggn:GenericName
-                    GenericNames="$Tag">
-                    <yiapcspvggn:GenericName.BindingSets>
-                        <yiapcspvggnc:BindingSetList
-                            Capacity="4">
-                            <yiapcspvggn:BindingSet
-                                SetNumber="1">
-                                <yiapcspvggn:BindingSet.Bindings>
-                                    <yiapcspvggnc:GNBindingList
-                                        Capacity="4">
-                                        <yiapcspvggn:GNBinding
-                                            GenericName="$TAG"
-                                            Value="AAABBBCCC" />
-                                    </yiapcspvggnc:GNBindingList>
-                                </yiapcspvggn:BindingSet.Bindings>
-                            </yiapcspvggn:BindingSet>
-                            <yiapcspvggn:BindingSet />
-                        </yiapcspvggnc:BindingSetList>
-                    </yiapcspvggn:GenericName.BindingSets>
-                </yiapcspvggn:GenericName>
-            </yiapcspvggn:GenericNameComponent.GenericName>
-            <yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
-                <yiapcspvgdldm:DataLinkModifiers
-                    Capacity="4">
-                    <yiapcspvgdldm:DataLinkModifier
-                        Name="DataLink0">
-                        <yiapcspvgdldm:DataLinkModifier.DataLinks>
-                            <yiapcspvgdldm:DataLinkList
-                                Capacity="4">
-                                <yiapcspvgdldm:SimpleDataLink
-                                    PropertyName="Value"
-                                    Value="$TAG.PL" />
-                            </yiapcspvgdldm:DataLinkList>
-                        </yiapcspvgdldm:DataLinkModifier.DataLinks>
-                        <yiapcspvgdldm:DataLinkModifier.Modifier>
-                            <yiapcspvgdldm:Modifier>
-                                <yiapcspvgdldm:Modifier.Conditions>
-                                    <yiapcspvgdldm:ConditionsList
-                                        Capacity="4">
-                                        <yiapcspvgdldm:Condition
-                                            Expression="$TAG.PL &lt; $TAG.SL OR $TAG.PL == $TAG.SL"
-                                            ID="1">
-                                            <yiapcspvgdldm:Condition.ActionTypes>
-                                                <yiapcspvgdldm:ColorChange
-                                                    ColorChangeType="NormalColorChange"
-                                                    Color="#00FFFFFF"
-                                                    PropertyName="Foreground" />
-                                                <yiapcspvgdldm:Blinking
-                                                    PropertyName="Foreground" />
-                                                <yiapcspvgdldm:Set
-                                                    AttributeName="Visibility"
-                                                    AttributeType="System.Windows.Visibility, PresentationCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
-                                                    To="{x:Static Visibility.Hidden}" />
-                                            </yiapcspvgdldm:Condition.ActionTypes>
-                                        </yiapcspvgdldm:Condition>
-                                    </yiapcspvgdldm:ConditionsList>
-                                </yiapcspvgdldm:Modifier.Conditions>
-                            </yiapcspvgdldm:Modifier>
-                        </yiapcspvgdldm:DataLinkModifier.Modifier>
-                    </yiapcspvgdldm:DataLinkModifier>
-                </yiapcspvgdldm:DataLinkModifiers>
-            </yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
-        </yiapcspvgccdc:ProcessDataCharacter>
-        <yiapcspvgccdc:ProcessDataCharacter
-            FontSize="14"
-            Visibility="Visible"
-            Focusable="False"
-            FontFamily="新宋体"
-            Height="15.97"
-            Width="48.7265625"
-            Tag=""
-            ActualDisplayType="Numeric"
-            Alignment="Right"
-            Background="{x:Null}"
-            DecimalPlaces="1"
-            DisplayType="Numeric"
-            EngineerUnitLength="5"
-            Foreground="#FFFF0000"
-            NumberOfDigit="5"
-            ShowEngineerUnit="Hidden"
-            IsSpecifiedAlignment="True"
-            Canvas.Left="486"
-            Canvas.Top="0"
-            Panel.ZIndex="104"
-            yiapcspvgbdc:ComponentProperties.Name="DataCharacter0"
-            yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1">
-            <yiapcspvgccdc:ProcessDataCharacter.Value>
-                <s:Double>NaN</s:Double>
-            </yiapcspvgccdc:ProcessDataCharacter.Value>
-            <yiapcspvggn:GenericNameComponent.GenericName>
-                <yiapcspvggn:GenericName
-                    GenericNames="$Tag">
-                    <yiapcspvggn:GenericName.BindingSets>
-                        <yiapcspvggnc:BindingSetList
-                            Capacity="4">
-                            <yiapcspvggn:BindingSet
-                                SetNumber="1">
-                                <yiapcspvggn:BindingSet.Bindings>
-                                    <yiapcspvggnc:GNBindingList
-                                        Capacity="4">
-                                        <yiapcspvggn:GNBinding
-                                            GenericName="$TAG"
-                                            Value="AAABBBCCC" />
-                                    </yiapcspvggnc:GNBindingList>
-                                </yiapcspvggn:BindingSet.Bindings>
-                            </yiapcspvggn:BindingSet>
-                            <yiapcspvggn:BindingSet />
-                        </yiapcspvggnc:BindingSetList>
-                    </yiapcspvggn:GenericName.BindingSets>
-                </yiapcspvggn:GenericName>
-            </yiapcspvggn:GenericNameComponent.GenericName>
-            <yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
-                <yiapcspvgdldm:DataLinkModifiers
-                    Capacity="4">
-                    <yiapcspvgdldm:DataLinkModifier
-                        Name="DataLink0">
-                        <yiapcspvgdldm:DataLinkModifier.DataLinks>
-                            <yiapcspvgdldm:DataLinkList
-                                Capacity="4">
-                                <yiapcspvgdldm:SimpleDataLink
-                                    PropertyName="Value"
-                                    Value="$TAG.LL" />
-                            </yiapcspvgdldm:DataLinkList>
-                        </yiapcspvgdldm:DataLinkModifier.DataLinks>
-                        <yiapcspvgdldm:DataLinkModifier.Modifier>
-                            <yiapcspvgdldm:Modifier>
-                                <yiapcspvgdldm:Modifier.Conditions>
-                                    <yiapcspvgdldm:ConditionsList
-                                        Capacity="4">
-                                        <yiapcspvgdldm:Condition
-                                            Expression="$TAG.PL &lt; $TAG.SL OR $TAG.PL == $TAG.SL"
-                                            ID="1">
-                                            <yiapcspvgdldm:Condition.ActionTypes>
-                                                <yiapcspvgdldm:ColorChange
-                                                    ColorChangeType="NormalColorChange"
-                                                    Color="#00FFFFFF"
-                                                    PropertyName="Foreground" />
-                                                <yiapcspvgdldm:Blinking
-                                                    PropertyName="Foreground" />
-                                                <yiapcspvgdldm:Set
-                                                    AttributeName="Visibility"
-                                                    AttributeType="System.Windows.Visibility, PresentationCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
-                                                    To="{x:Static Visibility.Hidden}" />
-                                            </yiapcspvgdldm:Condition.ActionTypes>
-                                        </yiapcspvgdldm:Condition>
-                                    </yiapcspvgdldm:ConditionsList>
-                                </yiapcspvgdldm:Modifier.Conditions>
-                            </yiapcspvgdldm:Modifier>
-                        </yiapcspvgdldm:DataLinkModifier.Modifier>
-                    </yiapcspvgdldm:DataLinkModifier>
-                </yiapcspvgdldm:DataLinkModifiers>
-            </yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
-        </yiapcspvgccdc:ProcessDataCharacter>
-        <yiapcspvgccdc:ProcessDataCharacter
-            FontSize="14"
-            FontWeight="Bold"
-            Visibility="Visible"
-            Focusable="True"
-            FontFamily="新宋体"
-            Height="15.97"
-            Width="174.6040625"
-            Tag=""
-            ActualDisplayType="String"
-            Alignment="Left"
-            DisplayType="String"
-            Foreground="#FF696969"
-            NumberOfDigit="24"
-            ShowEngineerUnit="Hidden"
-            Value=""
-            IsSpecifiedAlignment="True"
+            ScaleX="1"
+            ScaleY="1"
             Canvas.Left="0"
             Canvas.Top="0"
-            Panel.ZIndex="105"
-            yiapcspvgbdc:ComponentProperties.Name="DataCharacter1"
+            Panel.ZIndex="102"
+            yiapcspvgbdc:ComponentProperties.Name="Text0"
             yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1">
             <yiapcspvggn:GenericNameComponent.GenericName>
-                <yiapcspvggn:GenericName
-                    GenericNames="$TAG">
-                    <yiapcspvggn:GenericName.BindingSets>
-                        <yiapcspvggnc:BindingSetList
-                            Capacity="4">
-                            <yiapcspvggn:BindingSet
-                                SetNumber="1">
-                                <yiapcspvggn:BindingSet.Bindings>
-                                    <yiapcspvggnc:GNBindingList
-                                        Capacity="4">
-                                        <yiapcspvggn:GNBinding
-                                            GenericName="$TAG"
-                                            Value="AAABBBCCC" />
-                                    </yiapcspvggnc:GNBindingList>
-                                </yiapcspvggn:BindingSet.Bindings>
-                            </yiapcspvggn:BindingSet>
-                            <yiapcspvggn:BindingSet />
-                        </yiapcspvggnc:BindingSetList>
-                    </yiapcspvggn:GenericName.BindingSets>
-                </yiapcspvggn:GenericName>
-            </yiapcspvggn:GenericNameComponent.GenericName>
-            <yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
-                <yiapcspvgdldm:DataLinkModifiers
-                    Capacity="4">
-                    <yiapcspvgdldm:DataLinkModifier
-                        Name="DataLink0">
-                        <yiapcspvgdldm:DataLinkModifier.DataLinks>
-                            <yiapcspvgdldm:DataLinkList
-                                Capacity="4">
-                                <yiapcspvgdldm:SimpleDataLink
-                                    PropertyName="Value"
-                                    Value="@Property($TAG,COMMENT) " />
-                            </yiapcspvgdldm:DataLinkList>
-                        </yiapcspvgdldm:DataLinkModifier.DataLinks>
-                    </yiapcspvgdldm:DataLinkModifier>
-                </yiapcspvgdldm:DataLinkModifiers>
-            </yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
-        </yiapcspvgccdc:ProcessDataCharacter>
-        <yiapcspvgccdc:ProcessDataCharacter
-            FontSize="14"
-            FontWeight="Bold"
-            Visibility="Visible"
-            Focusable="False"
-            FontFamily="新宋体"
-            Height="15.97"
-            Width="43.5640625"
-            Tag=""
-            ActualDisplayType="String"
-            Alignment="Left"
-            DisplayType="String"
-            Foreground="#FF696969"
-            NumberOfDigit="6"
-            ShowEngineerUnit="Hidden"
-            Value=""
-            IsSpecifiedAlignment="True"
-            Canvas.Left="182"
-            Canvas.Top="0"
-            Panel.ZIndex="106"
-            yiapcspvgbdc:ComponentProperties.Name="DataCharacter1"
-            yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1">
-            <yiapcspvggn:GenericNameComponent.GenericName>
-                <yiapcspvggn:GenericName
-                    GenericNames="$TAG">
-                    <yiapcspvggn:GenericName.BindingSets>
-                        <yiapcspvggnc:BindingSetList
-                            Capacity="4">
-                            <yiapcspvggn:BindingSet
-                                SetNumber="1">
-                                <yiapcspvggn:BindingSet.Bindings>
-                                    <yiapcspvggnc:GNBindingList
-                                        Capacity="4">
-                                        <yiapcspvggn:GNBinding
-                                            GenericName="$TAG"
-                                            Value="AAABBBCCC" />
-                                    </yiapcspvggnc:GNBindingList>
-                                </yiapcspvggn:BindingSet.Bindings>
-                            </yiapcspvggn:BindingSet>
-                            <yiapcspvggn:BindingSet />
-                        </yiapcspvggnc:BindingSetList>
-                    </yiapcspvggn:GenericName.BindingSets>
-                </yiapcspvggn:GenericName>
-            </yiapcspvggn:GenericNameComponent.GenericName>
-            <yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
-                <yiapcspvgdldm:DataLinkModifiers
-                    Capacity="4">
-                    <yiapcspvgdldm:DataLinkModifier
-                        Name="DataLink0">
-                        <yiapcspvgdldm:DataLinkModifier.DataLinks>
-                            <yiapcspvgdldm:DataLinkList
-                                Capacity="4">
-                                <yiapcspvgdldm:SimpleDataLink
-                                    PropertyName="Value"
-                                    Value="@Property($TAG.PV, UNIT) " />
-                            </yiapcspvgdldm:DataLinkList>
-                        </yiapcspvgdldm:DataLinkModifier.DataLinks>
-                    </yiapcspvgdldm:DataLinkModifier>
-                </yiapcspvgdldm:DataLinkModifiers>
-            </yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
-        </yiapcspvgccdc:ProcessDataCharacter>
-        <yiapcspvgccdc:ProcessDataCharacter
-            FontSize="14"
-            Visibility="Visible"
-            Focusable="False"
-            FontFamily="新宋体"
-            Height="15.97"
-            Width="48.7265625"
-            Tag=""
-            ActualDisplayType="Numeric"
-            Alignment="Right"
-            DecimalPlaces="1"
-            DisplayType="Numeric"
-            EngineerUnitLength="5"
-            Foreground="#FF000000"
-            NumberOfDigit="5"
-            ShowEngineerUnit="Hidden"
-            IsSpecifiedAlignment="True"
-            Canvas.Left="229"
-            Canvas.Top="0"
-            Panel.ZIndex="107"
-            yiapcspvgbdc:ComponentProperties.Name="DataCharacter0"
-            yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1">
-            <yiapcspvgccdc:ProcessDataCharacter.Value>
-                <s:Double>NaN</s:Double>
-            </yiapcspvgccdc:ProcessDataCharacter.Value>
-            <yiapcspvggn:GenericNameComponent.GenericName>
-                <yiapcspvggn:GenericName
-                    GenericNames="$Tag">
-                    <yiapcspvggn:GenericName.BindingSets>
-                        <yiapcspvggnc:BindingSetList
-                            Capacity="4">
-                            <yiapcspvggn:BindingSet
-                                SetNumber="1">
-                                <yiapcspvggn:BindingSet.Bindings>
-                                    <yiapcspvggnc:GNBindingList
-                                        Capacity="4">
-                                        <yiapcspvggn:GNBinding
-                                            GenericName="$TAG"
-                                            Value="AAABBBCCC" />
-                                    </yiapcspvggnc:GNBindingList>
-                                </yiapcspvggn:BindingSet.Bindings>
-                            </yiapcspvggn:BindingSet>
-                            <yiapcspvggn:BindingSet />
-                        </yiapcspvggnc:BindingSetList>
-                    </yiapcspvggn:GenericName.BindingSets>
-                </yiapcspvggn:GenericName>
-            </yiapcspvggn:GenericNameComponent.GenericName>
-            <yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
-                <yiapcspvgdldm:DataLinkModifiers
-                    Capacity="4">
-                    <yiapcspvgdldm:DataLinkModifier
-                        Name="DataLink0">
-                        <yiapcspvgdldm:DataLinkModifier.DataLinks>
-                            <yiapcspvgdldm:DataLinkList
-                                Capacity="4">
-                                <yiapcspvgdldm:SimpleDataLink
-                                    PropertyName="Value"
-                                    Value="$TAG.SH" />
-                            </yiapcspvgdldm:DataLinkList>
-                        </yiapcspvgdldm:DataLinkModifier.DataLinks>
-                    </yiapcspvgdldm:DataLinkModifier>
-                </yiapcspvgdldm:DataLinkModifiers>
-            </yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
-        </yiapcspvgccdc:ProcessDataCharacter>
-        <yiapcspvgccdc:ProcessDataCharacter
-            FontSize="14"
-            Visibility="Visible"
-            Focusable="False"
-            FontFamily="新宋体"
-            Height="15.97"
-            Width="48.7265625"
-            Tag=""
-            ActualDisplayType="Numeric"
-            Alignment="Right"
-            DecimalPlaces="1"
-            DisplayType="Numeric"
-            EngineerUnitLength="5"
-            Foreground="#FF000000"
-            NumberOfDigit="5"
-            ShowEngineerUnit="Hidden"
-            IsSpecifiedAlignment="True"
-            Canvas.Left="281"
-            Canvas.Top="0"
-            Panel.ZIndex="108"
-            yiapcspvgbdc:ComponentProperties.Name="DataCharacter0"
-            yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1">
-            <yiapcspvgccdc:ProcessDataCharacter.Value>
-                <s:Double>NaN</s:Double>
-            </yiapcspvgccdc:ProcessDataCharacter.Value>
-            <yiapcspvggn:GenericNameComponent.GenericName>
-                <yiapcspvggn:GenericName
-                    GenericNames="$Tag">
-                    <yiapcspvggn:GenericName.BindingSets>
-                        <yiapcspvggnc:BindingSetList
-                            Capacity="4">
-                            <yiapcspvggn:BindingSet
-                                SetNumber="1">
-                                <yiapcspvggn:BindingSet.Bindings>
-                                    <yiapcspvggnc:GNBindingList
-                                        Capacity="4">
-                                        <yiapcspvggn:GNBinding
-                                            GenericName="$TAG"
-                                            Value="AAABBBCCC" />
-                                    </yiapcspvggnc:GNBindingList>
-                                </yiapcspvggn:BindingSet.Bindings>
-                            </yiapcspvggn:BindingSet>
-                            <yiapcspvggn:BindingSet />
-                        </yiapcspvggnc:BindingSetList>
-                    </yiapcspvggn:GenericName.BindingSets>
-                </yiapcspvggn:GenericName>
-            </yiapcspvggn:GenericNameComponent.GenericName>
-            <yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
-                <yiapcspvgdldm:DataLinkModifiers
-                    Capacity="4">
-                    <yiapcspvgdldm:DataLinkModifier
-                        Name="DataLink0">
-                        <yiapcspvgdldm:DataLinkModifier.DataLinks>
-                            <yiapcspvgdldm:DataLinkList
-                                Capacity="4">
-                                <yiapcspvgdldm:SimpleDataLink
-                                    PropertyName="Value"
-                                    Value="$TAG.SL" />
-                            </yiapcspvgdldm:DataLinkList>
-                        </yiapcspvgdldm:DataLinkModifier.DataLinks>
-                    </yiapcspvgdldm:DataLinkModifier>
-                </yiapcspvgdldm:DataLinkModifiers>
-            </yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
-        </yiapcspvgccdc:ProcessDataCharacter>
+                <yiapcspvggn:GenericName />
+            </yiapcspvggn:GenericNameComponent.GenericName>1</yiapcspvgccbsc:Text>
     </yiapcspvgbdc0:GroupComponent>
 </Canvas>
