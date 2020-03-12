@@ -92,8 +92,7 @@ class App:
         ## 同文件选择框
         self.intVar = BooleanVar()
         #should_auto = BooleanVar()
-
-        self.check1 = ttk.Checkbutton(top_frame,text = "同文件",variable = self.intVar,command = self.change).pack(side=LEFT)
+        self.check1 = Checkbutton(top_frame,text = "同文件",variable = self.intVar,command = self.change).pack(side=LEFT)
         #self.check1.select()
         self.ckeckchange = 0
         ## 目标文件选择按钮
@@ -156,7 +155,7 @@ class App:
             self.entry.delete(0, END)
             self.entry.insert('insert', file_text)
 
-        except xlrd.biffh.XLRDError :
+        except xlrd.biffh.XLRDError as e:
             self.Text.insert('insert', '错误提示：文件格式错误，现在就只能处理Excel文档')
 
     def open_combox(self,*args):
@@ -180,7 +179,7 @@ class App:
             self.sheetNameR = tuple(sheetName)
             self.comboxlist2["values"] = self.sheetNameR
             self.comboxlist2.current(0)
-        except xlrd.biffh.XLRDError :
+        except xlrd.biffh.XLRDError as e:
             self.Text.insert('insert', '错误提示：文件格式错误，现在就只能处理Excel文档')
 
     def open_combox2(self,event):
@@ -371,7 +370,7 @@ class App:
 
     def OpenExcel(self):
         try:
-            os.startfile(self.entry.get()) #仅支持win32
+            os.startfile(self.entry.get())
         except FileNotFoundError :
             self.Text.insert('insert', '错误提示：文件不存在')
             pass

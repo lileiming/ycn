@@ -22,8 +22,9 @@ from tkinter import ttk
 from tkinter import filedialog
 import os
 import re
-import time
+from time import sleep
 import YokoRead   #自定义模块
+from YokoRead import time_Decorator,thread_Decorator
 
 
 class Windows_NODE(YokoRead._FILE_NODE_):
@@ -32,8 +33,11 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         #self.here = os.path.abspath(os.path.dirname(__file__))
         self.here = os.getcwd()
         self.initWidgets()
-        help_doc = '本程序为流程图数据块快速复制组态工具。 \n 使用方法：\n1.通过参考文档按钮选择需要复制的流程图样本，默认为GRtemp.xaml。\n2.通过按钮选择数据列表文件，使用下拉菜单选择相对应的表格（sheet）.\n\
-3.点击开始按钮执行程序复制'
+        help_doc = '本程序为流程图数据块快速复制组态工具。 \n' \
+                   ' 使用方法：\n' \
+                   '1.通过参考文档按钮选择需要复制的流程图样本，默认为GRtemp.xaml。\n' \
+                   '2.通过按钮选择数据列表文件，使用下拉菜单选择相对应的表格（sheet）.\n' \
+                   '3.点击开始按钮执行程序复制'
         self.Text.insert('insert', help_doc)
         pass
 
@@ -74,73 +78,80 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         # 创建底部
         bot_frame = LabelFrame(self.master)
         bot_frame.pack(fill=X,side=TOP,padx=15,pady=8)
-        self.e = StringVar()
-        #self.lable(bot_frame,text = '欢迎使用',width = 60,height = 20).pack(side=LEFT)
-        ttk.Label(bot_frame,width = 60,textvariable = self.e).pack(side=LEFT, fill=BOTH, expand=YES,pady=10)
-        self.e.set('懒惰、不耐烦、傲慢')
-        ttk.Button(bot_frame, text='开始', command=lambda: self.thread_it(self.get_entry)).pack(side=RIGHT)
+
+        self.e11 = StringVar()
+        ttk.Label(bot_frame,width = 6,textvariable = self.e11).pack(side=LEFT,padx=5,pady=5)
+        self.e11.set('间隔数:')
+        self.e12 = StringVar()
+        self.entry12= ttk.Entry(bot_frame,width=5,textvariable = self.e12)
+        self.entry12.pack(side=LEFT, pady=5)
+        self.e12.set('50')
+
+        self.e13 = StringVar()
+        ttk.Label(bot_frame,width = 6,textvariable = self.e13).pack(side=LEFT,padx=5,pady=5)
+        self.e13.set('行间距:')
+        self.e14 = StringVar()
+        self.entry14 = ttk.Entry(bot_frame, width=5, textvariable=self.e14)
+        self.entry14.pack(side=LEFT, pady=5)
+        self.e14.set('15')
+
+        ttk.Button(bot_frame, text='开始', command=self.command).pack(side=RIGHT)
         pass
 
     def open_file(self):
-        self.entry.delete(0,END)
         file_path = filedialog.askopenfilename(title=u'选择参考文档', initialdir=self.here)
         file_text = file_path
+        self.entry.delete(0, END)
         self.entry.insert('insert', file_text)
         pass
 
     def open_file2(self):
-        self.entry2.delete(0,END)
         file_path = filedialog.askopenfilename(title=u'选择数据列表', initialdir=self.here)
         file_text = file_path
+        self.entry2.delete(0, END)
         self.entry2.insert('insert', file_text)
         sheetName = self.get_sheet(file_text)
         sheetNameT = tuple(sheetName)
         self.comboxlist["values"] = sheetNameT
         self.comboxlist.current(0)
         pass
-        
-    def get_entry(self):
+
+    @thread_Decorator
+    @time_Decorator
+    def command(self):
         try:
             samplePVI = self.entry.get()
-            resultDR = 'GR_output.xaml'
+            resultDR = 'PVI_GR/GR_output.xaml'
             modbusList = self.entry2.get()
-            #listSheet = "DATE"
             listSheet = self.comboxlist.get()
-            #print (listSheet)
             Maintxt = open(samplePVI,'r',encoding='utf-8')
             OutFile = open(resultDR,'w+',encoding='utf-8')
-            
             # 读取所有样本流程图
             alls = Maintxt.read()
             # 读取所有样本流程图=====头部
             head1 = (re.findall(r'<!--P([\w\W]*?)<yiapcspvgbdc0',alls))
             #正则表达式 两字符串之间的内容。
-            #head = ('<!--P' + str(head1[0]) +'Visual Layer" />')
-            head = ('<!--P' + str(head1[0]))
-            #print(head)
-            ##print(head1)
+            head = ('<!--P' + str(head1[0]) + '\n')
             # 读取所有样本流程图=====内容
             s1 = (re.findall(r'Function Link Component0" />([\w\W]*)</yiapcspvgbdc0:GroupComponent>',alls))
             s = (str(s1[0]) + r'</yiapcspvgbdc0:GroupComponent>')
-            #print(s)
             # 读取所有样本流程图=====底部
             foot = '</Canvas>'
             # 读取所有样本流程图=====位置信息
-            #Canvas.Left="60"
             LeftData = (re.findall(r'Canvas.Left="\w+"',alls))
-            #print(LeftData[0])
             TopData = (re.findall(r'Canvas.Top="\w+"',alls))
             LeftDataCount = 0
             self.Text.delete(0.0, END)
             self.Text.insert('insert', "=============转换开始===============\n")
-            OutFile.seek(0,0)
+            self.Text.update()
             datalist = list(self.get_data_Tag(modbusList,listSheet))
             datalist_tag = tuple(datalist[0].values())
-            #print(datalist_tag[0])
 
             OutFile.write(head)   #写入头部
-            OutFile.write("\n")
-            
+            line = ""
+            TAG = ""
+            gapNum = int(self.entry12.get())
+            outValueGap = int(self.entry14.get())
             for i in (self.get_data(modbusList,listSheet)):
                 for j in datalist_tag:
                     if j == datalist_tag[0]:
@@ -155,15 +166,20 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                         line = line.replace (inValue,outValue)
                 pass
                 #修改坐标===
+                x = int(LeftDataCount/gapNum)
+
                 inValue = LeftData[0]
-                outValue = 'Canvas.Left="'+ str(LeftDataCount*10+100) +'"'
+                outValue = 'Canvas.Left="'+ str(LeftDataCount*2+20) +'"'
                 line = line.replace (inValue,outValue)
                 inValue = TopData[0]
-                outValue = 'Canvas.Top="'+ str(LeftDataCount*15+100) +'"'
+                outValue = 'Canvas.Top="'+ str((LeftDataCount+x)*outValueGap+20) +'"'
                 line = line.replace (inValue,outValue)
                 LeftDataCount += 1
                 pass
                 self.Text.insert('insert','INFO: '+ TAG + " 转换结束\n")
+                self.Text.update()
+                self.Text.see(END)
+
                 OutFile.write(line) #写入内容
                 OutFile.write("\n")
             OutFile.write(foot)#写入底部
@@ -175,9 +191,9 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         except UnicodeDecodeError as e:
             self.e.set(e)
         except  IndexError :
-            err = "错误提示：确认复制元素是否Group"
+            err = "\n错误提示：确认复制元素是否Group"
             self.Text.insert('insert', err)
-        time.sleep(2)
+        sleep(2)
 
 if __name__ == "__main__":
     root = Tk()

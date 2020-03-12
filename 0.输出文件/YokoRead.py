@@ -8,6 +8,8 @@ import xlrd
 import time
 import tkinter.messagebox
 import threading
+from time import sleep,time,strftime,localtime
+
 
 class _FILE_NODE_:
     # 读取模块
@@ -111,24 +113,40 @@ class _FILE_NODE_:
                         dict[(TAG_Str, condition_Str)] = dict_Str
         return dict
 
-    def thread_it(self,func,*args):
-        # 创建
-        t = threading.Thread(target=func, args=args)
-        # 守护 !!!
+    # def thread_it(self,func,*args):
+    #     # 创建
+    #     t = threading.Thread(target=func, args=args)
+    #     # 守护 !!!
+    #     t.setDaemon(True)
+    #     # 启动
+    #     t.start()
+    #     # 阻塞--卡死界面！
+
+def time_Decorator(func):
+    def wrapper(self,*args):
+        startTime = time()
+        func(self, *args)
+        endTime = time()
+        msecs = (endTime - startTime)*1000
+        print("time is %d ms" %msecs)
+    return wrapper
+
+def thread_Decorator(func):
+    def wrapper(self, *args):
+        t = threading.Thread(target=func, args=(self, *args))
         t.setDaemon(True)
-        # 启动
         t.start()
-        # 阻塞--卡死界面！
+    return wrapper
 
 class _ALRM_NODE_:
     #报警模块
     def limited_time(self):
-        ticks = time.time()
+        ticks = time()
         print(ticks)
         limitTime = 1582780703+2592000
-        localtime = time.strftime("%Y/%m/%d", time.localtime(limitTime))
+        localtime_var = strftime("%Y/%m/%d", localtime(limitTime))
         #print(localtime)
         if (ticks > limitTime):
-            tkinter.messagebox.showinfo('提示', '软件过期需要重新编译'+localtime)
+            tkinter.messagebox.showinfo('提示', '软件过期需要重新编译'+localtime_var)
             exit()
-        return localtime
+        return localtime_var

@@ -25,7 +25,6 @@ import tkinter.messagebox
 class App():
     def __init__(self):
         self.Excelfile = 'Sample.xlsx'                                          #定义文件名
-        #/Users/lileiming/Documents/GitHub/ycn/6.Autoslot/Sample.xlsx
         self.data = pd.read_excel(self.Excelfile,'Sheet0')                      #读取样本数据
         self.MaxIndex = len(self.data.index)                                    #数据索引最大值 14
         self.NodeSlotList = [[] for col in range(80)]                           #所有样本数据存取 2纬 List
@@ -161,20 +160,19 @@ class App():
         self.SheetnameDict = pd.read_excel(self.Excelfile,None)
         return list(self.SheetnameDict.keys())
 
-    def foo(self):
-        #print(self.data.Nodeslot.unique())
+    def test(self):
+        print(self.data.Nodeslot.unique())
         #print(self.data.iloc[13, 80])
         #print(self.NodeSlotCal[79][11])
         #self.data = self.data.sort_values(by='N1S1',ascending=False)
         #print(self.data)
         #self.data.iloc[12,1] = self.data.iloc[0,0]
         #print(self.data.iloc[12,1])
-        pass
 
 def limited_time():
     ticks = time.time()
     #print(ticks)
-    limitTime = 1575129094+2592000
+    limitTime = 1572414548+2592000
     #print(limitTime)
     localtime = time.strftime("%Y/%m/%d", time.localtime(limitTime))
     if (ticks > limitTime):
@@ -182,10 +180,10 @@ def limited_time():
         exit()
 
 if __name__ == '__main__':
-    limited_time()
+    #limited_time()
     app = App()
     app.my_card_num()
-    #app.foo()
+    #app.test()
     app.read_all_data()
     app.pro_calcu()
     app.card()

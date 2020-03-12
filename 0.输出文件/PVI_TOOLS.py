@@ -13,6 +13,7 @@ import PVI_ESCL  #量程修改工具
 import PVI_invter   #截图反色工具
 import Out_DrFile #DR文件自动导出
 import TagReplaceTool #快速替换工具
+import TaglistTool #Tag_list维护工具
 
 class myWindow():
     def __init__(self, root, myTitle, flag):
@@ -32,6 +33,9 @@ class myWindow():
             Out_DrFile.Windows_NODE(self.top)
         elif flag == 6:
             TagReplaceTool.Windows_NODE(self.top)
+        elif flag == 7:
+            self.top.geometry('640x600+100+200')
+            TaglistTool.Windows_NODE(self.top)
         pass
     pass
 
@@ -45,27 +49,25 @@ class Windows_NODE():
         # 创建顶部
         self.window1 = tkinter.IntVar(root, value=0) #只允许弹出一个窗体
         #self.window2 = tkinter.IntVar(root, value=0)  #允许同时弹出2个窗体
-        title1 = '流程图复制工具'
-        self.button1 = tkinter.Button(root,text= title1 , command=lambda :self.button_fun(title1,1))
-        self.button1.place(x=30, y=40, height=40, width=160)
-        title2 = '功能块复制工具'
-        self.button2 = tkinter.Button(root,text= title2 , command=lambda :self.button_fun(title2,2))
-        self.button2.place(x=30, y=100, height=40, width=160)
-        title3 = '量程修改工具'
-        self.button3 = tkinter.Button(root,text= title3 , command=lambda :self.button_fun(title3,3))
-        self.button3.place(x=30, y=160, height=40, width=160)
-        title4 = '截图反色工具'
-        self.button4 = tkinter.Button(root,text= title4 , command=lambda :self.button_fun(title4,4))
-        self.button4.place(x=30, y=220, height=40, width=160)
-        title5 = 'DR文件自动导出工具'
-        self.button5 = tkinter.Button(root, text= title5 , command=lambda :self.button_fun(title5,5))
-        self.button5.place(x=30, y=280, height=40, width=160)
-        title6 = '快速替换工具'
-        self.button6 = tkinter.Button(root, text= title6 , command=lambda :self.button_fun(title6,6))
-        self.button6.place(x=230, y=40, height=40, width=160)
-        title6 = '预留'
-        self.button6 = tkinter.Button(root, text= title6 , command=lambda :self.button_fun(title6,6))
-        self.button6.place(x=430, y=40, height=40, width=160)
+        title =['流程图复制工具',
+                '功能块复制工具',
+                '量程修改工具',
+                '截图反色工具',
+                'DR文件自动导出工具',
+                'Tag快速替换工具',
+                'TagList维护工具',
+                '预留']
+        for i in range(len(title)):
+            self.button_app(title[i], i+1)
+            pass
+        pass
+
+    def button_app(self,title,window_num):
+        xindex = int((window_num-1)/5)
+        yindex = (window_num-1) % 5
+        self.button1 = tkinter.Button(root, text=title, command=lambda: self.button_fun(title, window_num))
+        self.button1.place(x=30+xindex*200, y=40+yindex*60, height=40, width=160)
+        print(30+xindex*200, 40+yindex*60)
         pass
 
     def button_fun(self,title,window_num):

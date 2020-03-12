@@ -16,7 +16,9 @@ from tkinter import filedialog
 import os
 import re
 import YokoRead   #自定义模块
-import time
+from time import sleep
+from YokoRead import time_Decorator,thread_Decorator
+
 
 class PROCESS_NODE(YokoRead._FILE_NODE_):
     # 处理模块
@@ -37,20 +39,13 @@ class PROCESS_NODE(YokoRead._FILE_NODE_):
         #处理关键字
         file_name = self.excel_file_name
         sheet_name = self.sheet_name
-        #datalist = list(self.get_data_Tag(file_name, sheet_name))
-        #datalist_tag = tuple(datalist[0].values())
+
         for i in self.get_data(file_name, sheet_name):
-            #print(i)
             self.tag_key = i['TAG']
             lower = i['LOWER']
             upper = i['UPPER']
             unit  = i['UNIT']
-
-            #alarm_level = i['EALA'] #28: EALA:1: 5; 功能块报警等级
-
-            #print(self.tag_key,lower,upper,unit )
             valid4= self.valid_node(lower,upper)
-            #print(valid4[0],valid4[1])
             self.range_rep(valid4[1],valid4[0],unit)
 
     def valid_node(self,lower_input, upper_input):
@@ -114,8 +109,11 @@ class Windows_NODE(PROCESS_NODE):
         self.master = master
         self.here = os.getcwd()
         self.initWidgets()
-        help_doc = '本程序为量程替换工具 \n 使用方法：\n1.通过按钮选择需要替换的DR文件目录，默认为IN目录。\n2.通过按钮选择数据列表文件，使用下拉菜单选择相对应的表格（sheet）.\n\
-3.点击按钮开始执行量程替换\n\n'
+        help_doc = '本程序为量程替换工具 \n' \
+                   ' 使用方法：\n' \
+                   '1.通过按钮选择需要替换的DR文件目录，默认为IN目录。\n' \
+                   '2.通过按钮选择数据列表文件，使用下拉菜单选择相对应的表格（sheet）.\n' \
+                   '3.点击按钮开始执行量程替换\n\n'
         self.Text.insert('insert',help_doc)
 
     def initWidgets(self):
@@ -124,7 +122,7 @@ class Windows_NODE(PROCESS_NODE):
         top_frame.pack(fill=X, padx=15, pady=0)
         self.e1 = StringVar()
         self.entry = ttk.Entry(top_frame, width=65, textvariable=self.e1)
-        self.e1.set('IN')
+        self.e1.set('PVI_ESCL')
         self.entry.pack(fill=X, expand=YES, side=LEFT, pady=10)
         ttk.Button(top_frame, text='DR文件目录', command=self.open_dir).pack(side=LEFT)
 
@@ -157,19 +155,19 @@ class Windows_NODE(PROCESS_NODE):
         self.e = StringVar()
         ttk.Label(bot_frame, width=60, textvariable=self.e).pack(side=LEFT, fill=BOTH, expand=YES, pady=10)
         self.e.set('懒惰、不耐烦、傲慢')
-        ttk.Button(bot_frame, text='量程替换', command=lambda: self.thread_it(self.command)).pack(side=RIGHT, padx=10)
+        ttk.Button(bot_frame, text='量程替换', command=self.command).pack(side=RIGHT, padx=10)
 
     def open_dir(self):
-        self.entry.delete(0,END)
         dir_path = filedialog.askdirectory(title=u'选择DR文件夹',initialdir=self.here)
         path0 = dir_path
         path1 = path0+'/'
+        self.entry.delete(0, END)
         self.entry.insert('insert', path1)
 
     def open_file2(self):
-        self.entry2.delete(0,END)
         file_path = filedialog.askopenfilename(title=u'选择数据列表', initialdir=self.here)
         file_text = file_path
+        self.entry2.delete(0, END)
         self.entry2.insert('insert', file_text)
         sheetName = self.get_sheet(file_text)
         sheetNameT = tuple(sheetName)
@@ -179,15 +177,14 @@ class Windows_NODE(PROCESS_NODE):
     def print_record(self):
         #打印替换的文件
         record = set(self.recording)
-        #self.Text.delete(0.0,END)
         for _ in record:
-            #print(_)
             if re.search(r'DR([\w\W]*?)txt', _, flags=0) != None:
                 shortname = re.search(r'DR([\w\W]*?)txt', _, flags=0).group(0)
-                #print(shortname)
                 self.Text.insert('insert','INFO: '+ shortname + " 转换结束\n")
                 self.Text.update()
 
+    @thread_Decorator
+    @time_Decorator
     def command(self):
         path = self.entry.get()
         excelname = self.entry2.get()
@@ -195,7 +192,7 @@ class Windows_NODE(PROCESS_NODE):
         self.__init1__(excelname,listSheet,path)
         self.process_out()
         self.print_record()
-        time.sleep(1)
+        sleep(2)
 
 
 if __name__ == "__main__":

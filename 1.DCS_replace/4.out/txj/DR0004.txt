@@ -1,0 +1,1121 @@
+:::SOURCE
+:ACOM
+1:ID:FCDRW,2.00:0;
+2:CO:设备禁操;
+3:DT:2020,01,01,13,13,03:1577855583:BKEEdtCtlDrw:6.60;
+4:RC:2020,01,01,13,13,03:1577855583:BKEEdtCtlDrw:6.60;
+::ACOM
+:FDFL
+::FDFL
+:FHED
+1:IT:::1024,686:1;
+2:CLT:HJ:1;
+3:CLT:HG:2;
+4:CLT:DJ:1;
+5:CLT:DG:1;
+::FHED
+:FCSF
+1:REV3K:1:1;
+36:BKRV:2;
+10:TPFX:1:;
+2:ETAG:1:FCS0105_1SFC;
+3:EINS:1:_SFCSW;
+4:ETCM:1:设备禁操调试管理;
+5:ETIM:1:4;
+6:ELIM:1:4;
+7:CHKN:1:1;
+11:MSBP:1:NO;
+12:SMMA:1:YES;
+13:PSST:1:TOP;
+14:LBNO:1:DIR;
+15:BCLR:1:R:R;
+16:QSPM:1:2;
+17:ISPM:1:2;
+18:QSAM:1:5;
+19:ISAM:1:5;
+20:RSPN:1:1;
+21:HLPM:1:0000;
+22:UPPG:1:;
+23:TRS!:1:YES;
+24:LBL4:1:RUN\,PAUSE\,STOP\,RUN2;
+25:SBEX:1:TIMESHARE;
+26:DBLA:1:NO;
+27:UPPL:1:;
+28:EALA:1:4;
+33:CCST:HISR;
+# ============== Plane 1 =================
+:SFC:1
+1:CMNT:1:MAIN;
+# -------------- Plane Data --------------
+2:SFCR:1:2:3:IST:0:1:OPMK挂牌:SEBOL:;
+3:SFCR:2:2:4:TR:0:1::SEBOL;
+4:SFCR:3:2:5:ST:0:2::SEBOL:;
+# SEBOL Statement ------------------------
+5:STST,1;
+* 
+* <Include File>
+* 	
+#include <std.h>
+#include <smode.h>
+#include <sbsts.h>
+#include <salarm.h>
+
+***** < COLOR CODE > *****
+
+#define	BLACK		0
+#define	RED			1
+#define	GREEN		2
+#define	YELLOW		3
+#define	BLUE		4	
+#define	MAGENTA		5	
+#define	CYAN		6
+#define	WHITE		7
+#define	STELBLUE	8	
+
+* 
+* <Global Function Block>
+* 
+global block SIO-22 A01 alias 2MKV10AA001
+global block SW B01 alias 2MKV10AA001SW13
+global block SW C01 alias 2MKV10AA001SW14
+global block SW D01 alias 2MKV10AA001SW4
+
+global block SIO-22 A02 alias 2MKV10AA003
+global block SW B02 alias 2MKV10AA003SW13
+global block SW C02 alias 2MKV10AA003SW14
+global block SW D02 alias 2MKV10AA003SW4
+
+
+global block SIO-22 A03 alias 2MKV10AA401
+global block SW B03 alias 2MKV10AA401SW13
+global block SW C03 alias 2MKV10AA401SW14
+global block SW D03 alias 2MKV10AA401SW4
+
+global block SIO-22 A04 alias 2MKV10AA402
+global block SW B04 alias 2MKV10AA402SW13
+global block SW C04 alias 2MKV10AA402SW14
+global block SW D04 alias 2MKV10AA402SW4
+
+global block SIO-22 A05 alias 2MKV11AA002
+global block SW B05 alias 2MKV11AA002SW13
+global block SW C05 alias 2MKV11AA002SW14
+global block SW D05 alias 2MKV11AA002SW4
+
+global block SIO-22 A06 alias 2MKV11AA003
+global block SW B06 alias 2MKV11AA003SW13
+global block SW C06 alias 2MKV11AA003SW14
+global block SW D06 alias 2MKV11AA003SW4
+
+global block SIO-22 A07 alias 2MKV11AA011
+global block SW B07 alias 2MKV11AA011SW13
+global block SW C07 alias 2MKV11AA011SW14
+global block SW D07 alias 2MKV11AA011SW4
+
+global block SIO-22 A08 alias 2MKV11AA021
+global block SW B08 alias 2MKV11AA021SW13
+global block SW C08 alias 2MKV11AA021SW14
+global block SW D08 alias 2MKV11AA021SW4
+
+global block SIO-22 A09 alias 2MKV12AA001
+global block SW B09 alias 2MKV12AA001SW13
+global block SW C09 alias 2MKV12AA001SW14
+global block SW D09 alias 2MKV12AA001SW4
+
+global block SIO-22 A10 alias 2PCB01AA003
+global block SW B10 alias 2PCB01AA003SW13
+global block SW C10 alias 2PCB01AA003SW14
+global block SW D10 alias 2PCB01AA003SW4
+
+global block SIO-22 A11 alias 2PCB11AA001
+global block SW B11 alias 2PCB11AA001SW13
+global block SW C11 alias 2PCB11AA001SW14
+global block SW D11 alias 2PCB11AA001SW4
+
+global block SIO-22 A12 alias 2PCB11AA002
+global block SW B12 alias 2PCB11AA002SW13
+global block SW C12 alias 2PCB11AA002SW14
+global block SW D12 alias 2PCB11AA002SW4
+
+global block SIO-22 A13 alias 2PCB12AA001
+global block SW B13 alias 2PCB12AA001SW13
+global block SW C13 alias 2PCB12AA001SW14
+global block SW D13 alias 2PCB12AA001SW4
+
+global block SIO-22 A14 alias 2PCB12AA002
+global block SW B14 alias 2PCB12AA002SW13
+global block SW C14 alias 2PCB12AA002SW14
+global block SW D14 alias 2PCB12AA002SW4
+
+global block SIO-22 A15 alias 2PCB21AA001
+global block SW B15 alias 2PCB21AA001SW13
+global block SW C15 alias 2PCB21AA001SW14
+global block SW D15 alias 2PCB21AA001SW4
+
+global block SIO-22 A16 alias 2PCB21AA002
+global block SW B16 alias 2PCB21AA002SW13
+global block SW C16 alias 2PCB21AA002SW14
+global block SW D16 alias 2PCB21AA002SW4
+
+global block SIO-22 A17 alias 2PCB22AA001
+global block SW B17 alias 2PCB22AA001SW13
+global block SW C17 alias 2PCB22AA001SW14
+global block SW D17 alias 2PCB22AA001SW4
+
+global block SIO-22 A18 alias 2PCB22AA002
+global block SW B18 alias 2PCB22AA002SW13
+global block SW C18 alias 2PCB22AA002SW14
+global block SW D18 alias 2PCB22AA002SW4
+
+global block SIO-22 A19 alias 2PCB31AA001
+global block SW B19 alias 2PCB31AA001SW13
+global block SW C19 alias 2PCB31AA001SW14
+global block SW D19 alias 2PCB31AA001SW4
+
+global block SIO-22 A20 alias 2PCB31AA002
+global block SW B20 alias 2PCB31AA002SW13
+global block SW C20 alias 2PCB31AA002SW14
+global block SW D20 alias 2PCB31AA002SW4
+
+global block SIO-22 A21 alias 2PCB32AA001
+global block SW B21 alias 2PCB32AA001SW13
+global block SW C21 alias 2PCB32AA001SW14
+global block SW D21 alias 2PCB32AA001SW4
+
+global block SIO-22 A22 alias 2PCB32AA002
+global block SW B22 alias 2PCB32AA002SW13
+global block SW C22 alias 2PCB32AA002SW14
+global block SW D22 alias 2PCB32AA002SW4
+
+global block SIO-22 A23 alias 2PCB41AA001
+global block SW B23 alias 2PCB41AA001SW13
+global block SW C23 alias 2PCB41AA001SW14
+global block SW D23 alias 2PCB41AA001SW4
+
+global block SIO-22 A24 alias 2PCB41AA002
+global block SW B24 alias 2PCB41AA002SW13
+global block SW C24 alias 2PCB41AA002SW14
+global block SW D24 alias 2PCB41AA002SW4
+
+global block SIO-22 A25 alias 2PCB42AA001
+global block SW B25 alias 2PCB42AA001SW13
+global block SW C25 alias 2PCB42AA001SW14
+global block SW D25 alias 2PCB42AA001SW4
+
+global block SIO-22 A26 alias 2PCB42AA002
+global block SW B26 alias 2PCB42AA002SW13
+global block SW C26 alias 2PCB42AA002SW14
+global block SW D26 alias 2PCB42AA002SW4
+
+global block SIO-22 A27 alias 2PCB43AA001
+global block SW B27 alias 2PCB43AA001SW13
+global block SW C27 alias 2PCB43AA001SW14
+global block SW D27 alias 2PCB43AA001SW4
+
+global block SIO-22 A28 alias 2PCB43AA002
+global block SW B28 alias 2PCB43AA002SW13
+global block SW C28 alias 2PCB43AA002SW14
+global block SW D28 alias 2PCB43AA002SW4
+
+global block SIO-22 A29 alias 2PCB44AA001
+global block SW B29 alias 2PCB44AA001SW13
+global block SW C29 alias 2PCB44AA001SW14
+global block SW D29 alias 2PCB44AA001SW4
+
+global block SIO-22 A30 alias 2PCB44AA002
+global block SW B30 alias 2PCB44AA002SW13
+global block SW C30 alias 2PCB44AA002SW14
+global block SW D30 alias 2PCB44AA002SW4
+
+global block SIO-22 A31 alias 2MKV50AN001
+global block SW B31 alias 2MKV50AN001SW13
+global block SW C31 alias 2MKV50AN001SW14
+global block SW D31 alias 2MKV50AN001SW4
+
+global block SIO-22 A32 alias 2MKV50AN002
+global block SW B32 alias 2MKV50AN002SW13
+global block SW C32 alias 2MKV50AN002SW14
+global block SW D32 alias 2MKV50AN002SW4
+
+global block SIO-22 A33 alias 2MKV20CBA00
+global block SW B33 alias 2MKV20CBA00SW13
+global block SW C33 alias 2MKV20CBA00SW14
+global block SW D33 alias 2MKV20CBA00SW4
+
+global block SIO-22 A34 alias 2MKV60AP401
+global block SW B34 alias 2MKV60AP401SW13
+global block SW C34 alias 2MKV60AP401SW14
+global block SW D34 alias 2MKV60AP401SW4
+
+global block SIO-22 A35 alias 2MKV10AC001
+global block SW B35 alias 2MKV10AC001SW13
+global block SW C35 alias 2MKV10AC001SW14
+global block SW D35 alias 2MKV10AC001SW4
+
+global block SO-1 A36 alias 2MKV21AA131
+global block SW B36 alias 2MKV21AA131SW13
+global block SW C36 alias 2MKV21AA131SW14
+
+
+global block SO-1 A37 alias 2MKV21AA132
+global block SW B37 alias 2MKV21AA132SW13
+global block SW C37 alias 2MKV21AA132SW14
+
+global block SO-1 A38 alias 2MKV26AA131
+global block SW B38 alias 2MKV26AA131SW13
+global block SW C38 alias 2MKV26AA131SW14
+
+global block SO-1 A39 alias 2MKV26AA132
+global block SW B39 alias 2MKV26AA132SW13
+global block SW C39 alias 2MKV26AA132SW14
+
+global block SO-1 A40 alias 2MKV26AA133
+global block SW B40 alias 2MKV26AA133SW13
+global block SW C40 alias 2MKV26AA133SW14
+
+global block SO-1 A41 alias 2MKV26AA134
+global block SW B41 alias 2MKV26AA134SW13
+global block SW C41 alias 2MKV26AA134SW14
+
+global block SO-1 A42 alias 2MKV26AA135
+global block SW B42 alias 2MKV26AA135SW13
+global block SW C42 alias 2MKV26AA135SW14
+
+global block SO-1 A43 alias 2MKV30AA131
+global block SW B43 alias 2MKV30AA131SW13
+global block SW C43 alias 2MKV30AA131SW14
+
+global block SO-1 A44 alias 2MKV30AA132
+global block SW B44 alias 2MKV30AA132SW13
+global block SW C44 alias 2MKV30AA132SW14
+
+global block SO-1 A45 alias 2MKV30AA133
+global block SW B45 alias 2MKV30AA133SW13
+global block SW C45 alias 2MKV30AA133SW14
+
+global block SIO-22 A51 alias 2MKV21AP001
+global block SW B51 alias 2MKV21AP001SW13
+global block SW C51 alias 2MKV21AP001SW14
+global block SW D51 alias 2MKV21AP001SW4
+
+global block SIO-22 A52 alias 2MKV21AP002
+global block SW B52 alias 2MKV21AP002SW13
+global block SW C52 alias 2MKV21AP002SW14
+global block SW D52 alias 2MKV21AP002SW4
+
+global block SIO-22 A53 alias 2MKV21AP003
+global block SW B53 alias 2MKV21AP003SW13
+global block SW C53 alias 2MKV21AP003SW14
+global block SW D53 alias 2MKV21AP003SW4
+
+global block SIO-22 A54 alias 2MKV30AP001
+global block SW B54 alias 2MKV30AP001SW13
+global block SW C54 alias 2MKV30AP001SW14
+global block SW D54 alias 2MKV30AP001SW4
+
+global block SIO-22 A55 alias 2MKV30AP002
+global block SW B55 alias 2MKV30AP002SW13
+global block SW C55 alias 2MKV30AP002SW14
+global block SW D55 alias 2MKV30AP002SW4
+
+global block SIO-22 A56 alias 2MKV30AP003
+global block SW B56 alias 2MKV30AP003SW13
+global block SW C56 alias 2MKV30AP003SW14
+global block SW D56 alias 2MKV30AP003SW4
+
+6:STFN,1;
+7:STST,2;
+while(1>0)
+
+IF(A01.OPMK==1) THEN  !禁止操作
+   B01.PV=1
+ELSE
+   B01.PV=0
+END IF
+IF(A01.OPMK==11) THEN  !调试模式
+   C01.PV=1
+ELSE
+   C01.PV=0
+END IF
+IF(D01.PV==0 AND B01.PV==0 AND C01.PV==0) THEN  !不允许启动
+   A01.OPMK=5
+ ELSE IF(D01.PV==1 AND B01.PV==0 AND C01.PV==0) THEN
+   A01.OPMK=0
+END IF
+IF(A02.OPMK==1) THEN  !禁止操作
+   B02.PV=1
+ELSE
+   B02.PV=0
+END IF
+IF(A02.OPMK==11) THEN  !调试模式
+   C02.PV=1
+ELSE
+   C02.PV=0
+END IF
+IF(D02.PV==0 AND B02.PV==0 AND C02.PV==0) THEN  !不允许启动
+   A02.OPMK=5
+ ELSE IF(D02.PV==1 AND B02.PV==0 AND C02.PV==0) THEN
+   A02.OPMK=0
+END IF
+IF(A03.OPMK==1) THEN  !禁止操作
+   B03.PV=1
+ELSE
+   B03.PV=0
+END IF
+IF(A03.OPMK==11) THEN  !调试模式
+   C03.PV=1
+ELSE
+   C03.PV=0
+END IF
+IF(D03.PV==0 AND B03.PV==0 AND C03.PV==0) THEN  !不允许启动
+   A03.OPMK=5
+ ELSE IF(D03.PV==1 AND B03.PV==0 AND C03.PV==0) THEN
+   A03.OPMK=0
+END IF
+IF(A04.OPMK==1) THEN  !禁止操作
+   B04.PV=1
+ELSE
+   B04.PV=0
+END IF
+IF(A04.OPMK==11) THEN  !调试模式
+   C04.PV=1
+ELSE
+   C04.PV=0
+END IF
+IF(D04.PV==0 AND B04.PV==0 AND C04.PV==0) THEN  !不允许启动
+   A04.OPMK=5
+ ELSE IF(D04.PV==1 AND B04.PV==0 AND C04.PV==0) THEN
+   A04.OPMK=0
+END IF
+IF(A05.OPMK==1) THEN  !禁止操作
+   B05.PV=1
+ELSE
+   B05.PV=0
+END IF
+IF(A05.OPMK==11) THEN  !调试模式
+   C05.PV=1
+ELSE
+   C05.PV=0
+END IF
+IF(D05.PV==0 AND B05.PV==0 AND C05.PV==0) THEN  !不允许启动
+   A05.OPMK=5
+ ELSE IF(D05.PV==1 AND B05.PV==0 AND C05.PV==0) THEN
+   A05.OPMK=0
+END IF
+IF(A06.OPMK==1) THEN  !禁止操作
+   B06.PV=1
+ELSE
+   B06.PV=0
+END IF
+IF(A06.OPMK==11) THEN  !调试模式
+   C06.PV=1
+ELSE
+   C06.PV=0
+END IF
+IF(D06.PV==0 AND B06.PV==0 AND C06.PV==0) THEN  !不允许启动
+   A06.OPMK=5
+ ELSE IF(D06.PV==1 AND B06.PV==0 AND C06.PV==0) THEN
+   A06.OPMK=0
+END IF
+IF(A07.OPMK==1) THEN  !禁止操作
+   B07.PV=1
+ELSE
+   B07.PV=0
+END IF
+IF(A07.OPMK==11) THEN  !调试模式
+   C07.PV=1
+ELSE
+   C07.PV=0
+END IF
+IF(D07.PV==0 AND B07.PV==0 AND C07.PV==0) THEN  !不允许启动
+   A01.OPMK=5
+ ELSE IF(D07.PV==1 AND B07.PV==0 AND C07.PV==0) THEN
+   A07.OPMK=0
+END IF
+IF(A08.OPMK==1) THEN  !禁止操作
+   B08.PV=1
+ELSE
+   B08.PV=0
+END IF
+IF(A08.OPMK==11) THEN  !调试模式
+   C08.PV=1
+ELSE
+   C08.PV=0
+END IF
+IF(D08.PV==0 AND B08.PV==0 AND C08.PV==0) THEN  !不允许启动
+   A08.OPMK=5
+ ELSE IF(D08.PV==1 AND B08.PV==0 AND C08.PV==0) THEN
+   A08.OPMK=0
+END IF
+IF(A09.OPMK==1) THEN  !禁止操作
+   B09.PV=1
+ELSE
+   B09.PV=0
+END IF
+IF(A09.OPMK==11) THEN  !调试模式
+   C09.PV=1
+ELSE
+   C09.PV=0
+END IF
+IF(D09.PV==0 AND B09.PV==0 AND C09.PV==0) THEN  !不允许启动
+   A09.OPMK=5
+ ELSE IF(D09.PV==1 AND B09.PV==0 AND C09.PV==0) THEN
+   A09.OPMK=0
+END IF
+IF(A10.OPMK==1) THEN  !禁止操作
+   B10.PV=1
+ELSE
+   B10.PV=0
+END IF
+IF(A10.OPMK==11) THEN  !调试模式
+   C10.PV=1
+ELSE
+   C10.PV=0
+END IF
+IF(D10.PV==0 AND B10.PV==0 AND C10.PV==0) THEN  !不允许启动
+   A10.OPMK=5
+ ELSE IF(D10.PV==1 AND B10.PV==0 AND C10.PV==0) THEN
+   A10.OPMK=0
+END IF
+IF(A11.OPMK==1) THEN  !禁止操作
+   B11.PV=1
+ELSE
+   B11.PV=0
+END IF
+IF(A11.OPMK==11) THEN  !调试模式
+   C11.PV=1
+ELSE
+   C11.PV=0
+END IF
+IF(D11.PV==0 AND B11.PV==0 AND C11.PV==0) THEN  !不允许启动
+   A11.OPMK=5
+ ELSE IF(D11.PV==1 AND B11.PV==0 AND C11.PV==0) THEN
+   A11.OPMK=0
+END IF
+IF(A12.OPMK==1) THEN  !禁止操作
+   B12.PV=1
+ELSE
+   B12.PV=0
+END IF
+IF(A12.OPMK==11) THEN  !调试模式
+   C12.PV=1
+ELSE
+   C12.PV=0
+END IF
+IF(D12.PV==0 AND B12.PV==0 AND C12.PV==0) THEN  !不允许启动
+   A12.OPMK=5
+ ELSE IF(D12.PV==1 AND B12.PV==0 AND C12.PV==0) THEN
+   A12.OPMK=0
+END IF
+IF(A13.OPMK==1) THEN  !禁止操作
+   B13.PV=1
+ELSE
+   B13.PV=0
+END IF
+IF(A13.OPMK==11) THEN  !调试模式
+   C13.PV=1
+ELSE
+   C13.PV=0
+END IF
+IF(D13.PV==0 AND B13.PV==0 AND C13.PV==0) THEN  !不允许启动
+   A13.OPMK=5
+ ELSE IF(D13.PV==1 AND B13.PV==0 AND C13.PV==0) THEN
+   A13.OPMK=0
+END IF
+IF(A14.OPMK==1) THEN  !禁止操作
+   B14.PV=1
+ELSE
+   B14.PV=0
+END IF
+IF(A14.OPMK==11) THEN  !调试模式
+   C14.PV=1
+ELSE
+   C14.PV=0
+END IF
+IF(D14.PV==0 AND B14.PV==0 AND C14.PV==0) THEN  !不允许启动
+   A14.OPMK=5
+ ELSE IF(D14.PV==1 AND B14.PV==0 AND C14.PV==0) THEN
+   A14.OPMK=0
+END IF
+IF(A15.OPMK==1) THEN  !禁止操作
+   B15.PV=1
+ELSE
+   B15.PV=0
+END IF
+IF(A15.OPMK==11) THEN  !调试模式
+   C15.PV=1
+ELSE
+   C15.PV=0
+END IF
+IF(D15.PV==0 AND B15.PV==0 AND C15.PV==0) THEN  !不允许启动
+   A15.OPMK=5
+ ELSE IF(D15.PV==1 AND B15.PV==0 AND C15.PV==0) THEN
+   A15.OPMK=0
+END IF
+IF(A16.OPMK==1) THEN  !禁止操作
+   B16.PV=1
+ELSE
+   B16.PV=0
+END IF
+IF(A16.OPMK==11) THEN  !调试模式
+   C16.PV=1
+ELSE
+   C16.PV=0
+END IF
+IF(D16.PV==0 AND B16.PV==0 AND C16.PV==0) THEN  !不允许启动
+   A16.OPMK=5
+ ELSE IF(D16.PV==1 AND B16.PV==0 AND C16.PV==0) THEN
+   A16.OPMK=0
+END IF
+IF(A17.OPMK==1) THEN  !禁止操作
+   B17.PV=1
+ELSE
+   B17.PV=0
+END IF
+IF(A17.OPMK==11) THEN  !调试模式
+   C17.PV=1
+ELSE
+   C17.PV=0
+END IF
+IF(D17.PV==0 AND B17.PV==0 AND C17.PV==0) THEN  !不允许启动
+   A17.OPMK=5
+ ELSE IF(D17.PV==1 AND B17.PV==0 AND C17.PV==0) THEN
+   A17.OPMK=0
+END IF
+IF(A18.OPMK==1) THEN  !禁止操作
+   B18.PV=1
+ELSE
+   B18.PV=0
+END IF
+IF(A18.OPMK==11) THEN  !调试模式
+   C18.PV=1
+ELSE
+   C18.PV=0
+END IF
+IF(D18.PV==0 AND B18.PV==0 AND C18.PV==0) THEN  !不允许启动
+   A18.OPMK=5
+ ELSE IF(D18.PV==1 AND B18.PV==0 AND C18.PV==0) THEN
+   A18.OPMK=0
+END IF
+IF(A19.OPMK==1) THEN  !禁止操作
+   B19.PV=1
+ELSE
+   B19.PV=0
+END IF
+IF(A19.OPMK==11) THEN  !调试模式
+   C19.PV=1
+ELSE
+   C19.PV=0
+END IF
+IF(D19.PV==0 AND B19.PV==0 AND C19.PV==0) THEN  !不允许启动
+   A19.OPMK=5
+ ELSE IF(D19.PV==1 AND B19.PV==0 AND C19.PV==0) THEN
+   A19.OPMK=0
+END IF
+IF(A20.OPMK==1) THEN  !禁止操作
+   B20.PV=1
+ELSE
+   B20.PV=0
+END IF
+IF(A20.OPMK==11) THEN  !调试模式
+   C20.PV=1
+ELSE
+   C20.PV=0
+END IF
+IF(D20.PV==0 AND B20.PV==0 AND C20.PV==0) THEN  !不允许启动
+   A20.OPMK=5
+ ELSE IF(D20.PV==1 AND B20.PV==0 AND C20.PV==0) THEN
+   A20.OPMK=0
+END IF
+IF(A21.OPMK==1) THEN  !禁止操作
+   B21.PV=1
+ELSE
+   B21.PV=0
+END IF
+IF(A21.OPMK==11) THEN  !调试模式
+   C21.PV=1
+ELSE
+   C21.PV=0
+END IF
+IF(D21.PV==0 AND B21.PV==0 AND C21.PV==0) THEN  !不允许启动
+   A21.OPMK=5
+ ELSE IF(D21.PV==1 AND B21.PV==0 AND C21.PV==0) THEN
+   A21.OPMK=0
+END IF
+IF(A22.OPMK==1) THEN  !禁止操作
+   B22.PV=1
+ELSE
+   B22.PV=0
+END IF
+IF(A22.OPMK==11) THEN  !调试模式
+   C22.PV=1
+ELSE
+   C22.PV=0
+END IF
+IF(D22.PV==0 AND B22.PV==0 AND C22.PV==0) THEN  !不允许启动
+   A22.OPMK=5
+ ELSE IF(D22.PV==1 AND B22.PV==0 AND C22.PV==0) THEN
+   A22.OPMK=0
+END IF
+IF(A23.OPMK==1) THEN  !禁止操作
+   B23.PV=1
+ELSE
+   B23.PV=0
+END IF
+IF(A23.OPMK==11) THEN  !调试模式
+   C23.PV=1
+ELSE
+   C23.PV=0
+END IF
+IF(D23.PV==0 AND B23.PV==0 AND C23.PV==0) THEN  !不允许启动
+   A23.OPMK=5
+ ELSE IF(D23.PV==1 AND B23.PV==0 AND C23.PV==0) THEN
+   A23.OPMK=0
+END IF
+IF(A24.OPMK==1) THEN  !禁止操作
+   B24.PV=1
+ELSE
+   B24.PV=0
+END IF
+IF(A24.OPMK==11) THEN  !调试模式
+   C24.PV=1
+ELSE
+   C24.PV=0
+END IF
+IF(D24.PV==0 AND B24.PV==0 AND C24.PV==0) THEN  !不允许启动
+   A24.OPMK=5
+ ELSE IF(D24.PV==1 AND B24.PV==0 AND C24.PV==0) THEN
+   A24.OPMK=0
+END IF
+IF(A25.OPMK==1) THEN  !禁止操作
+   B25.PV=1
+ELSE
+   B25.PV=0
+END IF
+IF(A25.OPMK==11) THEN  !调试模式
+   C25.PV=1
+ELSE
+   C25.PV=0
+END IF
+IF(D25.PV==0 AND B25.PV==0 AND C25.PV==0) THEN  !不允许启动
+   A25.OPMK=5
+ ELSE IF(D25.PV==1 AND B25.PV==0 AND C25.PV==0) THEN
+   A25.OPMK=0
+END IF
+IF(A26.OPMK==1) THEN  !禁止操作
+   B26.PV=1
+ELSE
+   B26.PV=0
+END IF
+IF(A26.OPMK==11) THEN  !调试模式
+   C26.PV=1
+ELSE
+   C26.PV=0
+END IF
+IF(D26.PV==0 AND B26.PV==0 AND C26.PV==0) THEN  !不允许启动
+   A26.OPMK=5
+ ELSE IF(D26.PV==1 AND B26.PV==0 AND C26.PV==0) THEN
+   A26.OPMK=0
+END IF
+IF(A27.OPMK==1) THEN  !禁止操作
+   B27.PV=1
+ELSE
+   B27.PV=0
+END IF
+IF(A27.OPMK==11) THEN  !调试模式
+   C27.PV=1
+ELSE
+   C27.PV=0
+END IF
+IF(D27.PV==0 AND B27.PV==0 AND C27.PV==0) THEN  !不允许启动
+   A27.OPMK=5
+ ELSE IF(D27.PV==1 AND B27.PV==0 AND C27.PV==0) THEN
+   A27.OPMK=0
+END IF
+IF(A28.OPMK==1) THEN  !禁止操作
+   B28.PV=1
+ELSE
+   B28.PV=0
+END IF
+IF(A28.OPMK==11) THEN  !调试模式
+   C28.PV=1
+ELSE
+   C28.PV=0
+END IF
+IF(D28.PV==0 AND B28.PV==0 AND C28.PV==0) THEN  !不允许启动
+   A28.OPMK=5
+ ELSE IF(D28.PV==1 AND B28.PV==0 AND C28.PV==0) THEN
+   A28.OPMK=0
+END IF
+IF(A29.OPMK==1) THEN  !禁止操作
+   B29.PV=1
+ELSE
+   B29.PV=0
+END IF
+IF(A29.OPMK==11) THEN  !调试模式
+   C29.PV=1
+ELSE
+   C29.PV=0
+END IF
+IF(D29.PV==0 AND B29.PV==0 AND C29.PV==0) THEN  !不允许启动
+   A29.OPMK=5
+ ELSE IF(D29.PV==1 AND B29.PV==0 AND C29.PV==0) THEN
+   A29.OPMK=0
+END IF
+IF(A30.OPMK==1) THEN  !禁止操作
+   B30.PV=1
+ELSE
+   B30.PV=0
+END IF
+IF(A30.OPMK==11) THEN  !调试模式
+   C30.PV=1
+ELSE
+   C30.PV=0
+END IF
+IF(D30.PV==0 AND B30.PV==0 AND C30.PV==0) THEN  !不允许启动
+   A30.OPMK=5
+ ELSE IF(D30.PV==1 AND B30.PV==0 AND C30.PV==0) THEN
+   A30.OPMK=0
+END IF
+
+IF(A31.OPMK==1) THEN  !禁止操作
+   B31.PV=1
+ELSE
+   B31.PV=0
+END IF
+IF(A31.OPMK==11) THEN  !调试模式
+   C31.PV=1
+ELSE
+   C31.PV=0
+END IF
+IF(D31.PV==0 AND B31.PV==0 AND C31.PV==0) THEN  !不允许启动
+   A31.OPMK=5
+ ELSE IF(D31.PV==1 AND B31.PV==0 AND C31.PV==0) THEN
+   A31.OPMK=0
+END IF
+IF(A32.OPMK==1) THEN  !禁止操作
+   B32.PV=1
+ELSE
+   B32.PV=0
+END IF
+IF(A32.OPMK==11) THEN  !调试模式
+   C32.PV=1
+ELSE
+   C32.PV=0
+END IF
+IF(D32.PV==0 AND B32.PV==0 AND C32.PV==0) THEN  !不允许启动
+   A32.OPMK=5
+ ELSE IF(D32.PV==1 AND B32.PV==0 AND C32.PV==0) THEN
+   A32.OPMK=0
+END IF
+IF(A33.OPMK==1) THEN  !禁止操作
+   B33.PV=1
+ELSE
+   B33.PV=0
+END IF
+IF(A33.OPMK==11) THEN  !调试模式
+   C33.PV=1
+ELSE
+   C33.PV=0
+END IF
+IF(D33.PV==0 AND B33.PV==0 AND C33.PV==0) THEN  !不允许启动
+   A33.OPMK=5
+ ELSE IF(D33.PV==1 AND B33.PV==0 AND C33.PV==0) THEN
+   A33.OPMK=0
+END IF
+IF(A34.OPMK==1) THEN  !禁止操作
+   B34.PV=1
+ELSE
+   B34.PV=0
+END IF
+IF(A34.OPMK==11) THEN  !调试模式
+   C34.PV=1
+ELSE
+   C34.PV=0
+END IF
+IF(D34.PV==0 AND B34.PV==0 AND C34.PV==0) THEN  !不允许启动
+   A34.OPMK=5
+ ELSE IF(D34.PV==1 AND B34.PV==0 AND C34.PV==0) THEN
+   A34.OPMK=0
+END IF
+IF(A35.OPMK==1) THEN  !禁止操作
+   B35.PV=1
+ELSE
+   B35.PV=0
+END IF
+IF(A35.OPMK==11) THEN  !调试模式
+   C35.PV=1
+ELSE
+   C35.PV=0
+END IF
+IF(D35.PV==0 AND B35.PV==0 AND C35.PV==0) THEN  !不允许启动
+   A35.OPMK=5
+ ELSE IF(D35.PV==1 AND B35.PV==0 AND C35.PV==0) THEN
+   A35.OPMK=0
+END IF
+IF(A36.OPMK==1) THEN  !禁止操作
+   B36.PV=1
+ELSE
+   B36.PV=0
+END IF
+IF(A36.OPMK==11) THEN  !调试模式
+   C36.PV=1
+ELSE
+   C36.PV=0
+END IF
+IF(A37.OPMK==1) THEN  !禁止操作
+   B37.PV=1
+ELSE
+   B37.PV=0
+END IF
+IF(A37.OPMK==11) THEN  !调试模式
+   C37.PV=1
+ELSE
+   C37.PV=0
+END IF
+IF(A38.OPMK==1) THEN  !禁止操作
+   B38.PV=1
+ELSE
+   B38.PV=0
+END IF
+IF(A38.OPMK==11) THEN  !调试模式
+   C38.PV=1
+ELSE
+   C38.PV=0
+END IF
+IF(A39.OPMK==1) THEN  !禁止操作
+   B39.PV=1
+ELSE
+   B39.PV=0
+END IF
+IF(A39.OPMK==11) THEN  !调试模式
+   C39.PV=1
+ELSE
+   C39.PV=0
+END IF
+IF(A40.OPMK==1) THEN  !禁止操作
+   B40.PV=1
+ELSE
+   B40.PV=0
+END IF
+IF(A40.OPMK==11) THEN  !调试模式
+   C40.PV=1
+ELSE
+   C40.PV=0
+END IF
+IF(A41.OPMK==1) THEN  !禁止操作
+   B41.PV=1
+ELSE
+   B41.PV=0
+END IF
+IF(A41.OPMK==11) THEN  !调试模式
+   C41.PV=1
+ELSE
+   C41.PV=0
+END IF
+IF(A42.OPMK==1) THEN  !禁止操作
+   B42.PV=1
+ELSE
+   B42.PV=0
+END IF
+IF(A42.OPMK==11) THEN  !调试模式
+   C42.PV=1
+ELSE
+   C42.PV=0
+END IF
+IF(A43.OPMK==1) THEN  !禁止操作
+   B43.PV=1
+ELSE
+   B43.PV=0
+END IF
+IF(A43.OPMK==11) THEN  !调试模式
+   C43.PV=1
+ELSE
+   C43.PV=0
+END IF
+IF(A44.OPMK==1) THEN  !禁止操作
+   B44.PV=1
+ELSE
+   B44.PV=0
+END IF
+IF(A44.OPMK==11) THEN  !调试模式
+   C44.PV=1
+ELSE
+   C44.PV=0
+END IF
+IF(A45.OPMK==1) THEN  !禁止操作
+   B45.PV=1
+ELSE
+   B45.PV=0
+END IF
+IF(A45.OPMK==11) THEN  !调试模式
+   C45.PV=1
+ELSE
+   C45.PV=0
+END IF
+
+IF(A51.OPMK==1) THEN  !禁止操作
+   B51.PV=1
+ELSE
+   B51.PV=0
+END IF
+IF(A51.OPMK==11) THEN  !调试模式
+   C51.PV=1
+ELSE
+   C51.PV=0
+END IF
+IF(D51.PV==0 AND B51.PV==0 AND C51.PV==0) THEN  !不允许启动
+   A51.OPMK=5
+ ELSE IF(D51.PV==1 AND B51.PV==0 AND C51.PV==0) THEN
+   A51.OPMK=0
+END IF
+IF(A52.OPMK==1) THEN  !禁止操作
+   B52.PV=1
+ELSE
+   B52.PV=0
+END IF
+IF(A52.OPMK==11) THEN  !调试模式
+   C52.PV=1
+ELSE
+   C52.PV=0
+END IF
+IF(D52.PV==0 AND B52.PV==0 AND C52.PV==0) THEN  !不允许启动
+   A52.OPMK=5
+ ELSE IF(D52.PV==1 AND B52.PV==0 AND C52.PV==0) THEN
+   A52.OPMK=0
+END IF
+IF(A53.OPMK==1) THEN  !禁止操作
+   B53.PV=1
+ELSE
+   B53.PV=0
+END IF
+IF(A53.OPMK==11) THEN  !调试模式
+   C53.PV=1
+ELSE
+   C53.PV=0
+END IF
+IF(D53.PV==0 AND B53.PV==0 AND C53.PV==0) THEN  !不允许启动
+   A53.OPMK=5
+ ELSE IF(D53.PV==1 AND B53.PV==0 AND C53.PV==0) THEN
+   A53.OPMK=0
+END IF
+IF(A54.OPMK==1) THEN  !禁止操作
+   B54.PV=1
+ELSE
+   B54.PV=0
+END IF
+IF(A54.OPMK==11) THEN  !调试模式
+   C54.PV=1
+ELSE
+   C54.PV=0
+END IF
+IF(D54.PV==0 AND B54.PV==0 AND C54.PV==0) THEN  !不允许启动
+   A54.OPMK=5
+ ELSE IF(D54.PV==1 AND B54.PV==0 AND C54.PV==0) THEN
+   A54.OPMK=0
+END IF
+IF(A55.OPMK==1) THEN  !禁止操作
+   B55.PV=1
+ELSE
+   B55.PV=0
+END IF
+IF(A55.OPMK==11) THEN  !调试模式
+   C55.PV=1
+ELSE
+   C55.PV=0
+END IF
+IF(D55.PV==0 AND B55.PV==0 AND C55.PV==0) THEN  !不允许启动
+   A55.OPMK=5
+ ELSE IF(D55.PV==1 AND B55.PV==0 AND C55.PV==0) THEN
+   A55.OPMK=0
+END IF
+IF(A56.OPMK==1) THEN  !禁止操作
+   B56.PV=1
+ELSE
+   B56.PV=0
+END IF
+IF(A56.OPMK==11) THEN  !调试模式
+   C56.PV=1
+ELSE
+   C56.PV=0
+END IF
+IF(D56.PV==0 AND B56.PV==0 AND C56.PV==0) THEN  !不允许启动
+   A56.OPMK=5
+ ELSE IF(D56.PV==1 AND B56.PV==0 AND C56.PV==0) THEN
+   A56.OPMK=0
+END IF
+wend@
+8:STFN,2;
+# Transision Statement -------------------
+9:TTST,1;
+10:TTFN,1;
+::SFC:1
+34:CCFN:HISR;
+29:CCST:SDIT;
+@PRODUCTS,YOKOGAWA,CENTUM
+@ID,BKEEdtCtlDrw
+@SHEET,,System Definition
+@DATE,2020/01/01,13:13
+@No.,Data item,Comment,Display position,Y
+1,OMOD,OMOD,DEF,0
+2,CMOD,CMOD,DEF,0
+3,PREBSTS,PREBSTS,DEF,0
+4,AFLS,AFLS,DEF,0
+5,AF,AF,DEF,0
+6,AOFS,AOFS,DEF,0
+7,ERRC,ERRC,DEF,0
+8,ERRE,ERRE,DEF,0
+9,ERRL,ERRL,DEF,0
+10,ERRF,ERRF,DEF,0
+11,STEPNO,STEPNO,DEF,0
+12,IPHASE,IPHASE,DEF,0
+13,OPMK,OPMK,DEF,0
+14,SAID,SAID,DEF,0
+15,UAID,UAID,DEF,0
+16,SEMA,SEMA,DEF,0
+17,ERRS,ERRS,DEF,0
+18,ERRP,ERRP,DEF,0
+30:CCFN:SDIT;
+31:CCST:UDIT;
+@PRODUCTS,YOKOGAWA,CENTUM
+@ID,BKEEdtCtlDrw
+@SHEET,,User Definition
+@DATE,2020/01/01,13:13
+@No.,Data Item,Data Type,Array1,Array2,Comment,Engineering Unit Symbol,Lvl,Display Format,Entry Method,Display Position,Y,Check,Low Limit,High Limit,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+1,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+2,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+3,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+4,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+5,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+6,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+7,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+10,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+11,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+12,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+13,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+14,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+15,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+16,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+17,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+18,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+19,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+20,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+21,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+22,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+23,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+24,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+25,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+26,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+27,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+28,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+29,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+30,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+31,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+32,,F32,0,0,,(None),4,7.1,3,AUTO,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+32:CCFN:UDIT;
+35:FALM:1:USER10;
+8:GBLK:88,80:S1::$9;
+9:GBCM:84,56:ETCM;
+::FCSF
+::::SOURCE
