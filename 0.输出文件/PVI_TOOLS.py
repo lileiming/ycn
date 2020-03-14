@@ -4,7 +4,7 @@
 #==========================================================
 import tkinter
 from tkinter import *
-
+from tkinter import ttk
 #===================自定义模块==============================
 import YokoRead
 import PVI_GR    #流程图复制工具
@@ -36,6 +36,8 @@ class myWindow():
         elif flag == 7:
             self.top.geometry('640x600+100+200')
             TaglistTool.Windows_NODE(self.top)
+        elif flag == 8:
+            Label(self.top, text='Qiang.li@cn.yokogawa.com').pack(fill=X, expand=1)
         pass
     pass
 
@@ -67,7 +69,7 @@ class Windows_NODE():
         yindex = (window_num-1) % 5
         self.button1 = tkinter.Button(root, text=title, command=lambda: self.button_fun(title, window_num))
         self.button1.place(x=30+xindex*200, y=40+yindex*60, height=40, width=160)
-        print(30+xindex*200, 40+yindex*60)
+        #print(30+xindex*200, 40+yindex*60)
         pass
 
     def button_fun(self,title,window_num):
