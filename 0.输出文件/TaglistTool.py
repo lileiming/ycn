@@ -50,9 +50,9 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.master = master
         self.here = os.getcwd()
         self.initWidgets()
-        help_doc = 'Don\'t Repeat Youself!!\n 懒惰、不耐烦、傲慢 程序员的三大美德！'
-        self.Text.insert('insert', help_doc)
-
+        help_doc = 'Don\'t Repeat Youself!!\n 懒惰、不耐烦、傲慢 程序员的三大美德！\n'
+        self.text_show(help_doc)
+        
     def initWidgets(self):
         # 创建第一层
         top_frame = LabelFrame(self.master,height = 150,width = 615,text="目标文件")
@@ -135,12 +135,11 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             self.sheetNameT = tuple(sheetName)
             self.comboxlist["values"] = self.sheetNameT 
             self.comboxlist.current(0)
-
             self.entry.delete(0, END)
             self.entry.insert('insert', file_text)
 
-        except xlrd.biffh.XLRDError as e:
-            self.Text.insert('insert', '错误提示：文件格式错误，现在就只能处理Excel文档')
+        except xlrd.biffh.XLRDError:
+            self.text_show('错误提示：文件格式错误，现在就只能处理Excel文档\n')
 
     def open_combox(self,*args):
         filename0 = self.entry.get()
@@ -150,7 +149,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.comboxlist1.current(0)
 
     def open_file2(self):
-        self.Text.delete(0.0,END)
+        #self.Text.delete(0.0,END)
         try:
             self.entry2.delete(0,END)
             if (self.ckeckchange):
@@ -163,8 +162,8 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             self.sheetNameR = tuple(sheetName)
             self.comboxlist2["values"] = self.sheetNameR
             self.comboxlist2.current(0)
-        except xlrd.biffh.XLRDError as e:
-            self.Text.insert('insert', '错误提示：文件格式错误，现在就只能处理Excel文档')
+        except xlrd.biffh.XLRDError:
+            self.text_show('错误提示：文件格式错误，现在就只能处理Excel文档\n')
 
     def open_combox2(self,event):
         filename = self.entry2.get()
@@ -177,16 +176,15 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.comboxlist3.current(0)
 
         if (filename == filename0 and SheetName == SheetName0):
-            self.Text.insert('insert', "不是用重复文件\n") 
-        else:
-            self.Text.delete(0.0,END)
+            self.text_show("不是用重复文件\n")
+        #else:
+        #    self.Text.delete(0.0,END)
 
     @thread_Decorator
+    @time_Decorator
     def ExcelSave(self):    #替换功能
         try:
-            self.Text.delete(0.0,END)
-            self.Text.insert('insert', "=============替换中===============\n")
-            self.Text.update()
+            self.text_show("=============替换中===============\n")
             TExcleName = self.entry.get()    
             self.TSheet = self.comboxlist.get()
             TSheetNum = self.sheetNameT.index(self.TSheet)
@@ -238,9 +236,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                 if (TAG_Z !="" and Nokey !=0):
                     #print(TAG_Z)
                     TAG_Z_OUT = str(TAG_Z) +'\n'
-                    self.Text.insert('insert', TAG_Z_OUT)
-                    self.Text.update()
-                    self.Text.see(END)
+                    self.text_show(TAG_Z_OUT)
                     #Excel坐标============================================
                     NewTagRow_Str = list_TAG[TAG_index][0]
                     NewTagcol_Str = list_TAG[TAG_index][1]
@@ -252,22 +248,16 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                 TAG_index= TAG_index+1 
             #Excel写入===========================================================    
             data.save(TExcleName)
-            self.Text.insert('insert', "=============替换结束===============\n")
-            self.Text.update()
-            self.Text.see(END)
+            self.text_show("=============替换结束===============\n")
         except Exception as e:
-            self.Text.insert('insert', e)
-            self.Text.update()
-            self.Text.see(END)
+            self.text_show(e)
         sleep(2)
 
     @thread_Decorator
     @time_Decorator
     def ExcelComp(self):    #比较功能
         try:
-            self.Text.delete(0.0,END)
-            self.Text.insert('insert', "=============校队中===============\n")
-            self.Text.update()
+            self.text_show("=============校队中===============\n")
             TExcleName = self.entry.get()    
             self.TSheet = self.comboxlist.get()
             TSheetNum = self.sheetNameT.index(self.TSheet)
@@ -329,19 +319,14 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                     if (TAG_Z != TAG_ZZ):
                         #print (TAG_Z)
                         TAG_Z_OUT = str(TAG_Z) +'\n'
-                        self.Text.insert('insert', TAG_Z_OUT)
-                        self.Text.update()
-                        self.Text.see(END)
+                        self.text_show(TAG_Z_OUT)
                         table.cell(NewTagRow_index,NewTagCel_index).fill=sty.PatternFill(fill_type='solid',fgColor="FF00FF") #对更新数据进行标注颜色  
                 TAG_index= TAG_index+1 
             #Excel写入===========================================================    
             data.save(TExcleName)
-            self.Text.insert('insert', "=============校队结束===============\n")
-            self.Text.update()
-            self.Text.see(END)
-            
+            self.text_show("=============校队结束===============\n")
         except Exception as e:
-            self.Text.insert('insert', e)
+            self.text_show(e)
         sleep(2)
 
     def get_col(self,filename, SheetName):
@@ -355,8 +340,17 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         try:
             os.startfile(self.entry.get())
         except FileNotFoundError :
-            self.Text.insert('insert', '错误提示：文件不存在')
+            self.text_show("错误提示：文件不存在\n")
             pass
+
+    @thread_Decorator
+    def text_show(self,*args):
+        Textmod = self.Text
+        Textmod.see(END)
+        Textmod.insert('insert',args[0])
+        Textmod.update()
+        Textmod.see(END)
+        pass
 
 if __name__ == "__main__":
     root = Tk()
