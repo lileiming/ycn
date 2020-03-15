@@ -37,7 +37,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                    ' 使用方法：\n' \
                    '1.通过参考文档按钮选择需要复制的流程图样本，默认为GRtemp.xaml。\n' \
                    '2.通过按钮选择数据列表文件，使用下拉菜单选择相对应的表格（sheet）.\n' \
-                   '3.点击开始按钮执行程序复制'
+                   '3.点击开始按钮执行程序复制.\n'
         self.Text.insert('insert', help_doc)
         pass
 
@@ -121,13 +121,14 @@ class Windows_NODE(YokoRead._FILE_NODE_):
     def command(self):
         try:
             samplePVI = self.entry.get()
-            resultDR = 'PVI_GR/GR_output.xaml'
+            filepath, fullflname = os.path.split(samplePVI)
+            resultDR = filepath + '/GR_output.xaml'
             modbusList = self.entry2.get()
             listSheet = self.comboxlist.get()
-            Maintxt = open(samplePVI,'r',encoding='utf-8')
-            OutFile = open(resultDR,'w+',encoding='utf-8')
-            # 读取所有样本流程图
-            alls = Maintxt.read()
+           # Maintxt = open(samplePVI,'r',encoding='utf-8')
+            with open(samplePVI,'r',encoding='utf-8') as Maintxt:
+                # 读取所有样本流程图
+                alls = Maintxt.read()
             # 读取所有样本流程图=====头部
             head1 = (re.findall(r'<!--P([\w\W]*?)<yiapcspvgbdc0',alls))
             #正则表达式 两字符串之间的内容。
@@ -146,7 +147,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             self.Text.update()
             datalist = list(self.get_data_Tag(modbusList,listSheet))
             datalist_tag = tuple(datalist[0].values())
-
+            OutFile = open(resultDR, 'w+', encoding='utf-8')
             OutFile.write(head)   #写入头部
             line = ""
             TAG = ""
@@ -187,9 +188,13 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             self.Text.see(END)
 
         except FileNotFoundError as e:
-            self.e.set(e)
+            self.Text.insert('insert', e)
+            self.Text.update()
+            self.Text.see(END)
         except UnicodeDecodeError as e:
-            self.e.set(e)
+            self.Text.insert('insert', e)
+            self.Text.update()
+            self.Text.see(END)
         except  IndexError :
             err = "\n错误提示：确认复制元素是否Group"
             self.Text.insert('insert', err)

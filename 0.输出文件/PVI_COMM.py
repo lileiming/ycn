@@ -96,7 +96,6 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.comboxlist["values"] = sheetNameT
         self.comboxlist.current(0)
 
-
     @thread_Decorator
     @time_Decorator
     def get_entry(self):
