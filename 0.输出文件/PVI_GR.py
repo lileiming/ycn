@@ -121,10 +121,11 @@ class Windows_NODE(YokoRead._FILE_NODE_):
     def command(self):
         try:
             samplePVI = self.entry.get()
-            filepath, fullflname = os.path.split(samplePVI)
-            resultDR = filepath + '/GR_output.xaml'
             modbusList = self.entry2.get()
             listSheet = self.comboxlist.get()
+            filepath, fullflname = os.path.split(modbusList)
+            resultDR = os.path.join(filepath, 'GR_output.xaml')
+
            # Maintxt = open(samplePVI,'r',encoding='utf-8')
             with open(samplePVI,'r',encoding='utf-8') as Maintxt:
                 # 读取所有样本流程图
@@ -147,6 +148,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             self.Text.update()
             datalist = list(self.get_data_Tag(modbusList,listSheet))
             datalist_tag = tuple(datalist[0].values())
+
             OutFile = open(resultDR, 'w+', encoding='utf-8')
             OutFile.write(head)   #写入头部
             line = ""

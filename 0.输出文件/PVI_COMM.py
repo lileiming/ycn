@@ -103,6 +103,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             samplePVI = self.entry.get()
             modbusList = self.entry2.get()
             listSheet = self.comboxlist.get()
+            filepath, fullflname = os.path.split(modbusList)
 
             # 数据读取
             with open(samplePVI,'r') as samplefile:
@@ -131,8 +132,8 @@ class Windows_NODE(YokoRead._FILE_NODE_):
 
             for No_page in range(page_num):
                 #处理开始resultfile
-                #media / output.avi
-                resultDR = 'PVI_COMM/DR_output'+str(No_page)+'.txt'
+                resultDRfilename = 'DR_output'+str(No_page)+'.txt'
+                resultDR = os.path.join(filepath, resultDRfilename)
                 resultfile = open(resultDR,'w')
                 resultfile.write(head)
                 for i in self.get_data_2line(modbusList,listSheet):
@@ -240,7 +241,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                     self.Text.insert('insert', ">>>"+ETAG+"\n")
                     self.Text.update()
                 resultfile.write(foot)
-                self.Text.insert('insert', "==================="+str(resultDR)+"复制结束===\n")
+                self.Text.insert('insert', "==================="+str(resultDRfilename)+"复制结束===\n")
                 self.Text.update()
                 self.Text.see(END)
             #self.e.set("复制结束：结果已输出至 DR_output.txt")

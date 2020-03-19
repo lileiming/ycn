@@ -5,6 +5,7 @@
 import tkinter
 from tkinter import *
 from tkinter import ttk
+from sys import argv
 #===================自定义模块==============================
 import YokoRead
 import PVI_GR    #流程图复制工具
@@ -14,6 +15,7 @@ import PVI_invter   #截图反色工具
 import Out_DrFile #DR文件自动导出
 import TagReplaceTool #快速替换工具
 import TaglistTool #Tag_list维护工具
+
 
 class myWindow():
     def __init__(self, root, myTitle, flag):
@@ -82,10 +84,18 @@ class Windows_NODE():
     pass
 
 if __name__ == "__main__":
+    try:
+        str_ = argv[1]
+    except:
+        str_ = ''
     root = Tk()
     root.geometry('640x400+100+200')  # 窗口尺寸
     Windows_NODE(root)
-    limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+    #limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+    if str_ != '-S':
+        limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+    else:
+        limit_time = '3020/1/1'
     root.title("组态工具箱 V0.1"+"    到期日:"+limit_time)
     root.mainloop()
     pass

@@ -43,6 +43,7 @@ from tkinter import filedialog
 import YokoRead
 from time import sleep
 from YokoRead import time_Decorator,thread_Decorator
+from sys import argv
 #计时装饰器
 
 class Windows_NODE(YokoRead._FILE_NODE_):
@@ -50,7 +51,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.master = master
         self.here = os.getcwd()
         self.initWidgets()
-        help_doc = 'Don\'t Repeat Youself!!\n 懒惰、不耐烦、傲慢 程序员的三大美德！'
+        help_doc = 'Don\'t Repeat Youself!!\n '
         self.Text.insert('insert', help_doc)
 
     def initWidgets(self):
@@ -359,12 +360,18 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             pass
 
 if __name__ == "__main__":
+    try:
+        str_ = argv[1]
+    except:
+        str_ = ''
     root = Tk()
-    root.geometry('640x600')  # 窗口尺寸
+    root.geometry('640x600+100+200')  # 窗口尺寸
     Windows_NODE(root)
-    limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+    #limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+    if str_ != '-S':
+        limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+    else:
+        limit_time = '3020/1/1'
     root.title("Tag_list维护工具  Ver1.0"+"    到期日:"+limit_time)
-
     root.mainloop()
-     
-        
+    pass
