@@ -191,49 +191,72 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                 ### Name
                         if 'ETAG' in i:
                             ETAG = i['ETAG']
-                            inValue = self.get_linestr(sample_content, model, 'ETAG')
-                            outValue = ":ETAG:1:"+ETAG+";"
-                            line = line.replace (inValue,outValue)
+                            # inValue = self.get_linestr(sample_content, model, 'ETAG')
+                            # outValue = ":ETAG:1:"+ETAG+";"
+                            # line = line.replace (inValue,outValue)
 
                             inValue = self.get_linestr(sample_content,'PIO','RCNC')
                             outValue = ":RCNC:1::"+ETAG+".IN:O;"
                             line = line.replace (inValue,outValue)
-                ### 注释
-                        if 'ETCM' in i:
-                            ETCM = i['ETCM']
-                            inValue = self.get_linestr(sample_content, model, 'ETCM')
-                            outValue = ":ETCM:1:"+ETCM+";"
-                            line = line.replace (inValue,outValue)
+
+
                 ### PIO地址
                         if 'CNCT' in i:
                             CNCT = i['CNCT']
-                            inValue = self.get_linestr(sample_content, model, 'CNCT')
-                            outValue = ":CNCT:1:IN:"+CNCT+":I;"
-                            line = line.replace (inValue,outValue)
+                            # inValue = self.get_linestr(sample_content, model, 'CNCT')
+                            # outValue = ":CNCT:1:IN:"+CNCT+":I;"
+                            # line = line.replace (inValue,outValue)
 
                             inValue = self.get_linestr(sample_content, 'PIO', 'RTAG')
                             outValue = ":RTAG:1:"+CNCT+";"
                             line = line.replace (inValue,outValue)
+
+
+                        index_A = ['ETCM', 'EUNT', 'ESCL', 'SSI!','CNCT','ETAG']
+                        index_B = [':ETCM:1:' + i[index_A[0]] + ';',
+                                   ":EUNT:1:" + i[index_A[1]] + ";",
+                                   ":ESCL:1:" + i[index_A[2]] + ";",
+                                   ":SSI!:1:" + i[index_A[3]] + ":106.25:-6.25;",
+                                   ":CNCT:1:IN:"+i[index_A[4]]+":I;",
+                                   ":ETAG:1:"+i[index_A[5]]+";"]
+
+                        def foo(index_A, index_B, line):
+                            line_ = line
+                            for item in range(len(index_A)):
+                                #print(index_A[item], index_B[item], item)
+                                if index_A[item] in i:
+                                    inValue = self.get_linestr(sample_content, model, index_A[item])
+                                    line_ = line_.replace(inValue, index_B[item])
+                                pass
+                            return line_
+
+                        line = foo(index_A, index_B, line)
+                ### 注释
+                        # if 'ETCM' in i:
+                        #     ETCM = i['ETCM']
+                        #     inValue = self.get_linestr(sample_content, model, 'ETCM')
+                        #     outValue = ":ETCM:1:"+ETCM+";"
+                        #     line = line.replace (inValue,outValue)
                 ### 量程
-                        if 'LO' in i and 'HI' in i:
-                            LO = i['LO']
-                            HI = i['HI']
-                            inValue = self.get_linestr(sample_content, model, 'HI')
-                            outValue = ":ESCL:1:" + str(HI) + ":" + str(LO) + ";"
-                            line = line.replace(inValue, outValue)
+                        # if 'LO' in i and 'HI' in i:
+                        #     LO = i['LO']
+                        #     HI = i['HI']
+                        #     inValue = self.get_linestr(sample_content, model, 'HI')
+                        #     outValue = ":ESCL:1:" + str(HI) + ":" + str(LO) + ";"
+                        #     line = line.replace(inValue, outValue)
                 ### 单位
-                        if 'UNIT' in i:
-                            UNIT = i['UNIT']
-                            inValue = self.get_linestr(sample_content, model, 'EUNT')
-                            outValue = ":EUNT:1:" + UNIT + ";"
-                            line = line.replace(inValue, outValue)
+                        # if 'EUNT' in i:
+                        #     EUNT = i['EUNT']
+                        #     inValue = self.get_linestr(sample_content, model, 'EUNT')
+                        #     outValue = ":EUNT:1:" + EUNT + ";"
+                        #     line = line.replace(inValue, outValue)
                 ### 比例系数
-                        if 'SSIK' in i and 'SSIB' in i:
-                            SSIK = i['SSIK']
-                            SSIB = i['SSIB']
-                            inValue = self.get_linestr(sample_content, model, 'SSI!')
-                            outValue = ":SSI!:1:" + str(SSIK) + ":" + str(SSIB) + ":106.25:-6.25;"
-                            line = line.replace(inValue, outValue)
+                        # if 'SSIK' in i and 'SSIB' in i:
+                        #     SSIK = i['SSIK']
+                        #     SSIB = i['SSIB']
+                        #     inValue = self.get_linestr(sample_content, model, 'SSI!')
+                        #     outValue = ":SSI!:1:" + str(SSIK) + ":" + str(SSIB) + ":106.25:-6.25;"
+                        #     line = line.replace(inValue, outValue)
                 ### 写入文件
                         resultfile.write(line)
                         pass
@@ -253,10 +276,10 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         pass
 
     def get_linestr(self,ds,model,CODE):
-        funrm = ['PVI','SI-1ALM']
+        furm = ['PVI','SI-1ALM']
         fref = ['PIO']
         find_all_str =''
-        if model in funrm:
+        if model in furm:
             find_all_str = r':FNRM\n([\w\W]*)::FNRM'
             pass
         if model in fref:
