@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 #!/usr/bin/python
-# python 3.7
-#==========================================================
-#lileiming@me.com
-#==========================================================
+# python 3.8
+# ==========================================================
+# lileiming@me.com
+# ==========================================================
 import xlrd
 import time
 import tkinter.messagebox
@@ -122,6 +122,7 @@ class _FILE_NODE_:
     #     t.start()
     #     # 阻塞--卡死界面！
 
+
 def time_Decorator(func):
     def wrapper(self,*args):
         startTime = time()
@@ -130,6 +131,7 @@ def time_Decorator(func):
         msecs = (endTime - startTime)*1000
         print("time is %d ms" %msecs)
     return wrapper
+
 
 def thread_Decorator(func):
     def wrapper(self, *args):

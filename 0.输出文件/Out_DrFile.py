@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 #!/usr/bin/python
-# python 3.7
+# python 3.8
 #==========================================================
 # Rev01
 # 基本实现 导出DR文件的自动化流程
@@ -72,12 +72,17 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         pass
 
     def text_update(self,show):
-        if show == '0':
-            self.Text.insert(END, '==============导出结束============\n')
+        if show == 'START_':
+            self.Text.insert(END, "=============程序开始=============\n")
+        elif show == 'STOP_':
+            self.Text.insert(END, "=============程序结束=============\n")
         else:
-            self.Text.insert(END,'错误信息: '+ show + '\n')
+            self.Text.insert(END,show)
+            self.Text.insert(END, "=============程序终止=============\n")
+
         self.Text.update()
         self.Text.see(END)
+
 
     def all_windows_name(self,hwnd, mouse):
         if IsWindow(hwnd) and IsWindowEnabled(hwnd) and IsWindowVisible(hwnd):
@@ -107,6 +112,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         else:
             err_text = "Control Drawing Builder is not Open !1\n"
             self.text_update(err_text)
+
             exit()
 
     def close_dr_builder(self):
@@ -161,7 +167,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         #self.press_key(Key.enter)
 
     def circuit(self,count):   #循环流程
-        self.Text.insert(END, '==============导出开始============\n')
+        self.text_update('START_')
         for _ in range(count):
             self.__delay(1)
             self.command()
@@ -173,7 +179,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             self.__delay(1)
             self.press_key(Key.down,Key.enter)
 
-        self.text_update('0')
+        self.text_update('STOP_')
 
     def scan_windows(self,hwnd, mous):
         #遍历所有打开窗口

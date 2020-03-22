@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 #!/usr/bin/python
-# python 3.7
+# python 3.8
 #==========================================================
 # Rev01
 # 实现截图反色及转换为PNG格式
@@ -25,7 +25,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                    'WIN+R 输入 regedit \n' \
                    '找到 HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\YOKOGAWA\CS3K\HIS\PRINTER\HDCPCNT\n' \
                    '将HDCPCNT 的原来的值（10进制）修改即可\n'
-        self.Text.insert('insert',help_doc)
+        self.text_update(help_doc)
         pass
 
     def initWidgets(self):
@@ -80,8 +80,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
     @thread_Decorator
     @time_Decorator
     def command(self):
-        self.Text.insert(END, "==============转换开始============\n")
-        self.Text.update()
+        self.text_update('START_')
         path = self.entry.get()
         bmp_in_files = os.listdir(path)
         for _bmp in bmp_in_files:
@@ -97,17 +96,9 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             else:
                 png_name = bmp_name
             cv.imwrite(png_name, self.inver_bmp)
-            self.text_update(png_name)
-        self.text_update('0')
+            self.text_update('INFO: '+ png_name + " 转换结束\n")
+        self.text_update('STOP_')
         sleep(1)
-
-    def text_update(self,show):
-        if show == '0':
-            self.Text.insert(END, "==============转换结束============\n")
-        else:
-            self.Text.insert(END,'INFO: '+ show + " 转换结束\n")
-        self.Text.update()
-        self.Text.see(END)
 
     def inverse_color(self,image):
         height,width,temp = image.shape
@@ -127,7 +118,20 @@ class Windows_NODE(YokoRead._FILE_NODE_):
       #释放窗口
       #cv.destroyAllWindows()
 
-    def foo(self):
+    def text_update(self,show):
+        if show == 'START_':
+            self.Text.insert(END, "=============程序开始=============\n")
+        elif show == 'STOP_':
+            self.Text.insert(END, "=============程序结束=============\n")
+        else:
+            self.Text.insert(END,show)
+            pass
+        self.Text.update()
+        self.Text.see(END)
+        #self.text_update('STOP_')
+        pass
+
+    def foo(self):  #未启用
         path = self.entry.get()
         dirnum = len([lists for lists in os.listdir(path) if os.path.isdir(os.path.join(path, lists))])
         filenum = len([lists for lists in os.listdir(path) if os.path.isfile(os.path.join(path, lists))])

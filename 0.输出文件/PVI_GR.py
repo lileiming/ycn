@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 #!/usr/bin/python
-# python 3.7
+# python 3.8
 #==========================================================
 
 # Rev01
@@ -38,7 +38,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                    '1.通过参考文档按钮选择需要复制的流程图样本，默认为GRtemp.xaml。\n' \
                    '2.通过按钮选择数据列表文件，使用下拉菜单选择相对应的表格（sheet）.\n' \
                    '3.点击开始按钮执行程序复制.\n'
-        self.Text.insert('insert', help_doc)
+        self.text_update(help_doc)
         pass
 
     def initWidgets(self):
@@ -143,9 +143,8 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             LeftData = (re.findall(r'Canvas.Left="\w+"',alls))
             TopData = (re.findall(r'Canvas.Top="\w+"',alls))
             LeftDataCount = 0
-            self.Text.delete(0.0, END)
-            self.Text.insert('insert', "=============转换开始===============\n")
-            self.Text.update()
+            #self.Text.delete(0.0, END)
+            self.text_update('START_')
             datalist = list(self.get_data_Tag(modbusList,listSheet))
             datalist_tag = tuple(datalist[0].values())
 
@@ -179,29 +178,35 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                 line = line.replace (inValue,outValue)
                 LeftDataCount += 1
                 pass
-                self.Text.insert('insert','INFO: '+ TAG + " 转换结束\n")
-                self.Text.update()
-                self.Text.see(END)
+                self.text_update('INFO: '+ TAG + " 转换结束\n")
 
                 OutFile.write(line) #写入内容
                 OutFile.write("\n")
             OutFile.write(foot)#写入底部
-            self.Text.insert('insert', "转换结束：结果已输出至 DR_output.xaml")
-            self.Text.see(END)
+            self.text_update("结果已输出至 DR_output.xaml")
+            self.text_update('STOP_')
 
         except FileNotFoundError as e:
-            self.Text.insert('insert', e)
-            self.Text.update()
-            self.Text.see(END)
+            self.text_update(e)
         except UnicodeDecodeError as e:
-            self.Text.insert('insert', e)
-            self.Text.update()
-            self.Text.see(END)
+            self.text_update(e)
         except  IndexError :
             err = "\n错误提示：确认复制元素是否Group"
-            self.Text.insert('insert', err)
+            self.text_update(err)
         sleep(2)
 
+    def text_update(self,show):
+        if show == 'START_':
+            self.Text.insert(END, "=============程序开始=============\n")
+        elif show == 'STOP_':
+            self.Text.insert(END, "=============程序结束=============\n")
+        else:
+            self.Text.insert(END,show)
+            pass
+        self.Text.update()
+        self.Text.see(END)
+        #self.text_update('STOP_')
+        pass
 if __name__ == "__main__":
     root = Tk()
     root.geometry('640x400')  # 窗口尺寸

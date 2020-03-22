@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 #!/usr/bin/python
-# python 3.7
+# python 3.8
 #==========================================================
 # Rev01
 # 基本实现 量程和单位的替换
@@ -19,92 +19,7 @@ import YokoRead   #自定义模块
 from time import sleep
 from YokoRead import time_Decorator,thread_Decorator
 
-
-class PROCESS_NODE(YokoRead._FILE_NODE_):
-    # 处理模块
-    def __init1__(self,excel_fn,sheet_n,path):
-        self.excel_file_name = excel_fn
-        self.sheet_name = sheet_n
-        self.path0 = path
-        self.recording = []
-
-    def find_keyword(self,txt_file):
-        #寻找关键字
-        self.txt_file = txt_file
-        self.file_detail = self.read_txt(self.txt_file)
-        #print(file_detail)
-        self.find_result = (re.findall(r':FNRM([\w\W]*?)::FNRM', self.file_detail))
-
-    def process_key(self):
-        #处理关键字
-        file_name = self.excel_file_name
-        sheet_name = self.sheet_name
-
-        for i in self.get_data(file_name, sheet_name):
-            self.tag_key = i['TAG']
-            lower = i['LOWER']
-            upper = i['UPPER']
-            unit  = i['UNIT']
-            valid4= self.valid_node(lower,upper)
-            self.range_rep(valid4[1],valid4[0],unit)
-
-    def valid_node(self,lower_input, upper_input):
-        # input = 0.0
-        output = []
-        upper_input1 = float(upper_input)
-        lower_input1 = float(lower_input)
-
-        if upper_input1 < 10:
-            output.append("{:.3f}".format(lower_input1))
-            output.append("{:.3f}".format(upper_input1))
-        if 10 <= upper_input1 < 100:
-            output.append("{:.2f}".format(lower_input1))
-            output.append("{:.2f}".format(upper_input1))
-        if 100 <= upper_input1:
-            output.append("{:.1f}".format(lower_input1))
-            output.append("{:.1f}".format(upper_input1))
-        return output
-
-    def range_rep(self,upper,lower,unit):
-        #量程单位处理子程序
-        # Condition 1:
-        #range_key = 'ESCL:1:100.0:0.0;'
-        # Condition 2:
-        #unit_key = 'EUNT:1:%;'
-        for _ in self.find_result:
-            #print(_)
-            tag = self.tag_key +';'
-            if tag in _:                #有TAG再处理
-                #print(self.tag_key)
-        # Condition 1:
-                if re.search(r'ESCL:([\w\W]*?);', _, flags=0) != None:
-                    range_key = re.search(r'ESCL:([\w\W]*?);', _, flags=0).group(0)
-                    range_new_key = 'ESCL:1:' + str(upper) + ':' + str(lower) + ';'
-                    #print(range_key,range_new_key)
-                    self.good_result = str(_).replace(range_key, range_new_key, 1)
-        # Condition 2:
-                if re.search(r'EUNT:([\w\W]*?);', _, flags=0) != None:
-                    unit_key = re.search(r'EUNT:([\w\W]*?);', _, flags=0).group(0)
-                    unit_new_key = 'EUNT:1:' + str(unit) + ';'
-                    self.good_result = (self.good_result).replace(unit_key,unit_new_key,1)
-        #替换完结果：
-                #print(self.good_result)
-                if re.search(r'ESCL:([\w\W]*?);', _, flags=0) != None:
-                    self.file_detail = self.file_detail.replace(_,self.good_result,1)
-                    self.recording.append(self.txt_file_name)  #记录处理过的文件
-        self.out_txt(self.outtxt,self.file_detail)
-
-    def process_out(self):
-        txt_in_files = os.listdir(self.path0)
-        for _txt in txt_in_files:
-            self.txt_file_name = self.path0 + '/' +_txt
-            self.outtxt =  self.path0 + '/' + 'OUT-' +_txt
-            if self.txt_file_name.find('OUT')<0:
-            #屏蔽掉之前输出的结果
-                self.find_keyword(self.txt_file_name)
-                self.process_key()
-
-class Windows_NODE(PROCESS_NODE):
+class Windows_NODE(YokoRead._FILE_NODE_):
     def __init__(self, master):
         self.master = master
         self.here = os.getcwd()
@@ -114,7 +29,8 @@ class Windows_NODE(PROCESS_NODE):
                    '1.通过按钮选择需要替换的DR文件目录，默认为IN目录。\n' \
                    '2.通过按钮选择数据列表文件，使用下拉菜单选择相对应的表格（sheet）.\n' \
                    '3.点击按钮开始执行量程替换\n\n'
-        self.Text.insert('insert',help_doc)
+        self.text_update(help_doc)
+
 
     def initWidgets(self):
         # 创建顶部
@@ -163,6 +79,7 @@ class Windows_NODE(PROCESS_NODE):
         path1 = path0+'/'
         self.entry.delete(0, END)
         self.entry.insert('insert', path1)
+        pass
 
     def open_file2(self):
         file_path = filedialog.askopenfilename(title=u'选择数据列表', initialdir=self.here)
@@ -173,15 +90,7 @@ class Windows_NODE(PROCESS_NODE):
         sheetNameT = tuple(sheetName)
         self.comboxlist["values"] = sheetNameT
         self.comboxlist.current(0)
-
-    def print_record(self):
-        #打印替换的文件
-        record = set(self.recording)
-        for _ in record:
-            if re.search(r'DR([\w\W]*?)txt', _, flags=0) != None:
-                shortname = re.search(r'DR([\w\W]*?)txt', _, flags=0).group(0)
-                self.Text.insert('insert','INFO: '+ shortname + " 转换结束\n")
-                self.Text.update()
+        pass
 
     @thread_Decorator
     @time_Decorator
@@ -192,11 +101,124 @@ class Windows_NODE(PROCESS_NODE):
         self.__init1__(excelname,listSheet,path)
         self.process_out()
         self.print_record()
+        self.text_update('STOP_')
         sleep(2)
+        pass
 
+    # 处理模块
+    def __init1__(self,excel_fn,sheet_n,path):
+        self.excel_file_name = excel_fn
+        self.sheet_name = sheet_n
+        self.path0 = path
+        self.recording = []
+        pass
+
+    def process_out(self):
+        txt_in_files = os.listdir(self.path0)
+        self.text_update('START_')
+        for _txt in txt_in_files:
+            self.txt_file_name = self.path0 + '/' +_txt
+            self.outtxt =  self.path0 + '/' + 'OUT-' +_txt
+            if self.txt_file_name.find('OUT')<0:
+            #屏蔽掉之前输出的结果
+                self.find_keyword(self.txt_file_name)
+                self.process_key()
+                pass
+            pass
+        pass
+
+    def find_keyword(self,txt_file):
+        #寻找关键字
+        self.txt_file = txt_file
+        self.file_detail = self.read_txt(self.txt_file)
+        self.find_result = (re.findall(r':FNRM([\w\W]*?)::FNRM', self.file_detail))
+        pass
+
+    def process_key(self):
+        #处理关键字
+        file_name = self.excel_file_name
+        sheet_name = self.sheet_name
+        for i in self.get_data(file_name, sheet_name):
+            self.tag_key = i['TAG']
+            lower = i['LOWER']
+            upper = i['UPPER']
+            unit  = i['UNIT']
+            valid4= self.valid_node(lower,upper)
+            self.range_rep(valid4[1],valid4[0],unit)
+            pass
+        pass
+
+    def valid_node(self,lower_input, upper_input):
+        # input = 0.0
+        output = []
+        upper_input1 = float(upper_input)
+        lower_input1 = float(lower_input)
+
+        if upper_input1 < 10:
+            output.append("{:.3f}".format(lower_input1))
+            output.append("{:.3f}".format(upper_input1))
+        if 10 <= upper_input1 < 100:
+            output.append("{:.2f}".format(lower_input1))
+            output.append("{:.2f}".format(upper_input1))
+        if 100 <= upper_input1:
+            output.append("{:.1f}".format(lower_input1))
+            output.append("{:.1f}".format(upper_input1))
+        return output
+
+    def range_rep(self,upper,lower,unit):
+        #量程单位处理子程序
+        # Condition 1:
+        #range_key = 'ESCL:1:100.0:0.0;'
+        # Condition 2:
+        #unit_key = 'EUNT:1:%;'
+        for _ in self.find_result:
+            tag = self.tag_key +';'
+            if tag in _:                #有TAG再处理
+        # Condition 1:
+                if re.search(r'ESCL:([\w\W]*?);', _, flags=0) != None:
+                    range_key = re.search(r'ESCL:([\w\W]*?);', _, flags=0).group(0)
+                    range_new_key = 'ESCL:1:' + str(upper) + ':' + str(lower) + ';'
+                    #print(range_key,range_new_key)
+                    self.good_result = str(_).replace(range_key, range_new_key, 1)
+                    pass
+        # Condition 2:
+                if re.search(r'EUNT:([\w\W]*?);', _, flags=0) != None:
+                    unit_key = re.search(r'EUNT:([\w\W]*?);', _, flags=0).group(0)
+                    unit_new_key = 'EUNT:1:' + str(unit) + ';'
+                    self.good_result = (self.good_result).replace(unit_key,unit_new_key,1)
+                    pass
+        #替换完结果：
+                if re.search(r'ESCL:([\w\W]*?);', _, flags=0) != None:
+                    self.file_detail = self.file_detail.replace(_,self.good_result,1)
+                    filepath, fullflname = os.path.split(self.txt_file_name) #记录处理过的文件
+                    self.recording.append(fullflname)
+                    pass
+            pass
+        self.out_txt(self.outtxt,self.file_detail)
+        pass
+
+    def print_record(self):
+        #打印替换的文件
+        record = set(self.recording) #set 去掉重复值
+        for _ in record:
+            if re.search(r'DR([\w\W]*?)txt', _ , flags=0) != None:
+                shortname = re.search(r'DR([\w\W]*?)txt', _, flags=0).group(0)
+                self.text_update('INFO:'+ shortname + " 转换结束\n")
+        pass
+
+    def text_update(self,show):
+        if show == 'START_':
+            self.Text.insert(END, "=============程序开始=============\n")
+        elif show == 'STOP_':
+            self.Text.insert(END, "=============程序结束=============\n")
+        else:
+            self.Text.insert(END,show)
+        self.Text.update()
+        self.Text.see(END)
+        #self.text_update('START_')
+        pass
 
 if __name__ == "__main__":
- 
         root = Tk()
         root.title("量程替换工具 V1.00")
         root.geometry('640x400')  # 窗口尺寸

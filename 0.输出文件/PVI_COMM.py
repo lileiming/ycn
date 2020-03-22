@@ -1,8 +1,7 @@
 # -*- coding:utf-8 -*-
 #!/usr/bin/python
-# python 3.7
+# python 3.8
 #==========================================================
-
 # Rev01
 # 读取模板
 
@@ -23,7 +22,6 @@ import YokoRead   #自定义模块
 from time import sleep
 from YokoRead import time_Decorator,thread_Decorator
 
-
 class Windows_NODE(YokoRead._FILE_NODE_):
     def __init__(self, master):
         self.master = master
@@ -33,8 +31,8 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                    '使用方法：\n' \
                    '1.通过参考文档按钮选择需要复制的DR文件，默认为DR_template.txt。\n' \
                    '2.通过按钮选择数据列表文件，使用下拉菜单选择相对应的表格（sheet）.\n' \
-                   '3.点击开始按钮执行程序复制'
-        self.Text.insert('insert', help_doc)
+                   '3.点击开始按钮执行程序复制.\n'
+        self.text_update(help_doc)
         pass
 
     def initWidgets(self):
@@ -114,9 +112,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             #剥离结果
             head = sample_stripping_head[0]
             foot ="::::SOURCE"
-
-            self.Text.delete(0.0,END)
-            self.Text.insert('insert', "=============复制开始===============\n")
+            self.text_update('START_')
             #================
             model = 'PVI'
             #================
@@ -198,8 +194,6 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                             inValue = self.get_linestr(sample_content,'PIO','RCNC')
                             outValue = ":RCNC:1::"+ETAG+".IN:O;"
                             line = line.replace (inValue,outValue)
-
-
                 ### PIO地址
                         if 'CNCT' in i:
                             CNCT = i['CNCT']
@@ -211,7 +205,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                             outValue = ":RTAG:1:"+CNCT+";"
                             line = line.replace (inValue,outValue)
 
-
+                ### 多个数据类型
                         index_A = ['ETCM', 'EUNT', 'ESCL', 'SSI!','CNCT','ETAG']
                         index_B = [':ETCM:1:' + i[index_A[0]] + ';',
                                    ":EUNT:1:" + i[index_A[1]] + ";",
@@ -223,7 +217,6 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                         def foo(index_A, index_B, line):
                             line_ = line
                             for item in range(len(index_A)):
-                                #print(index_A[item], index_B[item], item)
                                 if index_A[item] in i:
                                     inValue = self.get_linestr(sample_content, model, index_A[item])
                                     line_ = line_.replace(inValue, index_B[item])
@@ -261,13 +254,12 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                         resultfile.write(line)
                         pass
             ### Text显示
-                    self.Text.insert('insert', ">>>"+ETAG+"\n")
-                    self.Text.update()
+                    self.text_update(">>>"+ETAG+"\n")
                 resultfile.write(foot)
-                self.Text.insert('insert', "==================="+str(resultDRfilename)+"复制结束===\n")
-                self.Text.update()
-                self.Text.see(END)
+                self.text_update("=============导出文件:"+str(resultDRfilename)+"\n")
+
             #self.e.set("复制结束：结果已输出至 DR_output.txt")
+            self.text_update('STOP_')
         except FileNotFoundError as e:
             self.e.set(e)
         except UnicodeDecodeError as e:
@@ -281,15 +273,44 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         find_all_str =''
         if model in furm:
             find_all_str = r':FNRM\n([\w\W]*)::FNRM'
+            for _ in re.split(r'[\n]\s*', re.findall(find_all_str, ds)[0]):
+                if CODE in _:
+                    find_all_str = re.findall(r'(:[\w\W]*;)', str(_))[0]
+                pass
             pass
+        pass
         if model in fref:
-            find_all_str = r':FREF\n([\w\W]*)::FREF'
+            find_all_str = r':FREF\n([\w\W]*?)::FREF'
+            for find_at in re.findall(find_all_str, ds):
+                #print(find_at)
+                if "@1" in find_at:
+                    for _ in re.split(r'[\n]\s*', find_at):
+                        if CODE in _:
+                            find_all_str = re.findall(r'(:[\w\W]*;)', str(_))[0]
+                        pass
+                    pass
+                pass
+                if "@2" in find_at:
+                    print("@2")
+                pass
             pass
-        for _ in re.split(r'[\n]\s*', re.findall(find_all_str, ds)[0]):
-            if CODE in _:
-                find_all_str = re.findall(r'(:[\w\W]*;)',str(_))[0]
+        pass
         return  find_all_str
         pass
+
+    def text_update(self,show):
+        if show == 'START_':
+            self.Text.insert(END, "=============程序开始=============\n")
+        elif show == 'STOP_':
+            self.Text.insert(END, "=============程序结束=============\n")
+        else:
+            self.Text.insert(END,show)
+            pass
+        self.Text.update()
+        self.Text.see(END)
+        #self.text_update('STOP_')
+        pass
+
 
 if __name__ == "__main__":
     root = Tk()
