@@ -15,7 +15,7 @@ import PVI_invter  # 截图反色工具
 import Out_DrFile  # DR文件自动导出
 import TagReplaceTool  # 快速替换工具
 import TaglistTool  # Tag_list维护工具
-
+import PVI_TUN  # TUNING参数修改辅助工具
 
 class myWindow():
     def __init__(self, root, myTitle, flag):
@@ -39,6 +39,8 @@ class myWindow():
             self.top.geometry('640x600+100+200')
             TaglistTool.Windows_NODE(self.top)
         elif flag == 8:
+            PVI_TUN.Windows_NODE(self.top)
+        elif flag == 9:
             Label(self.top, text='Qiang.li@cn.yokogawa.com').pack(fill=X, expand=1)
         pass
 
@@ -62,6 +64,7 @@ class Windows_NODE:
                  'DR文件自动导出工具',
                  'Tag快速替换工具',
                  'TagList维护工具',
+                 'TUNING参数修改辅助工具',
                  '预留']
         for i in range(len(title)):
             self.button_app(title[i], i + 1)
