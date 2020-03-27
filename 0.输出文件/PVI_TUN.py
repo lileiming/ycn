@@ -71,49 +71,35 @@ class Windows_NODE(YokoRead._FILE_NODE_):
     @thread_Decorator
     @time_Decorator
     def command(self):
-        self.excel_file_name = self.entry2.get()
-        self.sheet_name = self.comboxlist.get()
-        #处理关键字
+        #开始
         self.text_update('START_')
-        file_name = self.excel_file_name
-        sheet_name = self.sheet_name
-        filepath, fullflname = os.path.split(file_name)
-        self.outtxt = os.path.join(filepath, 'OUT.txt')
-        line =''
-
+        #读取界面 文件信息
+        file_name = self.entry2.get()
+        sheet_name = self.comboxlist.get()
+        # 文本生成
+        line = ''
+        line2 = '\n'
+        Keywords= list(next(self.get_data_Tag(file_name, sheet_name)))
         for i in self.get_data(file_name, sheet_name):
-            tag_index = i['ZZZ']
-            tag_key = i['TAG']
-            tag_func = i['FUNC']
-            tag_hh = i['HH']
+            tag_index = i[Keywords[0]]
+            tag_key = i[Keywords[1]]
+            tag_func = i[Keywords[2]]
             line = line +'global block '+ tag_func +' ' +tag_index +' alias '+ tag_key+'\n'
             # global block PVI TAG83 alias 6200PIC11102A
-            pass
-
-        line = line + '\n'
-
-        for i in self.get_data(file_name, sheet_name):
-            tag_index = i['ZZZ']
-            tag_hh = str(i['HH'])
-            tag_hi = str(i['PH'])
-            tag_lo = str(i['PL'])
-            tag_ll = str(i['LL'])
-
-            if (tag_hh != ''):
-                line = line + tag_index +'.HH = '+ tag_hh+'\n'
-            if (tag_hi != ''):
-                line = line + tag_index +'.PH = '+ tag_hi+'\n'
-            if (tag_lo != ''):
-                line = line + tag_index +'.PL = '+ tag_lo+'\n'
-            if (tag_ll != ''):
-                line = line + tag_index +'.LL = '+ tag_ll+'\n'
-            # TAG01.HH = 11.0
+            for item in Keywords[3:]: #从第4项开始为TAG.ITEM
+                tag_item = str(i[item])
+                if tag_item != "" :
+                    line2 = line2 + tag_index +'.'+ item + ' = '+ tag_item +'\n'
+                    # TAG01.HH = 11.0
+                    pass
             self.text_update('>>>>' + tag_key + '\n')
             pass
-
-
+        line = line + line2
+        # 文本写入
+        filepath, fullflname = os.path.split(file_name)
+        self.outtxt = os.path.join(filepath, 'OUT.txt')
         self.out_txt(self.outtxt, line)
-        #print(line)
+        #结束
         self.text_update('STOP_')
         sleep(2)
         pass

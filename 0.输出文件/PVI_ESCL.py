@@ -95,10 +95,6 @@ class Windows_NODE(YokoRead._FILE_NODE_):
     @thread_Decorator
     @time_Decorator
     def command(self):
-        path = self.entry.get()
-        excelname = self.entry2.get()
-        listSheet = self.comboxlist.get()
-        self.__init1__(excelname,listSheet,path)
         self.process_out()
         self.print_record()
         self.text_update('STOP_')
@@ -106,14 +102,11 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         pass
 
     # 处理模块
-    def __init1__(self,excel_fn,sheet_n,path):
-        self.excel_file_name = excel_fn
-        self.sheet_name = sheet_n
-        self.path0 = path
-        self.recording = []
-        pass
-
     def process_out(self):
+        self.excel_file_name = self.entry2.get()
+        self.sheet_name = self.comboxlist.get()
+        self.path0 = self.entry.get()
+        self.recording = []
         txt_in_files = os.listdir(self.path0)
         self.text_update('START_')
         for _txt in txt_in_files:
