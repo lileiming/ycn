@@ -62,9 +62,9 @@ class Windows_NODE:
                  '量程修改工具',
                  '截图反色工具',
                  'DR文件自动导出工具',
-                 'Tag快速替换工具',
-                 'TagList维护工具',
-                 'TUNING参数修改辅助工具',
+                 'TAG替换工具',
+                 'IOlist维护工具',
+                 'TUNING参数修改工具',
                  '预留']
         for i in range(len(title)):
             self.button_app(title[i], i + 1)

@@ -188,21 +188,21 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             #print(type(GetClassName(hwnd)))
         #pass
 
-    def active_(self):  #未使用
-        # 打开其他应用
-        shell = win32com.client.Dispatch("WScript.Shell")
-        #shell.SendKeys('%')
-        shell.Run("C:\CENTUMVP\program\BKHCallSysFunc O " + '18-PDISA-18103 TUN -SM')
-        #pass
-
-    def listener_(self): #未使用
-        def on_release(key):
-            #print('{0} released'.format(key))
-            if key == keyboard.Key.space:
-                return False
-
-        with keyboard.Listener(on_release=on_release) as listener:
-                listener.join()
+    # def active_(self):  #未使用
+    #     # 打开其他应用
+    #     shell = win32com.client.Dispatch("WScript.Shell")
+    #     #shell.SendKeys('%')
+    #     shell.Run("C:\CENTUMVP\program\BKHCallSysFunc O " + '18-PDISA-18103 TUN -SM')
+    #     #pass
+    #
+    # def listener_(self): #未使用
+    #     def on_release(key):
+    #         #print('{0} released'.format(key))
+    #         if key == keyboard.Key.space:
+    #             return False
+    #
+    #     with keyboard.Listener(on_release=on_release) as listener:
+    #             listener.join()
 
 if __name__ == "__main__":
 
