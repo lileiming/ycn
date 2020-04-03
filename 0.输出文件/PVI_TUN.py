@@ -84,12 +84,12 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             tag_index = i[Keywords[0]]
             tag_key = i[Keywords[1]]
             tag_func = i[Keywords[2]]
-            line = line +'global block '+ tag_func +' ' +tag_index +' alias '+ tag_key+'\n'
+            line = line +f'global block {tag_func} {tag_index} alias {tag_key}\n'
             # global block PVI TAG83 alias 6200PIC11102A
             for item in Keywords[3:]: #从第4项开始为TAG.ITEM
                 tag_item = str(i[item])
                 if tag_item != "" :
-                    line2 = line2 + tag_index +'.'+ item + ' = '+ tag_item +'\n'
+                    line2 = line2 + f'{tag_index}.{item}={tag_item}\n'
                     # TAG01.HH = 11.0
                     pass
             self.text_update('>>>>' + tag_key + '\n')

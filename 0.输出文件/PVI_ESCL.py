@@ -110,8 +110,8 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         txt_in_files = os.listdir(self.path0)
         self.text_update('START_')
         for _txt in txt_in_files:
-            self.txt_file_name = self.path0 + '/' +_txt
-            self.outtxt =  self.path0 + '/' + 'OUT-' +_txt
+            self.txt_file_name = f'{self.path0}/{_txt}'
+            self.outtxt =  f'{self.path0}/OUT-{_txt}'
             if self.txt_file_name.find('OUT')<0:
             #屏蔽掉之前输出的结果
                 self.find_keyword(self.txt_file_name)

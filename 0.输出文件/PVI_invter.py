@@ -91,12 +91,12 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             #self.show_img(self.inver_bmp)
             if self.intVar1.get():
                 split_bmpname = os.path.splitext(bmp_name)
-                png_name = split_bmpname[0] + '.png'
+                png_name = f'{split_bmpname[0]}.png'
                 pass
             else:
                 png_name = bmp_name
             cv.imwrite(png_name, self.inver_bmp)
-            self.text_update('INFO: '+ png_name + " 转换结束\n")
+            self.text_update(f'INFO:{png_name}转换结束\n')
         self.text_update('STOP_')
         sleep(1)
 

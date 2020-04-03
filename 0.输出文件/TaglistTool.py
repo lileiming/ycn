@@ -126,7 +126,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
     def change(self):
         self.entry2.delete(0, END)
         self.ckeckchange = self.intVar.get()
-        if (self.ckeckchange):
+        if self.ckeckchange:
             self.open_file2()
 
     def open_file(self):
@@ -155,7 +155,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.Text.delete(0.0, END)
         try:
             self.entry2.delete(0, END)
-            if (self.ckeckchange):
+            if self.ckeckchange:
                 file_path = self.entry.get()
             else:
                 file_path = filedialog.askopenfilename(title=u'选择数据列表', initialdir=self.here)
@@ -178,7 +178,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.comboxlist3["values"] = self.col2
         self.comboxlist3.current(0)
 
-        if (filename == filename0 and SheetName == SheetName0):
+        if filename == filename0 and SheetName == SheetName0:
             self.text_update("不是用重复文件\n")
         else:
             self.Text.delete(0.0, END)
@@ -230,14 +230,14 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             data = openpyxl.load_workbook(TExcleName)
             table = data.worksheets[TSheetNum]
 
-            while (TAG_index < len(list_TAG)):
+            while TAG_index < len(list_TAG):
                 TAG_XY = list_TAG[TAG_index]
                 # print TAG_XY
                 TAG_Z = newTAG[TAG_XY]
                 # print TAG_Z # 7.0
                 Nokey = dictTAG.get(TAG_XY, 0)  # 处理Yget 不存在的key
 
-                if (TAG_Z != "" and Nokey != 0):
+                if TAG_Z != "" and Nokey != 0:
                     # print(TAG_Z)
                     TAG_Z_OUT = str(TAG_Z) + '\n'
                     # Excel坐标============================================
@@ -247,7 +247,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                     NewTagCel_index = collist_list.index(NewTagcol_Str) + 1
                     # 替换Excel数据===============================================
                     TAG_ZZ = table.cell(NewTagRow_index, NewTagCel_index).value
-                    if (TAG_Z != TAG_ZZ):
+                    if TAG_Z != TAG_ZZ:
                         table.cell(NewTagRow_index, NewTagCel_index).value = TAG_Z
                         table.cell(NewTagRow_index, NewTagCel_index).fill = sty.PatternFill(fill_type='solid',
                                                                                             fgColor="00FFFF")  # 对更新数据进行标注颜色
@@ -308,13 +308,13 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             data = openpyxl.load_workbook(TExcleName)
             table = data.worksheets[TSheetNum]
 
-            while (TAG_index < len(list_TAG)):
+            while TAG_index < len(list_TAG):
                 TAG_XY = list_TAG[TAG_index]
                 # print TAG_XY
                 TAG_Z = newTAG[TAG_XY]
                 # print TAG_Z # 7.0
                 Nokey = dictTAG.get(TAG_XY, 0)  # 处理Yget 不存在的key
-                if (TAG_Z != "" and Nokey != 0):
+                if TAG_Z != "" and Nokey != 0:
 
                     # Excel坐标============================================
                     NewTagRow_Str = list_TAG[TAG_index][0]
@@ -324,7 +324,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                     # 替换Excel数据===============================================
                     TAG_ZZ = table.cell(NewTagRow_index, NewTagCel_index).value
                     # table.cell(NewTagRow_index,NewTagCel_index).value = TAG_Z
-                    if (TAG_Z != TAG_ZZ):
+                    if TAG_Z != TAG_ZZ:
                         # print (TAG_Z)
                         TAG_Z_OUT = str(TAG_Z) + '\n'
                         self.Text.insert('insert', TAG_Z_OUT)

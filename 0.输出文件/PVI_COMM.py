@@ -128,7 +128,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
 
             for No_page in range(page_num):
                 #处理开始resultfile
-                resultDRfilename = 'DR_output'+str(No_page)+'.txt'
+                resultDRfilename = f'DR_output{No_page}.txt'
                 resultDR = os.path.join(filepath, resultDRfilename)
                 resultfile = open(resultDR,'w')
                 resultfile.write(head)
@@ -150,15 +150,15 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                             pass
 
                         inValue = self.get_linestr(sample_content, model, 'CHKN')
-                        outValue = ":CHKN:1:"+str(CHKN)+";"
+                        outValue = f':CHKN:1:{CHKN};'
                         line = sample_stripping[0].replace (inValue,outValue)
 
                         inValue = self.get_linestr(sample_content, 'PIO', 'RCHK')
-                        outValue = ":RCHK:1:@"+str(CHKN)+";"
+                        outValue = f':RCHK:1:@{CHKN};'
                         line = line.replace (inValue,outValue)
 
                         inValue = self.get_linestr(sample_content, 'PIO', 'GCNC')
-                        outValue = ":GCNC:3:"+str(CHKN)+"$8,$6,8,AN;"
+                        outValue = f':GCNC:3:{CHKN}$8,$6,8,AN;'
                         line = line.replace (inValue,outValue)
                 ### 位置
                         if(CHKN>0 and CHKN<limit40+1):
@@ -173,46 +173,35 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                                 COW = math.floor(CHKN/10)-1
                                 PVIX= 9*150+50
                                 PVIY= 100+COW*200
-                            #print(str(PVIX)+"-"+str(PVIY))
                             inValue = self.get_linestr(sample_content,model,'GBLK')
-                            outValue = ":GBLK:"+str(PVIX)+","+str(PVIY)+":S1;"
+                            outValue = f':GBLK:{PVIX},{PVIY}:S1;'
                             line = line.replace (inValue,outValue)
-                            #print(outValue)
                             PIOX= PVIX - 36
                             PIOY= PVIY + 120
-                            #print(str(PIOX)+"-"+str(PIOY))
                             inValue = self.get_linestr(sample_content,'PIO','GBLK')
-                            outValue = ":GBLK:"+str(PIOX)+","+str(PIOY)+":S1:$5;"
+                            outValue = f':GBLK:{PIOX},{PIOY}:S1:$5;'
                             line = line.replace (inValue,outValue)
                 ### Name
                         if 'ETAG' in i:
                             ETAG = i['ETAG']
-                            # inValue = self.get_linestr(sample_content, model, 'ETAG')
-                            # outValue = ":ETAG:1:"+ETAG+";"
-                            # line = line.replace (inValue,outValue)
-
                             inValue = self.get_linestr(sample_content,'PIO','RCNC')
-                            outValue = ":RCNC:1::"+ETAG+".IN:O;"
+                            outValue = f':RCNC:1::{ETAG}.IN:O;'
                             line = line.replace (inValue,outValue)
                 ### PIO地址
                         if 'CNCT' in i:
                             CNCT = i['CNCT']
-                            # inValue = self.get_linestr(sample_content, model, 'CNCT')
-                            # outValue = ":CNCT:1:IN:"+CNCT+":I;"
-                            # line = line.replace (inValue,outValue)
-
                             inValue = self.get_linestr(sample_content, 'PIO', 'RTAG')
-                            outValue = ":RTAG:1:"+CNCT+";"
+                            outValue = f':RTAG:1:{CNCT};'
                             line = line.replace (inValue,outValue)
 
                 ### 多个数据类型
                         index_A = ['ETCM', 'EUNT', 'ESCL', 'SSI!','CNCT','ETAG']
-                        index_B = [':ETCM:1:' + i[index_A[0]] + ';',
-                                   ":EUNT:1:" + i[index_A[1]] + ";",
-                                   ":ESCL:1:" + i[index_A[2]] + ";",
-                                   ":SSI!:1:" + i[index_A[3]] + ":106.25:-6.25;",
-                                   ":CNCT:1:IN:"+i[index_A[4]]+":I;",
-                                   ":ETAG:1:"+i[index_A[5]]+";"]
+                        index_B = [f':ETCM:1:{i[index_A[0]]};',
+                                   f':EUNT:1:{i[index_A[1]]};',
+                                   f':ESCL:1:{i[index_A[2]]};',
+                                   f':SSI!:1:{i[index_A[3]]}:106.25:-6.25;',
+                                   f':CNCT:1:IN:{i[index_A[4]]}:I;',
+                                   f':ETAG:1:{i[index_A[5]]};']
 
                         def foo(index_A, index_B, line):
                             line_ = line
@@ -224,32 +213,6 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                             return line_
 
                         line = foo(index_A, index_B, line)
-                ### 注释
-                        # if 'ETCM' in i:
-                        #     ETCM = i['ETCM']
-                        #     inValue = self.get_linestr(sample_content, model, 'ETCM')
-                        #     outValue = ":ETCM:1:"+ETCM+";"
-                        #     line = line.replace (inValue,outValue)
-                ### 量程
-                        # if 'LO' in i and 'HI' in i:
-                        #     LO = i['LO']
-                        #     HI = i['HI']
-                        #     inValue = self.get_linestr(sample_content, model, 'HI')
-                        #     outValue = ":ESCL:1:" + str(HI) + ":" + str(LO) + ";"
-                        #     line = line.replace(inValue, outValue)
-                ### 单位
-                        # if 'EUNT' in i:
-                        #     EUNT = i['EUNT']
-                        #     inValue = self.get_linestr(sample_content, model, 'EUNT')
-                        #     outValue = ":EUNT:1:" + EUNT + ";"
-                        #     line = line.replace(inValue, outValue)
-                ### 比例系数
-                        # if 'SSIK' in i and 'SSIB' in i:
-                        #     SSIK = i['SSIK']
-                        #     SSIB = i['SSIB']
-                        #     inValue = self.get_linestr(sample_content, model, 'SSI!')
-                        #     outValue = ":SSI!:1:" + str(SSIK) + ":" + str(SSIB) + ":106.25:-6.25;"
-                        #     line = line.replace(inValue, outValue)
                 ### 写入文件
                         resultfile.write(line)
                         pass
