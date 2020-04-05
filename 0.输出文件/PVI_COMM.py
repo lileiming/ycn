@@ -39,7 +39,6 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         # 创建顶部
         top_frame = LabelFrame(self.master,text='参考文档',height = 150,width = 615)
         top_frame.pack(fill=X,padx=15,pady=0)
-        #top_frame.pack(fill=X,expand=YES,side=TOP,padx=15,pady=0)
         self.e1 = StringVar()
         self.entry = ttk.Entry(top_frame,width=65,textvariable = self.e1)
         self.e1.set("DR_template.txt")
@@ -54,7 +53,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.e2.set("modbus.xls")
         self.entry2.pack(fill=X,expand=YES,side=LEFT,pady=10)
         self.e3 = StringVar()
-        self.comboxlist=ttk.Combobox(mid_frame,width=15,textvariable = self.e3) 
+        self.comboxlist=ttk.Combobox(mid_frame,width=15,textvariable = self.e3)
         self.comboxlist.pack(side=LEFT)
         self.e3.set("DATE")
         ttk.Button(mid_frame, text='数据列表', command=self.open_file2).pack(side=LEFT)
@@ -73,9 +72,8 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         bot_frame = LabelFrame(self.master)
         bot_frame.pack(fill=X,side=TOP,padx=15,pady=8)
         self.e = StringVar()
-        #self.lable(bot_frame,text = '欢迎使用',width = 60,height = 20).pack(side=LEFT)
-        ttk.Label(bot_frame,width = 60,textvariable = self.e).pack(side=LEFT, fill=BOTH, expand=YES,pady=10)
         self.e.set('懒惰、不耐烦、傲慢')
+        ttk.Label(bot_frame,width = 60,textvariable = self.e).pack(side=LEFT, fill=BOTH, expand=YES,pady=10)
         ttk.Button(bot_frame, text='开始', command=self.get_entry).pack(side=RIGHT, padx=10)
 
     def open_file(self):
@@ -121,15 +119,15 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             for i in self.get_data_2line(modbusList, listSheet):
                 if 'CHKN' in i:
                     CHKN = i['CHKN']
-                    if (CHKN > max_num):
+                    if CHKN > max_num:
                         max_num = CHKN
 
             page_num = int(max_num/(limit40+1))+1
 
             for No_page in range(page_num):
                 #处理开始resultfile
-                resultDRfilename = f'DR_output{No_page}.txt'
-                resultDR = os.path.join(filepath, resultDRfilename)
+                resultDR_filename = f'DR_output{No_page}.txt'
+                resultDR = os.path.join(filepath, resultDR_filename)
                 resultfile = open(resultDR,'w')
                 resultfile.write(head)
                 for i in self.get_data_2line(modbusList,listSheet):
@@ -138,7 +136,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                 ### No
                     if 'CHKN' in i:
                         CHKN = i['CHKN']
-                        if (CHKN <= limit40*No_page  or CHKN > limit40*(No_page+1)):
+                        if CHKN <= limit40*No_page  or CHKN > limit40*(No_page + 1):
                             #break   #跳出for循环 不再执行
                             continue #只跳出本次，循环继续执行
                             pass
@@ -161,15 +159,15 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                         outValue = f':GCNC:3:{CHKN}$8,$6,8,AN;'
                         line = line.replace (inValue,outValue)
                 ### 位置
-                        if(CHKN>0 and CHKN<limit40+1):
+                        if 0 < CHKN < limit40 + 1:
                             PVIX = 50
                             PVIY = 100
                             CHKNX = CHKN%10
-                            if(CHKNX!=0):
+                            if CHKNX!=0:
                                 COW = math.floor(CHKN/10)
                                 PVIX= int(CHKNX*150-100)
                                 PVIY= 100+COW*200
-                            if(CHKNX==0):
+                            if CHKNX==0:
                                 COW = math.floor(CHKN/10)-1
                                 PVIX= 9*150+50
                                 PVIY= 100+COW*200
@@ -203,23 +201,23 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                                    f':CNCT:1:IN:{i[index_A[4]]}:I;',
                                    f':ETAG:1:{i[index_A[5]]};']
 
-                        def foo(index_A, index_B, line):
-                            line_ = line
-                            for item in range(len(index_A)):
+                        def multi_process(indexA, indexB, lineC):
+                            line_ = lineC
+                            for item in range(len(indexA)):
                                 if index_A[item] in i:
-                                    inValue = self.get_linestr(sample_content, model, index_A[item])
-                                    line_ = line_.replace(inValue, index_B[item])
+                                    in_Value = self.get_linestr(sample_content, model, indexA[item])
+                                    line_ = line_.replace(in_Value, indexB[item])
                                 pass
                             return line_
 
-                        line = foo(index_A, index_B, line)
+                        line = multi_process(index_A, index_B, line)
                 ### 写入文件
                         resultfile.write(line)
                         pass
             ### Text显示
-                    self.text_update(">>>"+ETAG+"\n")
+                    self.text_update(f">>>{ETAG}\n")
                 resultfile.write(foot)
-                self.text_update("=============导出文件:"+str(resultDRfilename)+"\n")
+                self.text_update(f"=============导出文件:{str(resultDR_filename)}\n")
 
             #self.e.set("复制结束：结果已输出至 DR_output.txt")
             self.text_update('STOP_')
@@ -271,7 +269,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             pass
         self.Text.update()
         self.Text.see(END)
-        #self.text_update('STOP_')
+        # 样例：self.text_update('STOP_')
         pass
 
 

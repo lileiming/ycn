@@ -9,6 +9,8 @@ import time
 import tkinter.messagebox
 import threading
 from time import sleep,time,strftime,localtime
+#import time
+import calendar
 
 
 class _FILE_NODE_:
@@ -143,11 +145,16 @@ def thread_Decorator(func):
 class _ALRM_NODE_:
     #报警模块
     def limited_time(self):
+        year_now = localtime(time()).tm_year
+        month_now = localtime(time()).tm_mon
+        month_range = calendar.monthrange(year_now, month_now)  # 29,30,31
+        month_sec = month_range[1] * 3600 *24
         ticks = time()
         print(ticks)
-        limitTime = 1584581374+2592000
+        limitTime = 1585583784 + month_sec
         localtime_var = strftime("%Y/%m/%d", localtime(limitTime))
         #print(localtime)
+
         if (ticks > limitTime):
             tkinter.messagebox.showinfo('提示', '软件过期需要重新编译'+localtime_var)
             exit()

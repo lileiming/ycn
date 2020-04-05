@@ -93,9 +93,8 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             if 'Draw:DR' in GetWindowText(hwnd):
                 self.drwindowtext = GetWindowText(hwnd)
                 self.drclassname = GetClassName(hwnd)
-                #self.shortname = re.search('DR([\w\W\[0-9]{4}]*?)', self.drwindowtext, flags=0).group(0)
+                #shortname = re.search('DR([\w\W\[0-9]{4}]*?)', self.drwindowtext, flags=0).group(0)
                 self.shortname = re.search('[\w\W\[0-9]{6}]*?(?=.edf)', self.drwindowtext, flags=0).group(0)
-
 
     def command(self):
         self.svwindowtext = ''
@@ -159,6 +158,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
 
     def out_txt(self):
         self.press_key(Key.alt,'f','e','e')
+        self.__delay()
         self.keyboard.type(self.shortname)
         print(self.shortname)
         self.shortname = ''
@@ -186,7 +186,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         if IsWindow(hwnd) and IsWindowEnabled(hwnd) and IsWindowVisible(hwnd):
              print(GetClassName(hwnd)+'==>'+GetWindowText(hwnd))
             #print(type(GetClassName(hwnd)))
-        #pass
+        pass
 
     # def active_(self):  #未使用
     #     # 打开其他应用
