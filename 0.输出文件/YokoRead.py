@@ -3,6 +3,7 @@
 # python 3.8
 # ==========================================================
 # lileiming@me.com
+# ('程序员美德：懒惰、不耐烦、傲慢')
 # ==========================================================
 import xlrd
 import time
@@ -141,6 +142,21 @@ def thread_Decorator(func):
         t.setDaemon(True)
         t.start()
     return wrapper
+
+
+# 方法记录=====================
+# filepath, fullflname = os.path.split(csvFilename)  # 文件名
+# portion = os.path.splitext(csvFilename)   #portion[1] 文件后缀；portion[0] 文件名字
+# ShortName = os.path.basename(self.child) #短名字
+
+
+#find_result = re.search(r'<yiapcspvgccdc:TouchTarget([\w\W]*?)</yiapcspvgccdc:TouchTarget>', fileCsv, flags=0).group(0)
+ #找第一个
+#find_result = (re.findall(r'<yiapcspvgccdc:TouchTarget([\w\W]*?)</yiapcspvgccdc:TouchTarget>', fileCsv))
+ #全部找出来
+
+ #start_Serial = fileCsv.index('%') #字符转在文本的第几个位置
+# =============================
 
 class _ALRM_NODE_:
     #报警模块

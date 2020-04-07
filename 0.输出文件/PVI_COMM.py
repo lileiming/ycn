@@ -72,7 +72,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         bot_frame = LabelFrame(self.master)
         bot_frame.pack(fill=X,side=TOP,padx=15,pady=8)
         self.e = StringVar()
-        self.e.set('懒惰、不耐烦、傲慢')
+        self.e.set('程序员美德：懒惰、不耐烦、傲慢')
         ttk.Label(bot_frame,width = 60,textvariable = self.e).pack(side=LEFT, fill=BOTH, expand=YES,pady=10)
         ttk.Button(bot_frame, text='开始', command=self.get_entry).pack(side=RIGHT, padx=10)
 

@@ -4,7 +4,6 @@
 # ==========================================================
 import tkinter
 from tkinter import *
-from tkinter import ttk
 from sys import argv
 # ===================自定义模块==============================
 import YokoRead
@@ -16,6 +15,7 @@ import Out_DrFile  # DR文件自动导出
 import TagReplaceTool  # 快速替换工具
 import TaglistTool  # Tag_list维护工具
 import PVI_TUN  # TUNING参数修改辅助工具
+# ==========================================================
 
 class myWindow():
     def __init__(self, root, myTitle, flag):
@@ -41,11 +41,9 @@ class myWindow():
         elif flag == 8:
             PVI_TUN.Windows_NODE(self.top)
         elif flag == 9:
-            Label(self.top, text='Qiang.li@cn.yokogawa.com').pack(fill=X, expand=1)
+            Label(self.top, text='Qiang.li@cn.yokogawa.com\nDon\'t Repeat Youself !!\n ').pack(fill=X, expand=1)
         pass
-
     pass
-
 
 class Windows_NODE:
     def __init__(self, master):
@@ -56,7 +54,6 @@ class Windows_NODE:
 
     def initWidgets(self):
         # 创建顶部
-
         title = ['流程图复制工具',
                  '功能块复制工具',
                  '量程修改工具',
@@ -86,9 +83,7 @@ class Windows_NODE:
             self.button1.wait_window(w1.top)
             self.window1.set(0)
         pass
-
     pass
-
 
 if __name__ == "__main__":
     try:
@@ -98,11 +93,10 @@ if __name__ == "__main__":
     root = Tk()
     root.geometry('640x400+100+200')  # 窗口尺寸
     Windows_NODE(root)
-    # limit_time = YokoRead._ALRM_NODE_.limited_time(root)
     if str_ != '-S':
         limit_time = YokoRead._ALRM_NODE_.limited_time(root)
     else:
         limit_time = '3020/1/1'
-    root.title("组态工具箱 V0.1" + "    到期日:" + limit_time)
+    root.title("组态工具箱 V1.0" + "    到期日:" + limit_time)
     root.mainloop()
     pass

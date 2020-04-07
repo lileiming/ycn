@@ -2,15 +2,7 @@
 #!/usr/bin/python
 # python 3.8
 #==========================================================
-
-# Rev01
-# 读取模板
-
-# ReV02
-# 操作界面
-
-# Rev02.01
-# UTF-8 代码错误订正
+# lileiming@me.com
 #==========================================================
 
 from tkinter import *
@@ -71,7 +63,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
 
     def open_dir(self):
         self.Text.delete(0.0,END)
-        dir_path = filedialog.askdirectory(title=u'Select file directory', initialdir=self.here)
+        dir_path = filedialog.askdirectory(title=u'选择文件夹', initialdir=self.here)
         self.path0 = dir_path
         self.path1 = self.path0+'/'
         self.text_insert('path1')
@@ -114,28 +106,30 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         csvFiles = os.listdir(self.path0)
         for csvFilename in csvFiles:
             portion = os.path.splitext(csvFilename)
-            if (portion[1] == '.csv'): 
-                newname = portion[0] + '.txt' 
+            if portion[1] == '.csv':
+                new_name = portion[0] + '.txt'
                 self.filenamedir = self.path1 + csvFilename
-                newnamedir = self.path1 + newname
-                os.rename(self.filenamedir,newnamedir)
+                new_name_dir = self.path1 + new_name
+                try:
+                    os.rename(self.filenamedir,new_name_dir)
+                except FileExistsError as e:
+                    self.Text.insert('insert', f'{e}\n')
             else:
                 self.text_insert('error')
         
     def readExcel(self):
-        filename = self.entry2.get()
+        file_name = self.entry2.get()
         sheet_name = self.comboxlist.get()
         self.inValue = []
         self.outValue = []
         count = 1
-        filePath = os.path.join(os.getcwd(), filename)
+        filePath = os.path.join(os.getcwd(), file_name)
         x1 = xlrd.open_workbook(filePath)
         sheet1 = x1.sheet_by_name(sheet_name)
         self.rowsNum = sheet1.nrows
-        
-        while (count < self.rowsNum):
+        while count < self.rowsNum:
            count = count + 1
-           in1=sheet1.cell_value(count-1,0)
+           in1 = sheet1.cell_value(count-1,0)
            self.inValue.append(in1)
            out1 = sheet1.cell_value(count-1,1)
            self.outValue.append(out1)
@@ -147,122 +141,139 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             if (self.flag) == 1:
                 self.readfile()
             else:
-                self.readTXTfile()
-                
-    def readfile(self):
-        f1 = open(self.child,'r+')
-        s=f1.read()
-        f1.seek(0,0)
-        line = s.replace (self.inValue[0],self.outValue[0])
-        num = 1
-        while num < self.rowsNum:
-            line = line.replace (self.inValue[num-1],self.outValue[num-1])
-            num = num +1
-        f1.write(line)
-        f1.close()
-        self.startNo = s.index('%')
-        NodeSolt = s[self.startNo:self.startNo+5]
-        IOM = NodeSolt[1]
-        if IOM == 'Z':
-            nodeX = NodeSolt[2]
-            nodeY = NodeSolt[3]
-            soltX = NodeSolt[4]
-            flienameNS = self.path1+'N'+nodeX+nodeY+'S'+soltX+'.csv'
-            repeatName = 'N'+nodeX+nodeY+'S'+soltX+'.csv'
-            try:
-                os.renames(self.child,flienameNS)
-                self.Text.insert('insert', 'INFO:'+repeatName+' Conversion completing...\n')
-            except WindowsError as e:
-                self.Text.insert('insert', 'ERROR:'+repeatName+' Because Double name skip\n')
-                    
-        elif IOM == 'S':
-            SWX = NodeSolt[3]
-            flienameNS = self.path1+'SwitchDef'+SWX+'.csv'
-            repeatName = 'SwitchDef'+SWX+'.csv'
-            try:
-                os.renames(self.child,flienameNS)
-                self.Text.insert('insert', 'INFO:'+repeatName+'Conversion completing...\n')
-            except WindowsError as e:
-                self.Text.insert('insert', 'ERROR:'+repeatName+' Because Double name skip\n')
+                self.read_txt_file()
 
-        elif IOM == 'A':
-            ANX = NodeSolt[2]
-            flienameNS = self.path1+'AN'+'.csv'
-            repeatName = 'AN'+ANX+'.csv'
-            try:
-                os.renames(self.child,flienameNS)
-                self.Text.insert('insert', 'INFO:'+repeatName+'Conversion completing...\n')
-            except WindowsError as e:
-                self.Text.insert('insert', 'ERROR:'+repeatName+' Because Double name skip\n')
+    def readfile(self):
+        file = open(self.child,'r+')
+        fileCsv = file.read()
+        file.seek(0,0)
+        line = fileCsv.replace (self.inValue[0],self.outValue[0])
+        for _ in range(self.rowsNum-1):
+            line = line.replace(self.inValue[_], self.outValue[_])
+        file.write(line)
+        file.close()
+    # ======================================================
+        start_Serial = self.findposition(fileCsv, '%')
+        if start_Serial >0:
+            Node_Solt = fileCsv[start_Serial:start_Serial + 5]
+            IOM = Node_Solt[1]
+            if IOM == 'Z':
+                nodeX = Node_Solt[2]
+                nodeY = Node_Solt[3]
+                soltX = Node_Solt[4]
+                flienameNS = f'{self.path1}N{nodeX}{nodeY}S{soltX}.csv'
+                repeatName = f'N{nodeX}{nodeY}S{soltX}.csv'
+            elif IOM == 'S':
+                SWX = Node_Solt[3]
+                flienameNS = f'{self.path1}SwitchDef{SWX}.csv'
+                repeatName = f'SwitchDef{SWX}.csv'
+            elif IOM == 'A':
+                ANX = Node_Solt[2]
+                flienameNS = f'{self.path1}AN{ANX}.csv'
+                repeatName = f'AN{ANX}.csv'
+            else:
+                filepath, fullflname = os.path.split(self.child)
+                if IOM  not in fullflname:
+                    flienameNS = f'{self.path1}{IOM}{os.path.splitext(fullflname)[0]}.csv'
+                    repeatName = f'{IOM}{os.path.splitext(fullflname)[0]}.csv'
+                else:
+                    flienameNS = f'{self.path1}{os.path.splitext(fullflname)[0]}.csv'
+                    repeatName = f'{os.path.splitext(fullflname)[0]}.csv'
+
         else:
-            self.Text.insert('insert', 'ERROR:'+self.child+'Content not recognized\n')
+            sheet_position = self.findposition(fileCsv, '@SHEET')
+            if sheet_position > 0:
+                sheet3 = fileCsv[sheet_position + 9 : sheet_position + 12]
+                filepath, fullflname = os.path.split(self.child)
+                if sheet3 not in fullflname:
+                    flienameNS = f'{self.path1}{sheet3}-{os.path.splitext(fullflname)[0]}.csv'
+                    repeatName = f'{sheet3}-{os.path.splitext(fullflname)[0]}.csv'
+                else:
+                    flienameNS = f'{self.path1}{os.path.splitext(fullflname)[0]}.csv'
+                    repeatName = f'{os.path.splitext(fullflname)[0]}.csv'
+            else:
+                filepath, fullflname = os.path.split(self.child)
+                flienameNS = f'{self.path1}{os.path.splitext(fullflname)[0]}.csv'
+                repeatName = f'{os.path.splitext(fullflname)[0]}.csv'
+    # ======================================================
+        try:
+            os.renames(self.child, flienameNS)
+            self.Text.insert('insert', f'INFO: {repeatName} 转换完成...\n')
+        except WindowsError as e:
+            self.Text.insert('insert', f'ERROR: {repeatName} 重名跳过\n')
         self.Text.update()
 
-    def readTXTfile(self):
-        self.stortNameApp()
+    def read_txt_file(self):
+        self.ShortName = os.path.basename(self.child)
         self.flag = 0
-        f1 = open(self.child,'r+')
+        file = open(self.child,'r+')
         try:
-            s=f1.read()        
+            file_txt = file.read()
         except UnicodeDecodeError as e:
-                self.Text.insert('insert', 'WARNING: '+self.ShortName+' is UTF-8 format.\n')
+                self.Text.insert('insert', f'WARNING: {self.ShortName} is UTF-8 format.\n')
                 self.Text.update()
-                f1 = open(self.child,'r+',encoding='utf-8')
-                s=f1.read()
-        DRfindNum = s.find('DR0')
+                file = open(self.child,'r+',encoding='utf-8')
+                file_txt = file.read()
+        DRfindNum = file_txt.find('DR0')
+        xaml_name = file_txt.find('<Canvas')
     #======================================================
-        f1.seek(0,0)
-        line = s.replace (self.inValue[0],self.outValue[0])
-        num = 1
-        while (num < self.rowsNum):
-            line = line.replace (self.inValue[num-1],self.outValue[num-1])
-            num = num +1
-        f1.write(line)
-        f1.close()
+        file.seek(0,0)
+        line = file_txt.replace (self.inValue[0],self.outValue[0])
+        for _ in range(self.rowsNum-1):
+            line = line.replace(self.inValue[_], self.outValue[_])
+        file.write(line)
+        file.close()
     #======================================================
         if DRfindNum > 0 :
-            DR0X = s[DRfindNum+3]
-            DR00Y = s[DRfindNum+4]
-            DR000Z = s[DRfindNum+5]
-            #print "DR0"+DR0X+DR00Y+DR000Z
-            flienameNS = self.path1+"DR0"+DR0X+DR00Y+DR000Z+'.txt'
-            repeatName = "DR0"+DR0X+DR00Y+DR000Z+'.txt'
+            DR0X = file_txt[DRfindNum+3]
+            DR00Y = file_txt[DRfindNum+4]
+            DR000Z = file_txt[DRfindNum+5]
+            flienameNS = f'{self.path1}DR0{DR0X+DR00Y+DR000Z}.txt'
+            #repeatName = f'DR0{DR0X+DR00Y+DR000Z}.txt'
             try:
                os.renames(self.child,flienameNS)
-               self.Text.insert('insert', 'INFO: '+self.ShortName+' Conversion completing...\n')
+               self.Text.insert('insert', f'INFO: {self.ShortName} 转换完成...\n')
             except WindowsError as e:
-               self.Text.insert('insert', 'ERROR: '+self.ShortName+' Because Double name skip.\n')
+               self.Text.insert('insert', f'ERROR: {self.ShortName} 重名跳过\n')
         else:
-            self.Text.insert('insert', 'WARNING: '+self.ShortName+' does not conform to the DR format.\n')
+            self.Text.insert('insert', f'WARNING: {self.ShortName} does not conform to the DR format.\n')
+    # ======================================================
+        if xaml_name > 0 :
+            flienameNS = f'{self.path1}OUT-{self.ShortName}'
+            os.renames(self.child,flienameNS)
+            self.Text.insert('insert', f'INFO: {self.ShortName} 转换完成...\n')
         self.Text.update()
-            
-    def stortNameApp(self):
-        self.ShortName = os.path.basename(self.child)
 
     def text_insert(self,flag):
         if flag == 'path1':
-            self.Text.insert('insert', 'File directory：\n' + self.path1 + '\n')
+            self.Text.insert('insert', f'文件路径：\n{self.path1}\n')
             pass
         if flag == 'csv':
-            self.Text.insert('insert', 'INFO: ****Start converting csv files.****\n')
+            self.Text.insert('insert', 'INFO: ****开始转换CSV****\n')
             pass
         if flag == 'completed':
-            self.Text.insert('insert', 'INFO: ****All file Conversion completed.****\n')
+            self.Text.insert('insert', 'INFO: ****所有转换完成。****\n\n')
             self.Text.see(END)
             pass
         if flag == 'txt':
-            self.Text.insert('insert', 'INFO: ****Start converting txt files.****\n')
+            self.Text.insert('insert', 'INFO: ****开始转换txt文件。****\n')
             pass
         if flag == 'error':
-            self.Text.insert('insert', 'ERROR：File format error'+'\n')
+            self.Text.insert('insert', 'ERROR：文件格式错误。\n')
             pass
         self.Text.update()
         pass
 
+    def findposition (self,csv_file_read,find_str):
+        try:
+            position = csv_file_read.index(find_str)
+        except ValueError:
+            position = -1
+        return  position
 
 if __name__ == "__main__":
     root = Tk()
-    root.title("Tag replacement tool V2.01")
+    root.title("Tag replacement tool")
     root.geometry('640x400')  # Window size
     Windows_NODE(root)
     root.mainloop()
