@@ -16,8 +16,15 @@ from time import sleep
 import YokoRead   #自定义模块
 from YokoRead import time_Decorator,thread_Decorator
 
-class Windows_NODE(YokoRead._FILE_NODE_):
 
+def findposition(csv_file_read, find_str):
+    try:
+        position = csv_file_read.index(find_str)
+    except ValueError:
+        position = -1
+    return  position
+
+class Windows_NODE(YokoRead.FILE_NODE):
     def __init__(self, master):
         self.master = master
         self.here = os.getcwd()
@@ -57,9 +64,10 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         # bot_frame ===================================
         bot_frame = LabelFrame(self.master)
         bot_frame.pack(fill=X,side=TOP,padx=15,pady=10)
-        ttk.Button(bot_frame,text='选择目标文件夹',command=self.open_dir).pack(side=LEFT,padx=10,pady=10)
-        ttk.Button(bot_frame,text='替换 CSV 文件',command=self.Csv).pack(side=RIGHT,padx=10)
-        ttk.Button(bot_frame,text='替换 Txt 文件',command=self.Txt).pack(side=RIGHT,padx=10)
+        ttk.Button(bot_frame, text='选择目标文件夹', command=self.open_dir).pack(side=LEFT, padx=10, pady=10)
+        ttk.Button(bot_frame, text='替换 CSV 文件', command=self.Csv).pack(side=RIGHT, padx=10)
+        ttk.Button(bot_frame, text='替换 Txt 文件', command=self.Txt).pack(side=RIGHT, padx=10)
+        ttk.Button(bot_frame, text='分析TAG', command=self.findEtag).pack(side=RIGHT, padx=10)
 
     def open_dir(self):
         self.Text.delete(0.0,END)
@@ -77,6 +85,34 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         sheetNameT = tuple(sheetName)
         self.comboxlist["values"] = sheetNameT
         self.comboxlist.current(0)
+
+    @thread_Decorator
+    @time_Decorator
+    def findEtag(self):
+        self.text_insert('findEtag')
+        self.flag = 2
+        self.eachFile()
+        find_result = (re.findall(r'(?<=ETAG:1:).*(?=;)', self.text_detail))
+        find_result = find_result + (re.findall(r'(?<=RTAG:1:).*(?=;)', self.text_detail))
+        find_result_copy = find_result.copy()
+        find_result_last = []
+        for initial in find_result_copy:
+            i = re.findall(r'[0-9%]{2,4}[A-Z]+[0-9]{1,3}', initial)
+            if len(i):
+                find_result.pop(find_result.index(initial))
+                find_result_last.append(i[0])
+        find_result_last.extend(find_result)
+
+        find_result_last = list(set(find_result_last))  # 去重
+        line = ''
+        for _ in find_result_last:
+            line = f'{line}\n{_}'
+            pass
+        filepath, fullflname = os.path.split(self.entry2.get())
+        self.out_txt(f'{filepath}\分析结果.txt',line)
+        self.flag = 0
+        self.text_insert('completed')
+        pass
 
     @thread_Decorator
     @time_Decorator
@@ -107,7 +143,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         for csvFilename in csvFiles:
             portion = os.path.splitext(csvFilename)
             if portion[1] == '.csv':
-                new_name = portion[0] + '.txt'
+                new_name = f'{portion[0]}.txt'
                 self.filenamedir = self.path1 + csvFilename
                 new_name_dir = self.path1 + new_name
                 try:
@@ -135,11 +171,19 @@ class Windows_NODE(YokoRead._FILE_NODE_):
            self.outValue.append(out1)
         
     def eachFile(self):
+        self.text_detail = ''
         pathDir = os.listdir(self.path1)
         for allDir in pathDir:
             self.child = self.path1 + allDir
-            if (self.flag) == 1:
+            if self.flag == 1:
                 self.readfile()
+            elif self.flag == 2:
+                file = open(self.child, 'r+')
+                try:
+                    self.text_detail = self.text_detail + file.read()
+                except UnicodeDecodeError:
+                    file = open(self.child, 'r+', encoding='utf-8')
+                    self.text_detail = self.text_detail + file.read()
             else:
                 self.read_txt_file()
 
@@ -153,8 +197,9 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         file.write(line)
         file.close()
     # ======================================================
-        start_Serial = self.findposition(fileCsv, '%')
-        if start_Serial >0:
+        filepath, fullflname = os.path.split(self.child)
+        start_Serial = findposition(fileCsv, '%')
+        if start_Serial > 0:
             Node_Solt = fileCsv[start_Serial:start_Serial + 5]
             IOM = Node_Solt[1]
             if IOM == 'Z':
@@ -172,19 +217,16 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                 flienameNS = f'{self.path1}AN{ANX}.csv'
                 repeatName = f'AN{ANX}.csv'
             else:
-                filepath, fullflname = os.path.split(self.child)
                 if IOM  not in fullflname:
                     flienameNS = f'{self.path1}{IOM}{os.path.splitext(fullflname)[0]}.csv'
                     repeatName = f'{IOM}{os.path.splitext(fullflname)[0]}.csv'
                 else:
                     flienameNS = f'{self.path1}{os.path.splitext(fullflname)[0]}.csv'
                     repeatName = f'{os.path.splitext(fullflname)[0]}.csv'
-
         else:
-            sheet_position = self.findposition(fileCsv, '@SHEET')
+            sheet_position = findposition(fileCsv, '@SHEET')
             if sheet_position > 0:
                 sheet3 = fileCsv[sheet_position + 9 : sheet_position + 12]
-                filepath, fullflname = os.path.split(self.child)
                 if sheet3 not in fullflname:
                     flienameNS = f'{self.path1}{sheet3}-{os.path.splitext(fullflname)[0]}.csv'
                     repeatName = f'{sheet3}-{os.path.splitext(fullflname)[0]}.csv'
@@ -192,14 +234,13 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                     flienameNS = f'{self.path1}{os.path.splitext(fullflname)[0]}.csv'
                     repeatName = f'{os.path.splitext(fullflname)[0]}.csv'
             else:
-                filepath, fullflname = os.path.split(self.child)
                 flienameNS = f'{self.path1}{os.path.splitext(fullflname)[0]}.csv'
                 repeatName = f'{os.path.splitext(fullflname)[0]}.csv'
     # ======================================================
         try:
             os.renames(self.child, flienameNS)
             self.Text.insert('insert', f'INFO: {repeatName} 转换完成...\n')
-        except WindowsError as e:
+        except WindowsError:
             self.Text.insert('insert', f'ERROR: {repeatName} 重名跳过\n')
         self.Text.update()
 
@@ -209,7 +250,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         file = open(self.child,'r+')
         try:
             file_txt = file.read()
-        except UnicodeDecodeError as e:
+        except UnicodeDecodeError:
                 self.Text.insert('insert', f'WARNING: {self.ShortName} is UTF-8 format.\n')
                 self.Text.update()
                 file = open(self.child,'r+',encoding='utf-8')
@@ -233,13 +274,16 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             try:
                os.renames(self.child,flienameNS)
                self.Text.insert('insert', f'INFO: {self.ShortName} 转换完成...\n')
-            except WindowsError as e:
+            except WindowsError:
                self.Text.insert('insert', f'ERROR: {self.ShortName} 重名跳过\n')
         else:
             self.Text.insert('insert', f'WARNING: {self.ShortName} does not conform to the DR format.\n')
     # ======================================================
         if xaml_name > 0 :
-            flienameNS = f'{self.path1}OUT-{self.ShortName}'
+            if 'OUT' not in self.ShortName:
+                flienameNS = f'{self.path1}OUT-{self.ShortName}'
+            else:
+                flienameNS = f'{self.path1}{self.ShortName}'
             os.renames(self.child,flienameNS)
             self.Text.insert('insert', f'INFO: {self.ShortName} 转换完成...\n')
         self.Text.update()
@@ -261,20 +305,17 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         if flag == 'error':
             self.Text.insert('insert', 'ERROR：文件格式错误。\n')
             pass
+        if flag == 'findEtag':
+            self.Text.insert('insert', 'INFO: ****开始分析TAG****\n')
+            pass
+
         self.Text.update()
         pass
 
-    def findposition (self,csv_file_read,find_str):
-        try:
-            position = csv_file_read.index(find_str)
-        except ValueError:
-            position = -1
-        return  position
-
 if __name__ == "__main__":
     root = Tk()
-    root.title("Tag replacement tool")
     root.geometry('640x400')  # Window size
     Windows_NODE(root)
+    limit_time = YokoRead.ALRM_NODE.limited_time(root)
+    root.title("Tag replacement tool"+"    到期日:"+limit_time)
     root.mainloop()
-

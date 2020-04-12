@@ -14,7 +14,7 @@ from time import sleep,time,strftime,localtime
 import calendar
 
 
-class _FILE_NODE_:
+class FILE_NODE:
     # 读取模块
     #    def __init__(self):
     def read_txt(self, txt_file_name):
@@ -42,13 +42,13 @@ class _FILE_NODE_:
         # nor = table.nrows
         nol = table.ncols
         # print(nol)
-        dict = {}
+        dict_r = {}
         # for i in range(0,nor):
         for j in range(nol):
             title = table.cell_value(0, j)
             # print(title)
-            dict[title] = title
-        yield dict
+            dict_r[title] = title
+        yield dict_r
 
     def get_data_2line(self, filename, sheet_name):
         dir_case = filename
@@ -56,13 +56,13 @@ class _FILE_NODE_:
         table = data.sheet_by_name(sheet_name)
         nor = table.nrows
         nol = table.ncols
-        dict = {}
+        dict_r = {}
         for i in range(1, nor):
             for j in range(nol):
                 title = table.cell_value(0, j)
                 value = table.cell_value(i, j)
-                dict[title] = value
-            yield dict
+                dict_r[title] = value
+            yield dict_r
 
     def get_data(self, filename, sheet_name):
         dir_case = filename
@@ -70,20 +70,20 @@ class _FILE_NODE_:
         table = data.sheet_by_name(sheet_name)
         nor = table.nrows
         nol = table.ncols
-        dict = {}
+        dict_r = {}
         for i in range(1, nor):
             for j in range(nol):
                 title = table.cell_value(0, j)
                 value = table.cell_value(i, j)
-                dict[title] = value
-            yield dict
+                dict_r[title] = value
+            yield dict_r
 
     def rowList(self, sheet, Cindex):
         rowList = []
         rowN = 0
         rowsNum = sheet.nrows
-        colNum = sheet.ncols
-        while (rowN < rowsNum):
+        #colNum = sheet.ncols
+        while rowN < rowsNum:
             row_Str = sheet.cell_value(rowN, Cindex)
             rowList.append(row_Str)
             rowN = rowN + 1
@@ -93,9 +93,9 @@ class _FILE_NODE_:
     def colList(self, sheet):
         colList = []
         colN = 0
-        rowsNum = sheet.nrows
+        #rowsNum = sheet.nrows
         colNum = sheet.ncols
-        while (colN < colNum):
+        while colN < colNum:
             col_Str = sheet.cell_value(0, colN)
             colList.append(col_Str)
             colN = colN + 1
@@ -103,7 +103,7 @@ class _FILE_NODE_:
         return colList
 
     def dictGenerate(self, sheet, Cindex):
-        dict = {}
+        dict_r = {}
         rowsNum1 = sheet.nrows
         colNum1 = sheet.ncols
         for rowindex in range(rowsNum1):
@@ -113,8 +113,8 @@ class _FILE_NODE_:
                         TAG_Str = sheet.cell_value(rowindex, Cindex)
                         condition_Str = sheet.cell_value(0, colindex)
                         dict_Str = sheet.cell_value(rowindex, colindex)
-                        dict[(TAG_Str, condition_Str)] = dict_Str
-        return dict
+                        dict_r[(TAG_Str, condition_Str)] = dict_Str
+        return dict_r
 
     # def thread_it(self,func,*args):
     #     # 创建
@@ -158,7 +158,7 @@ def thread_Decorator(func):
  #start_Serial = fileCsv.index('%') #字符转在文本的第几个位置
 # =============================
 
-class _ALRM_NODE_:
+class ALRM_NODE:
     #报警模块
     def limited_time(self):
         year_now = localtime(time()).tm_year
@@ -171,7 +171,7 @@ class _ALRM_NODE_:
         localtime_var = strftime("%Y/%m/%d", localtime(limitTime))
         #print(localtime)
 
-        if (ticks > limitTime):
+        if ticks > limitTime:
             tkinter.messagebox.showinfo('提示', '软件过期需要重新编译'+localtime_var)
             exit()
         return localtime_var

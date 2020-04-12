@@ -17,7 +17,7 @@ import YokoRead   #自定义模块
 from YokoRead import time_Decorator,thread_Decorator
 
 
-class Windows_NODE(YokoRead._FILE_NODE_):
+class Windows_NODE(YokoRead.FILE_NODE):
     def __init__(self, master):
         self.master = master
         self.initWidgets()
@@ -59,15 +59,15 @@ class Windows_NODE(YokoRead._FILE_NODE_):
     @time_Decorator
     def start(self):
         try:
-            num = int(self.entry.get())
-            print(num)
+            export_num = int(self.entry.get())
+            #print(export_num)
         except ValueError :
             self.text_update("请输入数字.\n")
             self.entry.delete(0,END)
-            num = 0
+            export_num = 0
 
-        self.circuit(num)
-        #self.circuit(num)
+        self.circuit(export_num)
+        #self.circuit(export_num)
         EnumWindows(self.scan_windows, 0)  # 遍历所有窗口
         pass
 
@@ -88,36 +88,35 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         if IsWindow(hwnd) and IsWindowEnabled(hwnd) and IsWindowVisible(hwnd):
             #print(GetClassName(hwnd)+'==>'+GetWindowText(hwnd))
             if 'FUNCTION_BLOCK' in GetWindowText(hwnd):
-                self.svwindowtext = GetWindowText(hwnd)
-                self.svclassname = GetClassName(hwnd)
+                self.sv_window_text = GetWindowText(hwnd)
+                self.sv_class_name = GetClassName(hwnd)
             if 'Draw:DR' in GetWindowText(hwnd):
-                self.drwindowtext = GetWindowText(hwnd)
-                self.drclassname = GetClassName(hwnd)
-                #shortname = re.search('DR([\w\W\[0-9]{4}]*?)', self.drwindowtext, flags=0).group(0)
-                self.shortname = re.search('[\w\W\[0-9]{6}]*?(?=.edf)', self.drwindowtext, flags=0).group(0)
+                self.dr_window_text = GetWindowText(hwnd)
+                self.dr_class_name = GetClassName(hwnd)
+                #shortname = re.search('DR([\w\W\[0-9]{4}]*?)', self.dr_window_text, flags=0).group(0)
+                self.short_name = re.search('[\w\W\[0-9]{6}]*?(?=.edf)', self.dr_window_text, flags=0).group(0)
 
     def command(self):
-        self.svwindowtext = ''
-        self.svclassname = ''
-        self.drwindowtext = ''
-        self.drclassname = ''
+        self.sv_window_text = ''
+        self.sv_class_name = ''
+        self.dr_window_text = ''
+        self.dr_class_name = ''
         EnumWindows(self.all_windows_name, 0)
         #print("=" * 20)
 
     def active_dr_builder (self):
-        if self.drwindowtext != '' :
-            dr_builder_window = win32gui.FindWindow(self.drclassname, self.drwindowtext)
+        if self.dr_window_text != '' :
+            dr_builder_window = win32gui.FindWindow(self.dr_class_name, self.dr_window_text)
             win32gui.SetForegroundWindow(dr_builder_window)
         else:
             err_text = "Control Drawing Builder is not Open !1\n"
             self.text_update(err_text)
-
             exit()
 
     def close_dr_builder(self):
         self.__delay()
-        if self.drwindowtext != '' :
-            dr_builder_window = win32gui.FindWindow(self.drclassname, self.drwindowtext)
+        if self.dr_window_text != '' :
+            dr_builder_window = win32gui.FindWindow(self.dr_class_name, self.dr_window_text)
             win32gui.PostMessage(dr_builder_window, win32con.WM_CLOSE, 0, 0)
         else:
             err_text = "Control Drawing Builder is not Open !2\n"
@@ -126,8 +125,8 @@ class Windows_NODE(YokoRead._FILE_NODE_):
 
     def active_function_block (self):
         self.__delay()
-        if self.svwindowtext != '' :
-            function_block_window = win32gui.FindWindow(self.svclassname, self.svwindowtext)
+        if self.sv_window_text != '' :
+            function_block_window = win32gui.FindWindow(self.sv_class_name, self.sv_window_text)
             win32gui.SetForegroundWindow(function_block_window)
         else:
             err_text = "Control Drawing Builder is not Open !3\n"
@@ -149,19 +148,19 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             self.keyboard.release(combination)
 
     def press_abc(self,_character):
-        keyboard = Controller()
-        keyboard.press(_character)
-        keyboard.release(_character)
+        yo_keyboard = Controller()
+        yo_keyboard.press(_character)
+        yo_keyboard.release(_character)
 
-    def __delay(self,delaytime = 0.2):
-        sleep(delaytime)
+    def __delay(self,delay_time = 0.2):
+        sleep(delay_time)
 
     def out_txt(self):
         self.press_key(Key.alt,'f','e','e')
         self.__delay()
-        self.keyboard.type(self.shortname)
-        print(self.shortname)
-        self.shortname = ''
+        self.keyboard.type(self.short_name)
+        print(self.short_name)
+        self.short_name = ''
         self.press_key(Key.alt, 's')
         self.press_key(Key.left,Key.enter)
         #self.press_key(Key.enter)
@@ -181,7 +180,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
 
         self.text_update('STOP_')
 
-    def scan_windows(self,hwnd, mous):
+    def scan_windows(self,hwnd, mouse):
         #遍历所有打开窗口
         if IsWindow(hwnd) and IsWindowEnabled(hwnd) and IsWindowVisible(hwnd):
              print(GetClassName(hwnd)+'==>'+GetWindowText(hwnd))
@@ -212,7 +211,7 @@ if __name__ == "__main__":
     root = Tk()
     root.geometry('480x300')  # 窗口尺寸
     Windows_NODE(root)
-    limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+    limit_time = YokoRead.ALRM_NODE.limited_time(root)
     root.title("DR文件导出工具 V1.00"+"    到期日:"+limit_time)
     root.mainloop()
 

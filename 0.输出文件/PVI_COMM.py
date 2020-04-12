@@ -22,7 +22,7 @@ import YokoRead   #自定义模块
 from time import sleep
 from YokoRead import time_Decorator,thread_Decorator
 
-class Windows_NODE(YokoRead._FILE_NODE_):
+class Windows_NODE(YokoRead.FILE_NODE):
     def __init__(self, master):
         self.master = master
         self.here = os.getcwd()
@@ -87,22 +87,22 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         file_text = file_path
         self.entry2.delete(0, END)
         self.entry2.insert('insert', file_text)
-        sheetName = self.get_sheet(file_text)
-        sheetNameT = tuple(sheetName)
-        self.comboxlist["values"] = sheetNameT
+        sheet_Name = self.get_sheet(file_text)
+        sheet_Name_T = tuple(sheet_Name)
+        self.comboxlist["values"] = sheet_Name_T
         self.comboxlist.current(0)
 
     @thread_Decorator
     @time_Decorator
     def get_entry(self):
         try:
-            samplePVI = self.entry.get()
-            modbusList = self.entry2.get()
-            listSheet = self.comboxlist.get()
-            filepath, fullflname = os.path.split(modbusList)
+            sample_PVI = self.entry.get()
+            modbus_list = self.entry2.get()
+            sheet_list = self.comboxlist.get()
+            filepath, fullflname = os.path.split(modbus_list)
 
             # 数据读取
-            with open(samplePVI,'r') as samplefile:
+            with open(sample_PVI,'r') as samplefile:
                 sample_content = samplefile.read()
             # 数据剥离
             sample_stripping = (re.findall(r'::FHED\n([\w\W]*)::::SOURCE', sample_content)) #样本剥离
@@ -116,7 +116,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             #================
             max_num = 0
             limit40 = 40
-            for i in self.get_data_2line(modbusList, listSheet):
+            for i in self.get_data_2line(modbus_list, sheet_list):
                 if 'CHKN' in i:
                     CHKN = i['CHKN']
                     if CHKN > max_num:
@@ -125,12 +125,12 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             page_num = int(max_num/(limit40+1))+1
 
             for No_page in range(page_num):
-                #处理开始resultfile
-                resultDR_filename = f'DR_output{No_page}.txt'
-                resultDR = os.path.join(filepath, resultDR_filename)
-                resultfile = open(resultDR,'w')
-                resultfile.write(head)
-                for i in self.get_data_2line(modbusList,listSheet):
+                #处理开始result_file
+                result_DR_filename = f'DR_output{No_page}.txt'
+                result_DR = os.path.join(filepath, result_DR_filename)
+                result_file = open(result_DR,'w')
+                result_file.write(head)
+                for i in self.get_data_2line(modbus_list,sheet_list):
                     ETAG ='NULL'
 #===========参数
                 ### No
@@ -147,17 +147,17 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                             CHKN = limit40
                             pass
 
-                        inValue = self.get_linestr(sample_content, model, 'CHKN')
-                        outValue = f':CHKN:1:{CHKN};'
-                        line = sample_stripping[0].replace (inValue,outValue)
+                        in_Value = self.get_linestr(sample_content, model, 'CHKN')
+                        out_Value = f':CHKN:1:{CHKN};'
+                        result_line = sample_stripping[0].replace (in_Value,out_Value)
 
-                        inValue = self.get_linestr(sample_content, 'PIO', 'RCHK')
-                        outValue = f':RCHK:1:@{CHKN};'
-                        line = line.replace (inValue,outValue)
+                        in_Value = self.get_linestr(sample_content, 'PIO', 'RCHK')
+                        out_Value = f':RCHK:1:@{CHKN};'
+                        result_line = result_line.replace (in_Value,out_Value)
 
-                        inValue = self.get_linestr(sample_content, 'PIO', 'GCNC')
-                        outValue = f':GCNC:3:{CHKN}$8,$6,8,AN;'
-                        line = line.replace (inValue,outValue)
+                        in_Value = self.get_linestr(sample_content, 'PIO', 'GCNC')
+                        out_Value = f':GCNC:3:{CHKN}$8,$6,8,AN;'
+                        result_line = result_line.replace (in_Value,out_Value)
                 ### 位置
                         if 0 < CHKN < limit40 + 1:
                             PVIX = 50
@@ -171,26 +171,26 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                                 COW = math.floor(CHKN/10)-1
                                 PVIX= 9*150+50
                                 PVIY= 100+COW*200
-                            inValue = self.get_linestr(sample_content,model,'GBLK')
-                            outValue = f':GBLK:{PVIX},{PVIY}:S1;'
-                            line = line.replace (inValue,outValue)
+                            in_Value = self.get_linestr(sample_content,model,'GBLK')
+                            out_Value = f':GBLK:{PVIX},{PVIY}:S1;'
+                            result_line = result_line.replace (in_Value,out_Value)
                             PIOX= PVIX - 36
                             PIOY= PVIY + 120
-                            inValue = self.get_linestr(sample_content,'PIO','GBLK')
-                            outValue = f':GBLK:{PIOX},{PIOY}:S1:$5;'
-                            line = line.replace (inValue,outValue)
+                            in_Value = self.get_linestr(sample_content,'PIO','GBLK')
+                            out_Value = f':GBLK:{PIOX},{PIOY}:S1:$5;'
+                            result_line = result_line.replace (in_Value,out_Value)
                 ### Name
                         if 'ETAG' in i:
                             ETAG = i['ETAG']
-                            inValue = self.get_linestr(sample_content,'PIO','RCNC')
-                            outValue = f':RCNC:1::{ETAG}.IN:O;'
-                            line = line.replace (inValue,outValue)
+                            in_Value = self.get_linestr(sample_content,'PIO','RCNC')
+                            out_Value = f':RCNC:1::{ETAG}.IN:O;'
+                            result_line = result_line.replace (in_Value,out_Value)
                 ### PIO地址
                         if 'CNCT' in i:
                             CNCT = i['CNCT']
-                            inValue = self.get_linestr(sample_content, 'PIO', 'RTAG')
-                            outValue = f':RTAG:1:{CNCT};'
-                            line = line.replace (inValue,outValue)
+                            in_Value = self.get_linestr(sample_content, 'PIO', 'RTAG')
+                            out_Value = f':RTAG:1:{CNCT};'
+                            result_line = result_line.replace (in_Value,out_Value)
 
                 ### 多个数据类型
                         index_A = ['ETCM', 'EUNT', 'ESCL', 'SSI!','CNCT','ETAG']
@@ -202,22 +202,22 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                                    f':ETAG:1:{i[index_A[5]]};']
 
                         def multi_process(indexA, indexB, lineC):
-                            line_ = lineC
+                            multu_line = lineC
                             for item in range(len(indexA)):
                                 if index_A[item] in i:
-                                    in_Value = self.get_linestr(sample_content, model, indexA[item])
-                                    line_ = line_.replace(in_Value, indexB[item])
+                                    multi_in_Value = self.get_linestr(sample_content, model, indexA[item])
+                                    multu_line = multu_line.replace(multi_in_Value, indexB[item])
                                 pass
-                            return line_
+                            return multu_line
 
-                        line = multi_process(index_A, index_B, line)
+                        result_line = multi_process(index_A, index_B, result_line)
                 ### 写入文件
-                        resultfile.write(line)
+                        result_file.write(result_line)
                         pass
             ### Text显示
                     self.text_update(f">>>{ETAG}\n")
-                resultfile.write(foot)
-                self.text_update(f"=============导出文件:{str(resultDR_filename)}\n")
+                result_file.write(foot)
+                self.text_update(f"=============导出文件:{str(result_DR_filename)}\n")
 
             #self.e.set("复制结束：结果已输出至 DR_output.txt")
             self.text_update('STOP_')
@@ -277,6 +277,6 @@ if __name__ == "__main__":
     root = Tk()
     root.geometry('640x400')  # 窗口尺寸
     Windows_NODE(root)
-    limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+    limit_time = YokoRead.ALRM_NODE.limited_time(root)
     root.title("modbus列表生成工具 V2.1"+"    到期日:"+limit_time)
     root.mainloop()

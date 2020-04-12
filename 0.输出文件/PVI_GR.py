@@ -2,18 +2,7 @@
 #!/usr/bin/python
 # python 3.8
 #==========================================================
-
-# Rev01
-# 读取模板
-
-# ReV02
-# 操作界面
-
-# ReV03
-# 直接读取GR样本文档
-
-# ReV04
-# 修改读取样本bug
+# lileiming@me.com
 #==========================================================
 
 from tkinter import *
@@ -26,11 +15,9 @@ from time import sleep
 import YokoRead   #自定义模块
 from YokoRead import time_Decorator,thread_Decorator
 
-
-class Windows_NODE(YokoRead._FILE_NODE_):
+class Windows_NODE(YokoRead.FILE_NODE):
     def __init__(self, master):
         self.master = master
-        #self.here = os.path.abspath(os.path.dirname(__file__))
         self.here = os.getcwd()
         self.initWidgets()
         help_doc = '本程序为流程图数据块快速复制组态工具。 \n' \
@@ -45,7 +32,6 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         # 创建顶部
         top_frame = LabelFrame(self.master,text='参考文档',height = 150,width = 615)
         top_frame.pack(fill=X,padx=15,pady=0)
-        #top_frame.pack(fill=X,expand=YES,side=TOP,padx=15,pady=0)
         self.e1 = StringVar()
         self.entry = ttk.Entry(top_frame,width=65,textvariable = self.e1)
         self.e1.set('GRtemp.xaml')
@@ -60,8 +46,8 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.e2.set('GR_PVI_list.xls')
         self.entry2.pack(fill=X,expand=YES,side=LEFT,pady=10)
         self.e3 = StringVar()
-        self.comboxlist=ttk.Combobox(mid_frame,width=15,textvariable = self.e3) 
-        self.comboxlist.pack(side=LEFT)
+        self.combox_list=ttk.Combobox(mid_frame,width=15,textvariable = self.e3)
+        self.combox_list.pack(side=LEFT)
         self.e3.set('DATE1')
         ttk.Button(mid_frame, text='数据列表', command=self.open_file2).pack(side=LEFT)
 
@@ -110,80 +96,75 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         file_text = file_path
         self.entry2.delete(0, END)
         self.entry2.insert('insert', file_text)
-        sheetName = self.get_sheet(file_text)
-        sheetNameT = tuple(sheetName)
-        self.comboxlist["values"] = sheetNameT
-        self.comboxlist.current(0)
+        sheet_Name = self.get_sheet(file_text)
+        sheet_Name_T = tuple(sheet_Name)
+        self.combox_list["values"] = sheet_Name_T
+        self.combox_list.current(0)
         pass
 
     @thread_Decorator
     @time_Decorator
     def command(self):
         try:
-            samplePVI = self.entry.get()
-            modbusList = self.entry2.get()
-            listSheet = self.comboxlist.get()
-            filepath, fullflname = os.path.split(modbusList)
-            resultDR = os.path.join(filepath, 'GR_output.xaml')
+            sample_PVI = self.entry.get()
+            modbus_list = self.entry2.get()
+            sheet_list = self.combox_list.get()
+            filepath, fullflname = os.path.split(modbus_list)
+            DR_result = os.path.join(filepath, 'GR_output.xaml')
 
-           # Maintxt = open(samplePVI,'r',encoding='utf-8')
-            with open(samplePVI,'r',encoding='utf-8') as Maintxt:
+           # Maintxt = open(sample_PVI,'r',encoding='utf-8')
+            with open(sample_PVI,'r',encoding='utf-8') as Maintxt:
                 # 读取所有样本流程图
-                alls = Maintxt.read()
+                allContent = Maintxt.read()
             # 读取所有样本流程图=====头部
-            head1 = (re.findall(r'<!--P([\w\W]*?)<yiapcspvgbdc0',alls))
+            head_find = (re.findall(r'<!--P([\w\W]*?)<yiapcspvgbdc0',allContent))
             #正则表达式 两字符串之间的内容。
-            head = ('<!--P' + str(head1[0]) + '\n')
+            head_last = ('<!--P' + str(head_find[0]) + '\n')
             # 读取所有样本流程图=====内容
-            s1 = (re.findall(r'Function Link Component0" />([\w\W]*)</yiapcspvgbdc0:GroupComponent>',alls))
-            s = (str(s1[0]) + r'</yiapcspvgbdc0:GroupComponent>')
+            find_Content = (re.findall(r'Function Link Component0" />([\w\W]*)</yiapcspvgbdc0:GroupComponent>',allContent))
+            content = f'{find_Content[0]}</yiapcspvgbdc0:GroupComponent>'
             # 读取所有样本流程图=====底部
             foot = '</Canvas>'
             # 读取所有样本流程图=====位置信息
-            LeftData = (re.findall(r'Canvas.Left="\w+"',alls))
-            TopData = (re.findall(r'Canvas.Top="\w+"',alls))
-            LeftDataCount = 0
-            #self.Text.delete(0.0, END)
+            Left_Data = (re.findall(r'Canvas.Left="\w+"',allContent))
+            Top_Data = (re.findall(r'Canvas.Top="\w+"',allContent))
+            Left_Data_Count = 0
             self.text_update('START_')
-            datalist = list(self.get_data_Tag(modbusList,listSheet))
-            datalist_tag = tuple(datalist[0].values())
+            data_list = list(self.get_data_Tag(modbus_list,sheet_list))
+            data_list_tag = tuple(data_list[0].values())
 
-            OutFile = open(resultDR, 'w+', encoding='utf-8')
-            OutFile.write(head)   #写入头部
-            line = ""
-            TAG = ""
-            gapNum = int(self.entry12.get())
-            outValueGap = int(self.entry14.get())
-            for i in (self.get_data(modbusList,listSheet)):
-                for j in datalist_tag:
-                    if j == datalist_tag[0]:
-                        TAG = i[j]
-                        inValue = j
-                        outValue = str(TAG)
-                        line = s.replace (inValue,outValue)
-                    if j != datalist_tag[0]:
-                        TAG = i[j]
-                        inValue = j
-                        outValue = str(TAG)
-                        line = line.replace (inValue,outValue)
+            Out_file = open(DR_result, 'w+', encoding='utf-8')
+            Out_file.write(head_last)   #写入头部
+            result_line = ""
+            tag_now = ""
+            gap_Num = int(self.entry12.get())
+            out_ValueGap = int(self.entry14.get())
+            for all_tag in (self.get_data(modbus_list,sheet_list)):
+                for serial in data_list_tag:
+                    tag_now = all_tag[serial]
+                    in_Value = serial
+                    out_Value = str(tag_now)
+                    if serial == data_list_tag[0]:
+                        result_line = content.replace (in_Value,out_Value)
+                    else:
+                        result_line = result_line.replace (in_Value,out_Value)
                 pass
                 #修改坐标===
-                x = int(LeftDataCount/gapNum)
+                x = int(Left_Data_Count/gap_Num)
 
-                inValue = LeftData[0]
-                outValue = 'Canvas.Left="'+ str(LeftDataCount*2+20) +'"'
-                line = line.replace (inValue,outValue)
-                inValue = TopData[0]
-                outValue = 'Canvas.Top="'+ str((LeftDataCount+x)*outValueGap+20) +'"'
-                line = line.replace (inValue,outValue)
-                LeftDataCount += 1
+                in_Value = Left_Data[0]
+                out_Value = f'Canvas.Left="{(Left_Data_Count * 2 + 20)}"'
+                result_line = result_line.replace (in_Value,out_Value)
+                in_Value = Top_Data[0]
+                out_Value = f'Canvas.Top="{((Left_Data_Count + x) * out_ValueGap + 20)}"'
+                result_line = result_line.replace (in_Value,out_Value)
+                Left_Data_Count += 1
                 pass
-                self.text_update('INFO: '+ TAG + " 转换结束\n")
-
-                OutFile.write(line) #写入内容
-                OutFile.write("\n")
-            OutFile.write(foot)#写入底部
-            self.text_update("结果已输出至 DR_output.xaml")
+                self.text_update(f'INFO:{tag_now}转换结束\n')
+                result_line = result_line +'\n'
+                Out_file.write(result_line)     #写入内容
+            Out_file.write(foot)         #写入底部
+            self.text_update("结果已输出至 DR_output.xaml\n")
             self.text_update('STOP_')
 
         except FileNotFoundError as e:
@@ -193,7 +174,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         except  IndexError :
             err = "\n错误提示：确认复制元素是否Group"
             self.text_update(err)
-        sleep(2)
+        sleep(1)
 
     def text_update(self,show):
         if show == 'START_':
@@ -211,6 +192,6 @@ if __name__ == "__main__":
     root = Tk()
     root.geometry('640x400')  # 窗口尺寸
     Windows_NODE(root)
-    limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+    limit_time = YokoRead.ALRM_NODE.limited_time(root)
     root.title("列表流程图生成工具 V4.01"+"    到期日:"+limit_time)
     root.mainloop()

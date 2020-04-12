@@ -15,7 +15,7 @@ import YokoRead   #自定义模块
 from time import sleep
 from YokoRead import time_Decorator,thread_Decorator
 
-class Windows_NODE(YokoRead._FILE_NODE_):
+class Windows_NODE(YokoRead.FILE_NODE):
     def __init__(self, master):
         self.master = master
         self.here = 'C:/CENTUMVP/his/save/bmp/'
@@ -102,13 +102,13 @@ class Windows_NODE(YokoRead._FILE_NODE_):
 
     def inverse_color(self,image):
         height,width,temp = image.shape
-        img2 = image.copy()
+        img_last = image.copy()
 
         if self.intVar.get():
             for i in range(height):
                 for j in range(width):
-                    img2[i,j] = (255-image[i,j][0],255-image[i,j][1],255-image[i,j][2])
-        self.inver_bmp = img2
+                    img_last[i,j] = (255-image[i,j][0],255-image[i,j][1],255-image[i,j][2])
+        self.inver_bmp = img_last
         pass
 
     def show_img(self,img):
@@ -133,22 +133,22 @@ class Windows_NODE(YokoRead._FILE_NODE_):
 
     def foo(self):  #未启用
         path = self.entry.get()
-        dirnum = len([lists for lists in os.listdir(path) if os.path.isdir(os.path.join(path, lists))])
-        filenum = len([lists for lists in os.listdir(path) if os.path.isfile(os.path.join(path, lists))])
-        prdirnum = '文件夹:' + str(dirnum) +'个\n'
-        prfilenum = '文件数量:' + str(filenum) +'个\n'
-        self.Text.insert(END, prdirnum )
-        self.Text.insert(END, prfilenum)
+        dir_num = len([lists for lists in os.listdir(path) if os.path.isdir(os.path.join(path, lists))])
+        file_num = len([lists for lists in os.listdir(path) if os.path.isfile(os.path.join(path, lists))])
+        pr_dir_num = '文件夹:' + str(dir_num) +'个\n'
+        pr_file_num = '文件数量:' + str(file_num) +'个\n'
+        self.Text.insert(END, pr_dir_num )
+        self.Text.insert(END, pr_file_num)
 
-        for lists in os.listdir(path):
-            if '.png' in lists:
-                print(os.path.join(path, lists))
+        for all_list in os.listdir(path):
+            if '.png' in all_list:
+                print(os.path.join(path, all_list))
         pass
 
 if __name__ == "__main__":
     root = Tk()
     root.geometry('640x400+640+0')  # 窗口尺寸
     Windows_NODE(root)
-    limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+    limit_time = YokoRead.ALRM_NODE.limited_time(root)
     root.title("图片批量反色工具 V1.00"+"    到期日:"+limit_time)
     root.mainloop()

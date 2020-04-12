@@ -17,11 +17,11 @@ import TaglistTool  # Tag_list维护工具
 import PVI_TUN  # TUNING参数修改辅助工具
 # ==========================================================
 
-class myWindow():
-    def __init__(self, root, myTitle, flag):
-        self.top = tkinter.Toplevel(root)
+class myWindow:
+    def __init__(self, my_root, my_Title, flag):
+        self.top = tkinter.Toplevel(my_root)
         self.top.geometry('640x400+100+200')
-        self.top.title(myTitle)
+        self.top.title(my_Title)
         self.top.attributes('-topmost', 1)
         if flag == 1:
             PVI_GR.Windows_NODE(self.top)
@@ -47,7 +47,7 @@ class myWindow():
 
 class Windows_NODE:
     def __init__(self, master):
-        self.window1 = tkinter.IntVar(root, value=0)  # 只允许弹出一个窗体
+        self.window_A = tkinter.IntVar(root, value=0)  # 只允许弹出一个窗体
         # self.window2 = tkinter.IntVar(root, value=0)  #允许同时弹出2个窗体
         self.master = master
         self.initWidgets()
@@ -69,32 +69,32 @@ class Windows_NODE:
         pass
 
     def button_app(self, title, window_num):
-        xindex = int((window_num - 1) / 5)
-        yindex = (window_num - 1) % 5
-        self.button1 = tkinter.Button(root, text=title, command=lambda: self.button_fun(title, window_num))
-        self.button1.place(x=30 + xindex * 200, y=40 + yindex * 60, height=40, width=160)
-        # print(30+xindex*200, 40+yindex*60)
+        x_index = int((window_num - 1) / 5)
+        y_index = (window_num - 1) % 5
+        self.button_A = tkinter.Button(root, text=title, command=lambda: self.button_fun(title, window_num))
+        self.button_A.place(x=30 + x_index * 200, y=40 + y_index * 60, height=40, width=160)
+        # print(30+x_index*200, 40+y_index*60)
         pass
 
     def button_fun(self, title, window_num):
-        if self.window1.get() == 0:
-            self.window1.set(1)
+        if self.window_A.get() == 0:
+            self.window_A.set(1)
             w1 = myWindow(root, title, window_num)
-            self.button1.wait_window(w1.top)
-            self.window1.set(0)
+            self.button_A.wait_window(w1.top)
+            self.window_A.set(0)
         pass
     pass
 
 if __name__ == "__main__":
     try:
-        str_ = argv[1]
-    except:
-        str_ = ''
+        str_super = argv[1]
+    except IndexError:
+        str_super = ''
     root = Tk()
     root.geometry('640x400+100+200')  # 窗口尺寸
     Windows_NODE(root)
-    if str_ != '-S':
-        limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+    if str_super != '-S':
+        limit_time = YokoRead.ALRM_NODE.limited_time(root)
     else:
         limit_time = '3020/1/1'
     root.title("组态工具箱 V1.0" + "    到期日:" + limit_time)

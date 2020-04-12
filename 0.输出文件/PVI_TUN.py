@@ -15,7 +15,7 @@ import YokoRead   #自定义模块
 from time import sleep
 from YokoRead import time_Decorator,thread_Decorator
 
-class Windows_NODE(YokoRead._FILE_NODE_):
+class Windows_NODE(YokoRead.FILE_NODE):
     def __init__(self, master):
         self.master = master
         self.here = os.getcwd()
@@ -25,13 +25,13 @@ class Windows_NODE(YokoRead._FILE_NODE_):
 
 
     def initWidgets(self):
-        testpath = 'C:/Users/Administrator/Documents/python/0.输出文件/PVI_TUN/PVI_TUN_list.xls'
+        test_path = 'C:/Users/Administrator/Documents/python/0.输出文件/PVI_TUN/PVI_TUN_list.xls'
         # 创建中部
         mid_frame = LabelFrame(self.master, text='数据列表')
         mid_frame.pack(fill=X, padx=15, pady=0)
         self.e2 = StringVar()
         self.entry2 = ttk.Entry(mid_frame, width=45, textvariable=self.e2)
-        self.e2.set(testpath)
+        self.e2.set(test_path)
         self.entry2.pack(fill=X, expand=YES, side=LEFT, pady=10)
         self.e3 = StringVar()
         self.comboxlist = ttk.Combobox(mid_frame, width=15, textvariable=self.e3)
@@ -97,8 +97,8 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         line = line + line2
         # 文本写入
         filepath, fullflname = os.path.split(file_name)
-        self.outtxt = os.path.join(filepath, 'OUT.txt')
-        self.out_txt(self.outtxt, line)
+        result_last = os.path.join(filepath, 'OUT.txt')
+        self.out_txt(result_last, line)
         #结束
         self.text_update('STOP_')
         sleep(2)
@@ -122,6 +122,6 @@ if __name__ == "__main__":
         root.title("V1.00")
         root.geometry('640x400')  # 窗口尺寸
         Windows_NODE(root)
-        limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+        limit_time = YokoRead.ALRM_NODE.limited_time(root)
         root.title("TUNING参数修改工具" + "    到期日:" + limit_time)
         root.mainloop()

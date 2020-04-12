@@ -48,7 +48,7 @@ from sys import argv
 
 # 计时装饰器
 
-class Windows_NODE(YokoRead._FILE_NODE_):
+class Windows_NODE(YokoRead.FILE_NODE):
     def __init__(self, master):
         self.master = master
         self.here = os.getcwd()
@@ -133,21 +133,19 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         try:
             file_path = filedialog.askopenfilename(title=u'选择参考文档', initialdir=self.here)
             file_text = file_path
-            sheetName = self.get_sheet(file_text)
-            self.sheetNameT = tuple(sheetName)
-            self.comboxlist["values"] = self.sheetNameT
+            sheet_name = self.get_sheet(file_text)
+            self.sheet_name_T = tuple(sheet_name)
+            self.comboxlist["values"] = self.sheet_name_T
             self.comboxlist.current(0)
-
             self.entry.delete(0, END)
             self.entry.insert('insert', file_text)
-
-        except xlrd.biffh.XLRDError as e:
+        except xlrd.biffh.XLRDError:
             self.text_update('错误提示：文件格式错误，现在就只能处理Excel文档\n')
 
     def open_combox(self, *args):
-        filename0 = self.entry.get()
-        SheetName0 = self.comboxlist.get()
-        self.col = self.get_col(filename0, SheetName0)
+        file_name_0 = self.entry.get()
+        sheet_name_0 = self.comboxlist.get()
+        self.col = self.get_col(file_name_0, sheet_name_0)
         self.comboxlist1["values"] = self.col
         self.comboxlist1.current(0)
 
@@ -161,24 +159,24 @@ class Windows_NODE(YokoRead._FILE_NODE_):
                 file_path = filedialog.askopenfilename(title=u'选择数据列表', initialdir=self.here)
             file_text = file_path
             self.entry2.insert('insert', file_text)
-            sheetName = self.get_sheet(file_text)
-            self.sheetNameR = tuple(sheetName)
-            self.comboxlist2["values"] = self.sheetNameR
+            sheet_name = self.get_sheet(file_text)
+            self.sheet_nameR = tuple(sheet_name)
+            self.comboxlist2["values"] = self.sheet_nameR
             self.comboxlist2.current(0)
-        except xlrd.biffh.XLRDError as e:
+        except xlrd.biffh.XLRDError:
             self.text_update('错误提示：文件格式错误，现在就只能处理Excel文档\n')
 
-    def open_combox2(self, event):
-        filename = self.entry2.get()
-        SheetName = self.comboxlist2.get()
-        filename0 = self.entry.get()
-        SheetName0 = self.comboxlist.get()
+    def open_combox2(self,*args):
+        file_name = self.entry2.get()
+        sheet_name = self.comboxlist2.get()
+        file_name_0 = self.entry.get()
+        sheet_name_0 = self.comboxlist.get()
 
-        self.col2 = self.get_col(filename, SheetName)
+        self.col2 = self.get_col(file_name, sheet_name)
         self.comboxlist3["values"] = self.col2
         self.comboxlist3.current(0)
 
-        if filename == filename0 and SheetName == SheetName0:
+        if file_name == file_name_0 and sheet_name == sheet_name_0:
             self.text_update("不是用重复文件\n")
         else:
             self.Text.delete(0.0, END)
@@ -189,72 +187,72 @@ class Windows_NODE(YokoRead._FILE_NODE_):
             self.Text.delete(0.0, END)
             self.text_update("=============替换中===============\n")
             self.Text.update()
-            TExcleName = self.entry.get()
+            T_Excle_Name = self.entry.get()
             self.TSheet = self.comboxlist.get()
-            TSheetNum = self.sheetNameT.index(self.TSheet)
-            # print (TSheetNum)
-            Ttag = self.comboxlist1.get()
-            TtagColNum = self.col.index(Ttag)
-            # print (TtagColNum)
-            RExcleName = self.entry2.get()
-            RSheet = self.comboxlist2.get()
-            RSheetNum = self.sheetNameR.index(RSheet)
-            # print (RSheetNum)
-            Rtag = self.comboxlist3.get()
-            RtagColNum = self.col2.index(Rtag)
-            # print (RtagColNum)
+            T_Sheet_Num = self.sheet_name_T.index(self.TSheet)
+            # print (T_Sheet_Num)
+            T_tag = self.comboxlist1.get()
+            T_tag_ColNum = self.col.index(T_tag)
+            # print (T_tag_ColNum)
+            R_Excle_Name = self.entry2.get()
+            R_Sheet = self.comboxlist2.get()
+            R_Sheet_Num = self.sheet_nameR.index(R_Sheet)
+            # print (R_Sheet_Num)
+            R_tag = self.comboxlist3.get()
+            R_tag_ColNum = self.col2.index(R_tag)
+            # print (R_tag_ColNum)
 
-            TfilePath = os.path.join(os.getcwd(), TExcleName)
-            TexcelFile = xlrd.open_workbook(TfilePath)
-            RfilePath = os.path.join(os.getcwd(), RExcleName)
-            RexcelFile = xlrd.open_workbook(RfilePath)
+            T_file_path = os.path.join(os.getcwd(), T_Excle_Name)
+            T_excel_file = xlrd.open_workbook(T_file_path)
+            R_file_path = os.path.join(os.getcwd(), R_Excle_Name)
+            R_excel_file = xlrd.open_workbook(R_file_path)
             # print excelFile.sheet_names()
-            sheet1 = TexcelFile.sheet_by_index(TSheetNum)
-            sheet2 = RexcelFile.sheet_by_index(RSheetNum)
+            sheet_T = T_excel_file.sheet_by_index(T_Sheet_Num)
+            sheet_R = R_excel_file.sheet_by_index(R_Sheet_Num)
 
             # ==========================================================
-            rowsNum = sheet1.nrows
-            colNum = sheet1.ncols
-            # print "row num:", sheet1.nrows #行
-            # print "col num:", sheet1.ncols #列
-            rowlist_list = self.rowList(sheet1, TtagColNum)
-            collist_list = self.colList(sheet1)
-            dictTAG = self.dictGenerate(sheet1, TtagColNum)
+            #rowsNum = sheet_T.nrows
+            #colNum = sheet_T.ncols
+            # print "row num:", sheet_T.nrows #行
+            # print "col num:", sheet_T.ncols #列
+            rowlist_list = self.rowList(sheet_T, T_tag_ColNum)
+            collist_list = self.colList(sheet_T)
+            dict_tag = self.dictGenerate(sheet_T, T_tag_ColNum)
 
             # 读取更换内容==============================================
-            newTAG = self.dictGenerate(sheet2, RtagColNum)
-            list_TAG = list(newTAG)
+            new_tag = self.dictGenerate(sheet_R, R_tag_ColNum)
+            list_TAG = list(new_tag)
             # print list_TAG # [(u'BC', u'AB')]
             TAG_index = 0
             # openpyxl 打开Yget 清单=============================================
-            data = openpyxl.load_workbook(TExcleName)
-            table = data.worksheets[TSheetNum]
+            data = openpyxl.load_workbook(T_Excle_Name)
+            table = data.worksheets[T_Sheet_Num]
 
             while TAG_index < len(list_TAG):
                 TAG_XY = list_TAG[TAG_index]
                 # print TAG_XY
-                TAG_Z = newTAG[TAG_XY]
+                TAG_Z = new_tag[TAG_XY]
                 # print TAG_Z # 7.0
-                Nokey = dictTAG.get(TAG_XY, 0)  # 处理Yget 不存在的key
+                Nokey = dict_tag.get(TAG_XY, 0)  # 处理Yget 不存在的key
 
                 if TAG_Z != "" and Nokey != 0:
                     # print(TAG_Z)
                     TAG_Z_OUT = str(TAG_Z) + '\n'
                     # Excel坐标============================================
-                    NewTagRow_Str = list_TAG[TAG_index][0]
-                    NewTagcol_Str = list_TAG[TAG_index][1]
-                    NewTagRow_index = rowlist_list.index(NewTagRow_Str) + 1
-                    NewTagCel_index = collist_list.index(NewTagcol_Str) + 1
+                    New_Tag_Row_Str = list_TAG[TAG_index][0]
+                    New_Tag_col_Str = list_TAG[TAG_index][1]
+                    New_Tag_Row_index = rowlist_list.index(New_Tag_Row_Str) + 1
+                    NewTagCel_index = collist_list.index(New_Tag_col_Str) + 1
                     # 替换Excel数据===============================================
-                    TAG_ZZ = table.cell(NewTagRow_index, NewTagCel_index).value
+                    TAG_ZZ = table.cell(New_Tag_Row_index, NewTagCel_index).value
                     if TAG_Z != TAG_ZZ:
-                        table.cell(NewTagRow_index, NewTagCel_index).value = TAG_Z
-                        table.cell(NewTagRow_index, NewTagCel_index).fill = sty.PatternFill(fill_type='solid',
+                        table.cell(New_Tag_Row_index, NewTagCel_index).value = TAG_Z
+                        table.cell(New_Tag_Row_index, NewTagCel_index).fill = sty.PatternFill(fill_type='solid',
                                                                                             fgColor="00FFFF")  # 对更新数据进行标注颜色
                         self.text_update(TAG_Z_OUT)
                 TAG_index = TAG_index + 1
                 # Excel写入===========================================================
-            data.save(TExcleName)
+            data.save(T_Excle_Name)
             self.text_update("=============替换结束=============\n")
         except Exception as e:
             self.text_update(e)
@@ -266,84 +264,84 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         try:
             #self.Text.delete(0.0, END)
             self.text_update("=============校队中===============\n")
-            TExcleName = self.entry.get()
+            T_Excle_Name = self.entry.get()
             self.TSheet = self.comboxlist.get()
-            TSheetNum = self.sheetNameT.index(self.TSheet)
-            # print (TSheetNum)
-            Ttag = self.comboxlist1.get()
-            TtagColNum = self.col.index(Ttag)
-            # print (TtagColNum)
-            RExcleName = self.entry2.get()
-            RSheet = self.comboxlist2.get()
-            RSheetNum = self.sheetNameR.index(RSheet)
-            # print (RSheetNum)
-            Rtag = self.comboxlist3.get()
-            RtagColNum = self.col2.index(Rtag)
-            # print (RtagColNum)
+            T_Sheet_Num = self.sheet_name_T.index(self.TSheet)
+            # print (T_Sheet_Num)
+            T_tag = self.comboxlist1.get()
+            T_tag_ColNum = self.col.index(T_tag)
+            # print (T_tag_ColNum)
+            R_Excle_Name = self.entry2.get()
+            R_Sheet = self.comboxlist2.get()
+            R_Sheet_Num = self.sheet_nameR.index(R_Sheet)
+            # print (R_Sheet_Num)
+            R_tag = self.comboxlist3.get()
+            R_tag_ColNum = self.col2.index(R_tag)
+            # print (R_tag_ColNum)
 
-            TfilePath = os.path.join(os.getcwd(), TExcleName)
-            TexcelFile = xlrd.open_workbook(TfilePath)
-            RfilePath = os.path.join(os.getcwd(), RExcleName)
-            RexcelFile = xlrd.open_workbook(RfilePath)
+            T_file_path = os.path.join(os.getcwd(), T_Excle_Name)
+            T_excel_file = xlrd.open_workbook(T_file_path)
+            R_file_path = os.path.join(os.getcwd(), R_Excle_Name)
+            R_excel_file = xlrd.open_workbook(R_file_path)
             # print excelFile.sheet_names()
 
-            sheet1 = TexcelFile.sheet_by_index(TSheetNum)
-            sheet2 = RexcelFile.sheet_by_index(RSheetNum)
+            sheet_T = T_excel_file.sheet_by_index(T_Sheet_Num)
+            sheet_R = R_excel_file.sheet_by_index(R_Sheet_Num)
 
             # ==========================================================
-            rowsNum = sheet1.nrows
-            colNum = sheet1.ncols
-            # print "row num:", sheet1.nrows #行
-            # print "col num:", sheet1.ncols #列
-            rowlist_list = self.rowList(sheet1, TtagColNum)
-            collist_list = self.colList(sheet1)
-            dictTAG = self.dictGenerate(sheet1, TtagColNum)
+            #rowsNum = sheet_T.nrows
+            #colNum = sheet_T.ncols
+            # print "row num:", sheet_T.nrows #行
+            # print "col num:", sheet_T.ncols #列
+            rowlist_list = self.rowList(sheet_T, T_tag_ColNum)
+            collist_list = self.colList(sheet_T)
+            dict_tag = self.dictGenerate(sheet_T, T_tag_ColNum)
 
             # 读取更换内容==============================================
-            newTAG = self.dictGenerate(sheet2, RtagColNum)
-            list_TAG = list(newTAG)
+            new_tag = self.dictGenerate(sheet_R, R_tag_ColNum)
+            list_TAG = list(new_tag)
             # print list_TAG # [(u'BC', u'AB')]
             TAG_index = 0
             # openpyxl 打开Yget 清单=============================================
-            data = openpyxl.load_workbook(TExcleName)
-            table = data.worksheets[TSheetNum]
+            data = openpyxl.load_workbook(T_Excle_Name)
+            table = data.worksheets[T_Sheet_Num]
 
             while TAG_index < len(list_TAG):
                 TAG_XY = list_TAG[TAG_index]
                 # print TAG_XY
-                TAG_Z = newTAG[TAG_XY]
+                TAG_Z = new_tag[TAG_XY]
                 # print TAG_Z # 7.0
-                Nokey = dictTAG.get(TAG_XY, 0)  # 处理Yget 不存在的key
+                Nokey = dict_tag.get(TAG_XY, 0)  # 处理Yget 不存在的key
                 if TAG_Z != "" and Nokey != 0:
 
                     # Excel坐标============================================
-                    NewTagRow_Str = list_TAG[TAG_index][0]
-                    NewTagcol_Str = list_TAG[TAG_index][1]
-                    NewTagRow_index = rowlist_list.index(NewTagRow_Str) + 1
-                    NewTagCel_index = collist_list.index(NewTagcol_Str) + 1
+                    New_Tag_Row_Str = list_TAG[TAG_index][0]
+                    New_Tag_col_Str = list_TAG[TAG_index][1]
+                    New_Tag_Row_index = rowlist_list.index(New_Tag_Row_Str) + 1
+                    NewTagCel_index = collist_list.index(New_Tag_col_Str) + 1
                     # 替换Excel数据===============================================
-                    TAG_ZZ = table.cell(NewTagRow_index, NewTagCel_index).value
-                    # table.cell(NewTagRow_index,NewTagCel_index).value = TAG_Z
+                    TAG_ZZ = table.cell(New_Tag_Row_index, NewTagCel_index).value
+                    # table.cell(New_Tag_Row_index,NewTagCel_index).value = TAG_Z
                     if TAG_Z != TAG_ZZ:
                         # print (TAG_Z)
                         TAG_Z_OUT = str(TAG_Z) + '\n'
                         self.Text.insert('insert', TAG_Z_OUT)
                         self.Text.update()
                         self.Text.see(END)
-                        table.cell(NewTagRow_index, NewTagCel_index).fill = sty.PatternFill(fill_type='solid',
+                        table.cell(New_Tag_Row_index, NewTagCel_index).fill = sty.PatternFill(fill_type='solid',
                                                                                             fgColor="FF00FF")  # 对更新数据进行标注颜色
                 TAG_index = TAG_index + 1
                 # Excel写入===========================================================
-            data.save(TExcleName)
+            data.save(T_Excle_Name)
             self.text_update("=============校队结束=============\n")
         except Exception as e:
             self.text_update(e)
         sleep(2)
 
-    def get_col(self, filename, SheetName):
-        dir_case = filename
+    def get_col(self, file_name, sheet_name):
+        dir_case = file_name
         data = xlrd.open_workbook(dir_case)
-        sheet = data.sheet_by_name(SheetName)
+        sheet = data.sheet_by_name(sheet_name)
         col_name = self.colList(sheet)
         return col_name
 
@@ -369,16 +367,12 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         pass
 
 if __name__ == "__main__":
-    try:
-        str_ = argv[1]
-    except:
-        str_ = ''
     root = Tk()
     root.geometry('640x600+100+200')  # 窗口尺寸
     Windows_NODE(root)
     # limit_time = YokoRead._ALRM_NODE_.limited_time(root)
     if str_ != '-S':
-        limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+        limit_time = YokoRead.ALRM_NODE.limited_time(root)
     else:
         limit_time = '3020/1/1'
     root.title("Tag_list维护工具  Ver1.0" + "    到期日:" + limit_time)

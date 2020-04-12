@@ -19,7 +19,7 @@ import YokoRead   #自定义模块
 from time import sleep
 from YokoRead import time_Decorator,thread_Decorator
 
-class Windows_NODE(YokoRead._FILE_NODE_):
+class Windows_NODE(YokoRead.FILE_NODE):
     def __init__(self, master):
         self.master = master
         self.here = os.getcwd()
@@ -111,7 +111,7 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         self.text_update('START_')
         for _txt in txt_in_files:
             self.txt_file_name = f'{self.path0}/{_txt}'
-            self.outtxt =  f'{self.path0}/OUT-{_txt}'
+            self.out_txt_name =  f'{self.path0}/OUT-{_txt}'
             if self.txt_file_name.find('OUT')<0:
             #屏蔽掉之前输出的结果
                 self.find_keyword(self.txt_file_name)
@@ -143,20 +143,20 @@ class Windows_NODE(YokoRead._FILE_NODE_):
 
     def valid_node(self,lower_input, upper_input):
         # input = 0.0
-        output = []
+        out_put = []
         upper_input1 = float(upper_input)
         lower_input1 = float(lower_input)
 
         if upper_input1 < 10:
-            output.append("{:.3f}".format(lower_input1))
-            output.append("{:.3f}".format(upper_input1))
+            out_put.append("{:.3f}".format(lower_input1))
+            out_put.append("{:.3f}".format(upper_input1))
         if 10 <= upper_input1 < 100:
-            output.append("{:.2f}".format(lower_input1))
-            output.append("{:.2f}".format(upper_input1))
+            out_put.append("{:.2f}".format(lower_input1))
+            out_put.append("{:.2f}".format(upper_input1))
         if 100 <= upper_input1:
-            output.append("{:.1f}".format(lower_input1))
-            output.append("{:.1f}".format(upper_input1))
-        return output
+            out_put.append("{:.1f}".format(lower_input1))
+            out_put.append("{:.1f}".format(upper_input1))
+        return out_put
 
     def range_rep(self,upper,lower,unit):
         #量程单位处理子程序
@@ -164,37 +164,38 @@ class Windows_NODE(YokoRead._FILE_NODE_):
         #range_key = 'ESCL:1:100.0:0.0;'
         # Condition 2:
         #unit_key = 'EUNT:1:%;'
+
         for _ in self.find_result:
-            tag = self.tag_key +';'
+            tag = f'{self.tag_key};'
             if tag in _:                #有TAG再处理
         # Condition 1:
-                if re.search(r'ESCL:([\w\W]*?);', _, flags=0) != None:
+                if re.search(r'ESCL:([\w\W]*?);', _, flags=0):
                     range_key = re.search(r'ESCL:([\w\W]*?);', _, flags=0).group(0)
                     range_new_key = 'ESCL:1:' + str(upper) + ':' + str(lower) + ';'
                     #print(range_key,range_new_key)
                     self.good_result = str(_).replace(range_key, range_new_key, 1)
                     pass
         # Condition 2:
-                if re.search(r'EUNT:([\w\W]*?);', _, flags=0) != None:
+                if re.search(r'EUNT:([\w\W]*?);', _, flags=0):
                     unit_key = re.search(r'EUNT:([\w\W]*?);', _, flags=0).group(0)
                     unit_new_key = 'EUNT:1:' + str(unit) + ';'
-                    self.good_result = (self.good_result).replace(unit_key,unit_new_key,1)
+                    self.good_result = self.good_result.replace(unit_key,unit_new_key,1)
                     pass
         #替换完结果：
-                if re.search(r'ESCL:([\w\W]*?);', _, flags=0) != None:
+                if re.search(r'ESCL:([\w\W]*?);', _, flags=0):
                     self.file_detail = self.file_detail.replace(_,self.good_result,1)
                     filepath, fullflname = os.path.split(self.txt_file_name) #记录处理过的文件
                     self.recording.append(fullflname)
                     pass
             pass
-        self.out_txt(self.outtxt,self.file_detail)
+        self.out_txt(self.out_txt_name,self.file_detail)
         pass
 
     def print_record(self):
         #打印替换的文件
         record = set(self.recording) #set 去掉重复值
         for _ in record:
-            if re.search(r'DR([\w\W]*?)txt', _ , flags=0) != None:
+            if re.search(r'DR([\w\W]*?)txt', _ , flags=0):
                 shortname = re.search(r'DR([\w\W]*?)txt', _, flags=0).group(0)
                 self.text_update('INFO:'+ shortname + " 转换结束\n")
         pass
@@ -216,6 +217,6 @@ if __name__ == "__main__":
         root.title("量程替换工具 V1.00")
         root.geometry('640x400')  # 窗口尺寸
         Windows_NODE(root)
-        limit_time = YokoRead._ALRM_NODE_.limited_time(root)
+        limit_time = YokoRead.ALRM_NODE.limited_time(root)
         root.title("量程替换工具 V1.00" + "    到期日:" + limit_time)
         root.mainloop()
