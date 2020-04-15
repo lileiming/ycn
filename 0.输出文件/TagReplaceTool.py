@@ -88,31 +88,47 @@ class Windows_NODE(YokoRead.FILE_NODE):
 
     @thread_Decorator
     @time_Decorator
+    # find_target_A = r'[0-9%]{2,4}[A-Z]+[0-9]{1,2}' # 6200TICAS11 /6200TI11
+    # find_target_A = r'[0-9%]{2,4}[A-Z]+[0-9]{1,3}' # 6200TICAS111 /6200TI111
+    # find_target_B = r'[0-9A-Z%]+(?=-|_)'  # %%ITICAS11  FCS0115(FCS0115-)
+    # find_target_A = r'Z'
+    #
+    #
     def findEtag(self):
+        self.find_result_last = []
+        line = ''
         self.text_insert('findEtag')
         self.flag = 2
         self.eachFile()
-        find_result = (re.findall(r'(?<=ETAG:1:).*(?=;)', self.text_detail))
-        find_result = find_result + (re.findall(r'(?<=RTAG:1:).*(?=;)', self.text_detail))
-        find_result_copy = find_result.copy()
-        find_result_last = []
-        for initial in find_result_copy:
-            i = re.findall(r'[0-9%]{2,4}[A-Z]+[0-9]{1,3}', initial)
-            if len(i):
-                find_result.pop(find_result.index(initial))
-                find_result_last.append(i[0])
-        find_result_last.extend(find_result)
+        find_result_ETAG = (re.findall(r'(?<=ETAG:1:).*(?=;)', self.text_detail))
+        find_result_RTAG = (re.findall(r'(?<=RTAG:1:).*(?=;)', self.text_detail))
+        find_result = find_result_ETAG + find_result_RTAG
+        find_target_A = r'[0-9%]{2,4}[A-Z]+[0-9]{1,2}'
+        find_result = self.loop_part_func(find_result, find_target_A)
+        find_target_B = r'[0-9A-Z%]+(?=-|_)'
+        find_result = self.loop_part_func(find_result, find_target_B)
 
-        find_result_last = list(set(find_result_last))  # 去重
-        line = ''
-        for _ in find_result_last:
+        self.Text.insert('insert', f'未知：{find_result}\n')
+        self.find_result_last.extend(find_result)
+        self.find_result_last = list(set(self.find_result_last))  # 去重
+        for _ in self.find_result_last:
             line = f'{line}\n{_}'
             pass
         filepath, fullflname = os.path.split(self.entry2.get())
         self.out_txt(f'{filepath}\分析结果.txt',line)
         self.flag = 0
         self.text_insert('completed')
+        sleep(1)
         pass
+
+    def loop_part_func(self,result,target):
+        find_result_copy = result.copy()
+        for initial in find_result_copy:
+            i = re.findall(target, initial)
+            if len(i):
+                result.pop(result.index(initial))
+                self.find_result_last.append(i[0])
+        return result
 
     @thread_Decorator
     @time_Decorator
@@ -206,7 +222,14 @@ class Windows_NODE(YokoRead.FILE_NODE):
                 nodeX = Node_Solt[2]
                 nodeY = Node_Solt[3]
                 soltX = Node_Solt[4]
-                flienameNS = f'{self.path1}N{nodeX}{nodeY}S{soltX}.csv'
+                if 'Unit' in fileCsv:
+                    type_IOM  ="-Analog"
+                elif 'Btn1' in fileCsv:
+                    type_IOM = "-Status"
+                else:
+                    type_IOM = "-Other"
+                pass
+                flienameNS = f'{self.path1}N{nodeX}{nodeY}S{soltX}{type_IOM}.csv'
                 repeatName = f'N{nodeX}{nodeY}S{soltX}.csv'
             elif IOM == 'S':
                 SWX = Node_Solt[3]

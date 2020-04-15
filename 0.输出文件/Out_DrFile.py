@@ -21,10 +21,14 @@ class Windows_NODE(YokoRead.FILE_NODE):
     def __init__(self, master):
         self.master = master
         self.initWidgets()
-        help_doc = '本程序为快速组态导入导出工具. \n\n使用方法：\n\n1.填写到处DR文件数量.\n' \
+        help_doc = '本程序为快速组态导入导出工具（DR/IOM/SW）. \n\n' \
+                   '(DR文件)使用方法：\n\n' \
+                   '1.填写导出DR文件数量.\n' \
                    '2.打开 Control Drawing Builder(DR文件组态界面).\n' \
                    '3.点击导出按钮执行程序.\n' \
-                   '4.将本窗口隐藏至最小化.\n\n\n'
+                   '4.将本窗口隐藏至最小化.\n\n' \
+                   'IOM/SW开关导出类似.\n\n'
+
         self.Text.insert('insert', help_doc)
 
     def initWidgets(self):
@@ -41,7 +45,7 @@ class Windows_NODE(YokoRead.FILE_NODE):
 
         # 创建底部
         bot_frame = LabelFrame(self.master)
-        bot_frame.pack(fill=X, side=TOP, padx=15, pady=8)
+        bot_frame.pack(fill=X, side=TOP, padx=15, pady=2)
 
         self.e = StringVar()
         ttk.Label(bot_frame, width=10, textvariable=self.e).pack(side=LEFT)
@@ -52,12 +56,12 @@ class Windows_NODE(YokoRead.FILE_NODE):
         self.e1.set("0")
         self.entry.pack(side=LEFT, pady=10)
         #yoko_fn = YokoRead._FILE_NODE_
-        ttk.Button(bot_frame, text='导出', command=self.start).pack(side=RIGHT, padx=10)
+        ttk.Button(bot_frame, text='导出', command=self.start_dr).pack(side=RIGHT, padx=10)
 
     #lambda: self.thread_it(self.start)
     @thread_Decorator
     @time_Decorator
-    def start(self):
+    def start_dr(self):
         try:
             export_num = int(self.entry.get())
             #print(export_num)
@@ -65,17 +69,19 @@ class Windows_NODE(YokoRead.FILE_NODE):
             self.text_update("请输入数字.\n")
             self.entry.delete(0,END)
             export_num = 0
-
         self.circuit(export_num)
         #self.circuit(export_num)
         EnumWindows(self.scan_windows, 0)  # 遍历所有窗口
         pass
+
 
     def text_update(self,show):
         if show == 'START_':
             self.Text.insert(END, "=============程序开始=============\n")
         elif show == 'STOP_':
             self.Text.insert(END, "=============程序结束=============\n")
+        elif show == 'filename':
+            self.Text.insert(END, f'INFO:{self.short_name} 导出完成\n')
         else:
             self.Text.insert(END,show)
             self.Text.insert(END, "=============程序终止=============\n")
@@ -83,18 +89,42 @@ class Windows_NODE(YokoRead.FILE_NODE):
         self.Text.update()
         self.Text.see(END)
 
-
     def all_windows_name(self,hwnd, mouse):
         if IsWindow(hwnd) and IsWindowEnabled(hwnd) and IsWindowVisible(hwnd):
             #print(GetClassName(hwnd)+'==>'+GetWindowText(hwnd))
+            # DR文件部分
             if 'FUNCTION_BLOCK' in GetWindowText(hwnd):
                 self.sv_window_text = GetWindowText(hwnd)
                 self.sv_class_name = GetClassName(hwnd)
-            if 'Draw:DR' in GetWindowText(hwnd):
+            elif 'Draw:DR' in GetWindowText(hwnd):
                 self.dr_window_text = GetWindowText(hwnd)
                 self.dr_class_name = GetClassName(hwnd)
                 #shortname = re.search('DR([\w\W\[0-9]{4}]*?)', self.dr_window_text, flags=0).group(0)
-                self.short_name = re.search('[\w\W\[0-9]{6}]*?(?=.edf)', self.dr_window_text, flags=0).group(0)
+                self.short_name = re.search(r'[\w\W\[0-9]{6}]*?(?=.edf)', self.dr_window_text, flags=0).group(0)
+            #IOM文件部分
+            elif 'NODE' in GetWindowText(hwnd):
+                self.sv_window_text = GetWindowText(hwnd)
+                self.sv_class_name = GetClassName(hwnd)
+            elif 'IOM Builder' in GetWindowText(hwnd):
+                self.dr_window_text = GetWindowText(hwnd)
+                self.dr_class_name = GetClassName(hwnd)
+                name_NS = re.search(r'(?<=Stn:).*(?=.edf)', self.dr_window_text, flags=0).group(0)
+                #sn_FCS = re.search(r'(?<=FCS)[0-9]{4}', name_NS, flags=0).group(0)
+                #sn_FCS = re.search(r'.*(?= Train:)', name_NS, flags=0).group(0)
+                sn_Node = re.search(r'(?<=Node:)[0-9]{1,2}', name_NS, flags=0).group(0)
+                sn_Solt = re.search(r'(?<=File:)[1-8]', name_NS, flags=0).group(0)
+                self.short_name = f'N{sn_Node}S{sn_Solt}'
+            elif 'BKESysView' in GetWindowText(hwnd):
+                self.dr_window_text = GetWindowText(hwnd)
+                self.dr_class_name = GetClassName(hwnd)
+            #SW开关部分
+            elif 'SWITCH' in GetWindowText(hwnd):
+                self.sv_window_text = GetWindowText(hwnd)
+                self.sv_class_name = GetClassName(hwnd)
+            elif 'File:SwitchDef' in GetWindowText(hwnd):
+                self.dr_window_text = GetWindowText(hwnd)
+                self.dr_class_name = GetClassName(hwnd)
+                self.short_name = f'{self.sw_num}SW' #因为中文输入容易错
 
     def command(self):
         self.sv_window_text = ''
@@ -108,8 +138,11 @@ class Windows_NODE(YokoRead.FILE_NODE):
         if self.dr_window_text != '' :
             dr_builder_window = win32gui.FindWindow(self.dr_class_name, self.dr_window_text)
             win32gui.SetForegroundWindow(dr_builder_window)
+            if self.dr_window_text == 'BKESysView':
+                self.press_key(Key.enter,Key.down, Key.enter)
+                pass
         else:
-            err_text = "Control Drawing Builder is not Open !1\n"
+            err_text = "Windows not Open !1\n"
             self.text_update(err_text)
             exit()
 
@@ -119,7 +152,7 @@ class Windows_NODE(YokoRead.FILE_NODE):
             dr_builder_window = win32gui.FindWindow(self.dr_class_name, self.dr_window_text)
             win32gui.PostMessage(dr_builder_window, win32con.WM_CLOSE, 0, 0)
         else:
-            err_text = "Control Drawing Builder is not Open !2\n"
+            err_text = "Windows is not Open !2\n"
             self.text_update(err_text)
             exit()
 
@@ -129,7 +162,7 @@ class Windows_NODE(YokoRead.FILE_NODE):
             function_block_window = win32gui.FindWindow(self.sv_class_name, self.sv_window_text)
             win32gui.SetForegroundWindow(function_block_window)
         else:
-            err_text = "Control Drawing Builder is not Open !3\n"
+            err_text = "Windows is not Open !3\n"
             self.text_update(err_text)
             exit()
 
@@ -140,7 +173,7 @@ class Windows_NODE(YokoRead.FILE_NODE):
             self.keyboard.press(combination)
 
         for _ in abc:
-            print(_)
+            #print(_)
             self.press_abc(_)
             self.__delay()
 
@@ -157,9 +190,11 @@ class Windows_NODE(YokoRead.FILE_NODE):
 
     def out_txt(self):
         self.press_key(Key.alt,'f','e','e')
-        self.__delay()
+        self.__delay(1)
+        #print(self.short_name)
+        self.text_update('filename')
         self.keyboard.type(self.short_name)
-        print(self.short_name)
+        self.__delay(1)
         self.short_name = ''
         self.press_key(Key.alt, 's')
         self.press_key(Key.left,Key.enter)
@@ -168,16 +203,18 @@ class Windows_NODE(YokoRead.FILE_NODE):
     def circuit(self,count):   #循环流程
         self.text_update('START_')
         for _ in range(count):
+            self.sw_num = str(_+1)
             self.__delay(1)
             self.command()
             self.active_dr_builder()
+            if self.dr_window_text == 'BKESysView':
+                continue
             self.out_txt()
             self.close_dr_builder()
             self.active_function_block()
             #self.__delay(5)  or  self.listener_() # 按空格键 程序继续
             self.__delay(1)
             self.press_key(Key.down,Key.enter)
-
         self.text_update('STOP_')
 
     def scan_windows(self,hwnd, mouse):
@@ -209,7 +246,7 @@ if __name__ == "__main__":
     #app.active_()
 
     root = Tk()
-    root.geometry('480x300')  # 窗口尺寸
+    root.geometry('640x400+100+200')  # 窗口尺寸
     Windows_NODE(root)
     limit_time = YokoRead.ALRM_NODE.limited_time(root)
     root.title("DR文件导出工具 V1.00"+"    到期日:"+limit_time)

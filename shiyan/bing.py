@@ -2,7 +2,7 @@ import os
 import requests
 from bs4 import BeautifulSoup
 import win32api, win32con, win32gui
-
+from time import time,localtime
 
 def download_bing_wallpaper(filepath):
     global req_result
@@ -20,7 +20,13 @@ def download_bing_wallpaper(filepath):
     url_img = url + ls[0].attrs["href"]  # 获取图片链接
     jj = ls[0].attrs["href"].split("&")
     j = jj[0].split("=")
-    file_name = j[1]  # 获取图片文件名
+
+    year_now = localtime(time()).tm_year
+    month_now = localtime(time()).tm_mon
+    day_now = localtime(time()).tm_mday
+
+
+    file_name = f"{year_now}_{month_now}_{day_now}_{j[1]}"  # 获取图片文件名
     fjf = soup.select("#sh_cp")
     des = fjf[0].attrs["title"]  # 获取图片描述
 
