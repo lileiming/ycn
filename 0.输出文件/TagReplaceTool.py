@@ -12,12 +12,12 @@ from tkinter import filedialog
 import os
 import xlrd
 import sys
-from time import sleep
+from time import sleep,time,strftime,localtime
 import YokoRead   #自定义模块
-from YokoRead import time_Decorator,thread_Decorator
+from YokoRead import time_Decorator,thread_Decorator  #Custom module
 
 
-def findposition(csv_file_read, find_str):
+def func_find_position(csv_file_read, find_str):
     try:
         position = csv_file_read.index(find_str)
     except ValueError:
@@ -29,15 +29,19 @@ class Windows_NODE(YokoRead.FILE_NODE):
         self.master = master
         self.here = os.getcwd()
         self.initWidgets()
-        help_doc = '本程序为快速替换组态工具。 \n ' \
+        help_doc = '本程序为快速替换组态工具。 \n\n ' \
                    '使用方法：\n' \
                    '1.通过按钮选择数据列表文件，使用下拉菜单选择相对应的表格（sheet）\n' \
                    '2.通过按钮选择目标文件文件夹.\n' \
                    '3.点击[替换 CSV 文件]按钮执行替换 CSV 文件、\n' \
                    '4.点击[替换 TxT 文件]按钮执行替换 TXT 文件、\n'
-        self.Text.insert('insert', help_doc)
+        self.Text.insert(END, help_doc)
+        self.func_test_init() #测试模块
         
     def initWidgets(self):
+        """
+        功能块说明：GUI界面
+        """
         # top_frame ===================================
         top_frame = LabelFrame(self.master,text='数据列表')
         top_frame.pack(fill=X,padx=15,pady=0)
@@ -65,280 +69,308 @@ class Windows_NODE(YokoRead.FILE_NODE):
         bot_frame = LabelFrame(self.master)
         bot_frame.pack(fill=X,side=TOP,padx=15,pady=10)
         ttk.Button(bot_frame, text='选择目标文件夹', command=self.open_dir).pack(side=LEFT, padx=10, pady=10)
-        ttk.Button(bot_frame, text='替换 CSV 文件', command=self.Csv).pack(side=RIGHT, padx=10)
-        ttk.Button(bot_frame, text='替换 Txt 文件', command=self.Txt).pack(side=RIGHT, padx=10)
-        ttk.Button(bot_frame, text='分析TAG', command=self.findEtag).pack(side=RIGHT, padx=10)
+        ttk.Button(bot_frame, text='替换 CSV 文件', command=self.func_csv_process).pack(side=RIGHT, padx=10)
+        ttk.Button(bot_frame, text='替换 Txt 文件', command=self.func_txt_process).pack(side=RIGHT, padx=10)
+        ttk.Button(bot_frame, text='分析TAG', command=self.func_findEtag_process).pack(side=RIGHT, padx=10)
 
     def open_dir(self):
+        """
+        功能块说明：选择文件夹
+        """
         self.Text.delete(0.0,END)
-        dir_path = filedialog.askdirectory(title=u'选择文件夹', initialdir=self.here)
-        self.path0 = dir_path
+        self.path0 = filedialog.askdirectory(title=u'选择文件夹', initialdir=self.here)
         self.path1 = self.path0+'/'
-        self.text_insert('path1')
+        self.func_text_insert_show('path1')
 
     def open_file2(self):
+        """
+        功能块说明：选择数据列表
+        """
         self.entry2.delete(0,END)
-        file_path = filedialog.askopenfilename(title=u'选择数据列表', initialdir=self.here)
-        file_text = file_path
-        self.entry2.insert('insert', file_text)
-        sheetName = self.get_sheet(file_text)
-        sheetNameT = tuple(sheetName)
-        self.comboxlist["values"] = sheetNameT
+        var_file_name = filedialog.askopenfilename(title=u'选择数据列表', initialdir=self.here)
+        self.entry2.insert('insert', var_file_name)
+        self.comboxlist["values"] = tuple(self.get_sheet(var_file_name))
         self.comboxlist.current(0)
 
     @thread_Decorator
     @time_Decorator
-    # find_target_A = r'[0-9%]{2,4}[A-Z]+[0-9]{1,2}' # 6200TICAS11 /6200TI11
-    # find_target_A = r'[0-9%]{2,4}[A-Z]+[0-9]{1,3}' # 6200TICAS111 /6200TI111
-    # find_target_B = r'[0-9A-Z%]+(?=-|_)'  # %%ITICAS11  FCS0115(FCS0115-)
-    # find_target_A = r'Z'
-    #
-    #
-    def findEtag(self):
-        self.find_result_last = []
-        line = ''
-        self.text_insert('findEtag')
-        self.flag = 2
-        self.eachFile()
-        find_result_ETAG = (re.findall(r'(?<=ETAG:1:).*(?=;)', self.text_detail))
-        find_result_RTAG = (re.findall(r'(?<=RTAG:1:).*(?=;)', self.text_detail))
-        find_result = find_result_ETAG + find_result_RTAG
-        find_target_A = r'[0-9%]{2,4}[A-Z]+[0-9]{1,2}'
-        find_result = self.loop_part_func(find_result, find_target_A)
-        find_target_B = r'[0-9A-Z%]+(?=-|_)'
-        find_result = self.loop_part_func(find_result, find_target_B)
+    def func_findEtag_process(self):
+        # 正则表达式例子
+        # find_target_A = r'[0-9%]{2,4}[A-Z]+[0-9]{1,2}' # 6200TICAS11 /6200TI11
+        # find_target_A = r'[0-9%]{2,4}[A-Z]+[0-9]{1,3}' # 6200TICAS111 /6200TI111
+        # find_target_B = r'[0-9A-Z%]+(?=-|_)'  # %%ITICAS11  FCS0115(FCS0115-)
+        # find_target_A = r'Z'
+        #
+        #
+        """
+        功能块说明：分析按钮的处理流程
+        """
+        #Latest results
+        self.list_latest_result = []  #最新结果
+        line_content = ''
+        self.func_text_insert_show('findEtag')
+        self.var_flag = 2
+        self.func_eachFile_method()
+        var_result_ETAG = (re.findall(r'(?<=ETAG:1:).*(?=;)', self.var_txt_detail))
+        var_result_RTAG = (re.findall(r'(?<=RTAG:1:).*(?=;)', self.var_txt_detail))
+        var_result = var_result_ETAG + var_result_RTAG
+        var_target_A = r'[0-9%]{2,4}[A-Z]+[0-9]{1,2}'
+        var_result = self.func_loop_part_method(var_result, var_target_A)
+        var_target_B = r'[0-9A-Z%]+(?=-|_)'
+        var_result = self.func_loop_part_method(var_result, var_target_B)
 
-        self.Text.insert('insert', f'未知：{find_result}\n')
-        self.find_result_last.extend(find_result)
-        self.find_result_last = list(set(self.find_result_last))  # 去重
-        for _ in self.find_result_last:
-            line = f'{line}\n{_}'
+        self.Text.insert(END, f'未被分类：{var_result}\n')
+        self.list_latest_result.extend(var_result)
+        self.list_latest_result = list(set(self.list_latest_result))  # 去重
+        for _ in self.list_latest_result:
+            line_content = f'{line_content}\n{_}'
             pass
-        filepath, fullflname = os.path.split(self.entry2.get())
-        self.out_txt(f'{filepath}\分析结果.txt',line)
-        self.flag = 0
-        self.text_insert('completed')
+        var_filepath, var_fullflname = os.path.split(self.entry2.get())
+        self.out_txt(f'{var_filepath}\分析结果.txt',line_content)
+        self.var_flag = 0
+        self.func_text_insert_show('completed')
         sleep(1)
         pass
 
-    def loop_part_func(self,result,target):
-        find_result_copy = result.copy()
-        for initial in find_result_copy:
-            i = re.findall(target, initial)
-            if len(i):
-                result.pop(result.index(initial))
-                self.find_result_last.append(i[0])
+    def func_loop_part_method(self,result,target):
+        """
+        功能块说明：循环查找
+        """
+        var_result_copy = result.copy()
+        for var_initial in var_result_copy:
+            var_i = re.findall(target, var_initial)
+            if len(var_i):
+                result.pop(result.index(var_initial))
+                self.list_latest_result.append(var_i[0])
         return result
 
     @thread_Decorator
     @time_Decorator
-    def Csv(self):
-        self.text_insert('csv')
-        self.flag = 1
-        self.reName2txt()
-        self.readExcel()
-        self.eachFile()
-        self.flag = 0
-        self.text_insert('completed')
+    def func_csv_process(self):
+        """
+        功能块说明：csv按钮的处理流程
+        """
+        self.func_text_insert_show('csv')
+        self.var_flag = 1
+        self.func_reName2txt_method()
+        self.func_readExcel_method()
+        self.func_eachFile_method()
+        self.var_flag = 0
+        self.func_text_insert_show('completed')
         sleep(1)
 
     @thread_Decorator
     @time_Decorator
-    def Txt(self):
-        self.text_insert('txt')
-        self.flag = 0
-        self.readExcel()
-        self.eachFile()
-        self.flag = 0   
-        self.text_insert('completed')
+    def func_txt_process(self):
+        """
+        功能块说明：txt按钮的处理流程
+        """
+        self.func_text_insert_show('txt')
+        self.var_flag = 0
+        self.func_readExcel_method()
+        self.func_eachFile_method()
+        self.var_flag = 0
+        self.func_text_insert_show('completed')
         sleep(1)
 
-    def reName2txt(self):
-        sys.path.append(self.path1)
-        csvFiles = os.listdir(self.path0)
-        for csvFilename in csvFiles:
-            portion = os.path.splitext(csvFilename)
+    def func_reName2txt_method(self):
+        """
+        功能块说明：csv文件转换为txt文件
+        """
+        #sys.path.append(self.path1)
+        path_dir = os.listdir(self.path1)
+        for csv_file_name in path_dir:
+            portion = os.path.splitext(csv_file_name)
             if portion[1] == '.csv':
-                new_name = f'{portion[0]}.txt'
-                self.filenamedir = self.path1 + csvFilename
-                new_name_dir = self.path1 + new_name
+                old_full_name = f'{self.path1}{csv_file_name}'
+                new_full_name = f'{self.path1}{portion[0]}.txt'
                 try:
-                    os.rename(self.filenamedir,new_name_dir)
+                    os.rename(old_full_name,new_full_name)
                 except FileExistsError as e:
-                    self.Text.insert('insert', f'{e}\n')
+                    self.Text.insert(END, f'{e}\n')
             else:
-                self.text_insert('error')
+                self.func_text_insert_show('error')
         
-    def readExcel(self):
+    def func_readExcel_method(self):
+        """
+        功能块说明：读取数据列表
+        """
         file_name = self.entry2.get()
         sheet_name = self.comboxlist.get()
-        self.inValue = []
-        self.outValue = []
-        count = 1
-        filePath = os.path.join(os.getcwd(), file_name)
-        x1 = xlrd.open_workbook(filePath)
-        sheet1 = x1.sheet_by_name(sheet_name)
-        self.rowsNum = sheet1.nrows
-        while count < self.rowsNum:
-           count = count + 1
-           in1 = sheet1.cell_value(count-1,0)
-           self.inValue.append(in1)
-           out1 = sheet1.cell_value(count-1,1)
-           self.outValue.append(out1)
+        self.list_inValue = []
+        self.list_outValue = []
+        var_count = 1
+        file_path = os.path.join(os.getcwd(), file_name)
+        sheet_content = xlrd.open_workbook(file_path).sheet_by_name(sheet_name)
+        self.var_rows_num = sheet_content.nrows
+        while var_count < self.var_rows_num:
+           var_count = var_count + 1
+           self.list_inValue.append(sheet_content.cell_value(var_count-1,0))
+           self.list_outValue.append(sheet_content.cell_value(var_count-1,1))
         
-    def eachFile(self):
-        self.text_detail = ''
-        pathDir = os.listdir(self.path1)
-        for allDir in pathDir:
-            self.child = self.path1 + allDir
-            if self.flag == 1:
-                self.readfile()
-            elif self.flag == 2:
-                file = open(self.child, 'r+')
+    def func_eachFile_method(self):
+        """
+        功能块说明：读取文件夹内所有文件，按照flag 选择处理模式。
+        """
+        self.var_txt_detail = ''
+        path_dir = os.listdir(self.path1)
+        for file_name in path_dir:
+            self.var_child = self.path1 + file_name
+            if self.var_flag == 1:
+                self.func_readfile_method()
+            elif self.var_flag == 2:
+                file = open(self.var_child, 'r+')
                 try:
-                    self.text_detail = self.text_detail + file.read()
+                    self.var_txt_detail = self.var_txt_detail + file.read()
                 except UnicodeDecodeError:
-                    file = open(self.child, 'r+', encoding='utf-8')
-                    self.text_detail = self.text_detail + file.read()
+                    file = open(self.var_child, 'r+', encoding='utf-8')
+                    self.var_txt_detail = self.var_txt_detail + file.read()
             else:
-                self.read_txt_file()
+                self.func_read_txt_file_method()
 
-    def readfile(self):
-        file = open(self.child,'r+')
-        fileCsv = file.read()
-        file.seek(0,0)
-        line = fileCsv.replace (self.inValue[0],self.outValue[0])
-        for _ in range(self.rowsNum-1):
-            line = line.replace(self.inValue[_], self.outValue[_])
-        file.write(line)
-        file.close()
+    def func_readfile_method(self):
+        """
+        功能块说明：读取文件夹内csv文档，可以分辨IOM/SW/AN等文件，替换所需内容，并按照一定规范输出相应文件名字。
+        """
+
+        open_csv_file = open(self.var_child,'r+')
+        csv_detail = open_csv_file.read()
+        open_csv_file.seek(0,0)
+        line_content = csv_detail.replace (self.list_inValue[0],self.list_outValue[0])
+        for _ in range(self.var_rows_num-1):
+            line_content = line_content.replace(self.list_inValue[_], self.list_outValue[_])
+        open_csv_file.write(line_content)
+        open_csv_file.close()
     # ======================================================
-        filepath, fullflname = os.path.split(self.child)
-        start_Serial = findposition(fileCsv, '%')
+        var_filepath, var_fullflname = os.path.split(self.var_child)
+        start_Serial = func_find_position(csv_detail, '%')
         if start_Serial > 0:
-            Node_Solt = fileCsv[start_Serial:start_Serial + 5]
-            IOM = Node_Solt[1]
-            if IOM == 'Z':
-                nodeX = Node_Solt[2]
-                nodeY = Node_Solt[3]
-                soltX = Node_Solt[4]
-                if 'Unit' in fileCsv:
+            mark_Node_Solt = csv_detail[start_Serial:start_Serial + 5]
+            mark_IOM = mark_Node_Solt[1]
+            if mark_IOM == 'Z':
+                nodeX = mark_Node_Solt[2]
+                nodeY = mark_Node_Solt[3]
+                soltX = mark_Node_Solt[4]
+                if 'Unit' in csv_detail:
                     type_IOM  ="-Analog"
-                elif 'Btn1' in fileCsv:
+                elif 'Btn1' in csv_detail:
                     type_IOM = "-Status"
                 else:
                     type_IOM = "-Other"
                 pass
-                flienameNS = f'{self.path1}N{nodeX}{nodeY}S{soltX}{type_IOM}.csv'
-                repeatName = f'N{nodeX}{nodeY}S{soltX}.csv'
-            elif IOM == 'S':
-                SWX = Node_Solt[3]
-                flienameNS = f'{self.path1}SwitchDef{SWX}.csv'
-                repeatName = f'SwitchDef{SWX}.csv'
-            elif IOM == 'A':
-                ANX = Node_Solt[2]
-                flienameNS = f'{self.path1}AN{ANX}.csv'
-                repeatName = f'AN{ANX}.csv'
+                var_new_name = f'{self.path1}N{nodeX}{nodeY}S{soltX}{type_IOM}.csv'
+                var_show_name = f'N{nodeX}{nodeY}S{soltX}.csv'
+            elif mark_IOM == 'S':
+                SWX = mark_Node_Solt[3]
+                var_new_name = f'{self.path1}SwitchDef{SWX}.csv'
+                var_show_name = f'SwitchDef{SWX}.csv'
+            elif mark_IOM == 'A':
+                ANX = mark_Node_Solt[2]
+                var_new_name = f'{self.path1}AN{ANX}.csv'
+                var_show_name = f'AN{ANX}.csv'
             else:
-                if IOM  not in fullflname:
-                    flienameNS = f'{self.path1}{IOM}{os.path.splitext(fullflname)[0]}.csv'
-                    repeatName = f'{IOM}{os.path.splitext(fullflname)[0]}.csv'
+                if mark_IOM  not in var_fullflname:
+                    var_new_name = f'{self.path1}{mark_IOM}{os.path.splitext(var_fullflname)[0]}.csv'
+                    var_show_name = f'{mark_IOM}{os.path.splitext(var_fullflname)[0]}.csv'
                 else:
-                    flienameNS = f'{self.path1}{os.path.splitext(fullflname)[0]}.csv'
-                    repeatName = f'{os.path.splitext(fullflname)[0]}.csv'
+                    var_new_name = f'{self.path1}{os.path.splitext(var_fullflname)[0]}.csv'
+                    var_show_name = f'{os.path.splitext(var_fullflname)[0]}.csv'
         else:
-            sheet_position = findposition(fileCsv, '@SHEET')
+            sheet_position = func_find_position(csv_detail, '@SHEET')
             if sheet_position > 0:
-                sheet3 = fileCsv[sheet_position + 9 : sheet_position + 12]
-                if sheet3 not in fullflname:
-                    flienameNS = f'{self.path1}{sheet3}-{os.path.splitext(fullflname)[0]}.csv'
-                    repeatName = f'{sheet3}-{os.path.splitext(fullflname)[0]}.csv'
+                var_mark = csv_detail[sheet_position + 9 : sheet_position + 12]
+                if var_mark not in var_fullflname:
+                    var_new_name = f'{self.path1}{var_mark}-{os.path.splitext(var_fullflname)[0]}.csv'
+                    var_show_name = f'{var_mark}-{os.path.splitext(var_fullflname)[0]}.csv'
                 else:
-                    flienameNS = f'{self.path1}{os.path.splitext(fullflname)[0]}.csv'
-                    repeatName = f'{os.path.splitext(fullflname)[0]}.csv'
+                    var_new_name = f'{self.path1}{os.path.splitext(var_fullflname)[0]}.csv'
+                    var_show_name = f'{os.path.splitext(var_fullflname)[0]}.csv'
             else:
-                flienameNS = f'{self.path1}{os.path.splitext(fullflname)[0]}.csv'
-                repeatName = f'{os.path.splitext(fullflname)[0]}.csv'
+                var_new_name = f'{self.path1}{os.path.splitext(var_fullflname)[0]}.csv'
+                var_show_name = f'{os.path.splitext(var_fullflname)[0]}.csv'
     # ======================================================
         try:
-            os.renames(self.child, flienameNS)
-            self.Text.insert('insert', f'INFO: {repeatName} 转换完成...\n')
+            os.renames(self.var_child, var_new_name)
+            self.Text.insert(END, f'INFO: {var_show_name} 转换完成...\n')
         except WindowsError:
-            self.Text.insert('insert', f'ERROR: {repeatName} 重名跳过\n')
+            self.Text.insert(END, f'ERROR: {var_show_name} 重名跳过\n')
         self.Text.update()
 
-    def read_txt_file(self):
-        self.ShortName = os.path.basename(self.child)
-        self.flag = 0
-        file = open(self.child,'r+')
+    def func_read_txt_file_method(self):
+        """
+        功能块说明：读取文件夹内txt或 xaml文档，替换所需内容，并按照一定规范输出相应文件名字。
+        """
+        short_name = os.path.basename(self.var_child)
+        self.var_flag = 0
+        open_txt_file = open(self.var_child,'r+')
         try:
-            file_txt = file.read()
+            txt_detail = open_txt_file.read()
         except UnicodeDecodeError:
-                self.Text.insert('insert', f'WARNING: {self.ShortName} is UTF-8 format.\n')
+                self.Text.insert(END, f'WARNING: {short_name} is UTF-8 format.\n')
                 self.Text.update()
-                file = open(self.child,'r+',encoding='utf-8')
-                file_txt = file.read()
-        DRfindNum = file_txt.find('DR0')
-        xaml_name = file_txt.find('<Canvas')
+                open_txt_file = open(self.var_child,'r+',encoding='utf-8')
+                txt_detail = open_txt_file.read()
+        var_DR_exists = txt_detail.find('DR0') # exists 存在
+        var_xaml_exists = txt_detail.find('<Canvas')
     #======================================================
-        file.seek(0,0)
-        line = file_txt.replace (self.inValue[0],self.outValue[0])
-        for _ in range(self.rowsNum-1):
-            line = line.replace(self.inValue[_], self.outValue[_])
-        file.write(line)
-        file.close()
+        open_txt_file.seek(0,0)
+        line_content = txt_detail.replace (self.list_inValue[0],self.list_outValue[0])
+        for _ in range(self.var_rows_num-1):
+            line_content = line_content.replace(self.list_inValue[_], self.list_outValue[_])
+        open_txt_file.write(line_content)
+        open_txt_file.close()
     #======================================================
-        if DRfindNum > 0 :
-            DR0X = file_txt[DRfindNum+3]
-            DR00Y = file_txt[DRfindNum+4]
-            DR000Z = file_txt[DRfindNum+5]
-            flienameNS = f'{self.path1}DR0{DR0X+DR00Y+DR000Z}.txt'
-            #repeatName = f'DR0{DR0X+DR00Y+DR000Z}.txt'
+        if var_DR_exists > 0 :
+            var_DR0XX = txt_detail[var_DR_exists+3]
+            var_DR0X0Y = txt_detail[var_DR_exists+4]
+            var_DR0X00Z = txt_detail[var_DR_exists+5]
+            var_new_name = f'{self.path1}DR0{var_DR0XX+var_DR0X0Y+var_DR0X00Z}.txt'
+            #var_show_name = f'DR0{var_DR0XX+var_DR0X0Y+var_DR0X00Z}.txt'
             try:
-               os.renames(self.child,flienameNS)
-               self.Text.insert('insert', f'INFO: {self.ShortName} 转换完成...\n')
+               os.renames(self.var_child,var_new_name)
+               self.Text.insert(END, f'INFO: {short_name} 转换完成...\n')
             except WindowsError:
-               self.Text.insert('insert', f'ERROR: {self.ShortName} 重名跳过\n')
+               self.Text.insert(END, f'ERROR: {short_name} 重名跳过\n')
         else:
-            self.Text.insert('insert', f'WARNING: {self.ShortName} does not conform to the DR format.\n')
+            self.Text.insert(END, f'WARNING: {short_name} does not conform to the DR format.\n')
     # ======================================================
-        if xaml_name > 0 :
-            if 'OUT' not in self.ShortName:
-                flienameNS = f'{self.path1}OUT-{self.ShortName}'
+        if var_xaml_exists > 0 :
+            if 'OUT' not in short_name:
+                var_new_name = f'{self.path1}OUT-{short_name}'
             else:
-                flienameNS = f'{self.path1}{self.ShortName}'
-            os.renames(self.child,flienameNS)
-            self.Text.insert('insert', f'INFO: {self.ShortName} 转换完成...\n')
+                var_new_name = f'{self.path1}{short_name}'
+            os.renames(self.var_child,var_new_name)
+            self.Text.insert(END, f'INFO: {short_name} 转换完成...\n')
         self.Text.update()
 
-    def text_insert(self,flag):
-        if flag == 'path1':
-            self.Text.insert('insert', f'文件路径：\n{self.path1}\n')
-            pass
-        if flag == 'csv':
-            self.Text.insert('insert', 'INFO: ****开始转换CSV****\n')
-            pass
-        if flag == 'completed':
-            self.Text.insert('insert', 'INFO: ****所有转换完成。****\n\n')
-            self.Text.see(END)
-            pass
-        if flag == 'txt':
-            self.Text.insert('insert', 'INFO: ****开始转换txt文件。****\n')
-            pass
-        if flag == 'error':
-            self.Text.insert('insert', 'ERROR：文件格式错误。\n')
-            pass
-        if flag == 'findEtag':
-            self.Text.insert('insert', 'INFO: ****开始分析TAG****\n')
-            pass
+    def func_text_insert_show(self,flag):
+        """
+        GUI 信息 输出
+        """
+        dict_show = {'path1':f'文件路径：\n{self.path1}\n',
+                     'csv':'INFO: Start converting csv file.\n',
+                     'completed':f'Generation completed.  {strftime("%Y-%m-%d %H:%M:%S", localtime())}\n\n',
+                     'txt':'INFO: Start converting txt file.\n',
+                     'error':'ERROR：The file format is incorrect.\n',
+                     'findEtag':'INFO: Start analyze txt file.\n'}
 
+        self.Text.insert(END, dict_show[flag])
         self.Text.update()
+        self.Text.see(END)
         pass
+
+    def func_test_init(self):
+        """
+        功能块说明：快速测试初始化
+        """
+        self.e2.set(r'C:/Users/Administrator/Documents/python/0.输出文件/TagReplaceTool/replaceExc.xlsx')
+        self.e3.set('不替换')
+        self.here = 'C:/Users/Administrator/Documents/python/0.输出文件/TagReplaceTool/IN/'
 
 if __name__ == "__main__":
     root = Tk()
     root.geometry('640x400')  # Window size
     Windows_NODE(root)
-    limit_time = YokoRead.ALRM_NODE.limited_time(root)
-    root.title("Tag replacement tool"+"    到期日:"+limit_time)
+    var_limit_time = YokoRead.ALRM_NODE.limited_time(root)
+    root.title(f'Tag replacement tool    到期日:{var_limit_time}')
     root.mainloop()

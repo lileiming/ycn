@@ -55,6 +55,7 @@ class Windows_NODE(YokoRead.FILE_NODE):
         self.initWidgets()
         help_doc = 'Don\'t Repeat Youself!!\n '
         self.text_update(help_doc)
+        self.func_test_init()
 
     def initWidgets(self):
         # 创建第一层
@@ -131,22 +132,21 @@ class Windows_NODE(YokoRead.FILE_NODE):
 
     def open_file(self):
         try:
-            file_path = filedialog.askopenfilename(title=u'选择参考文档', initialdir=self.here)
-            file_text = file_path
-            sheet_name = self.get_sheet(file_text)
-            self.sheet_name_T = tuple(sheet_name)
+            var_file_path = filedialog.askopenfilename(title=u'选择参考文档', initialdir=self.here)
+            var_sheet_name = self.get_sheet(var_file_path)
+            self.sheet_name_T = tuple(var_sheet_name)
             self.comboxlist["values"] = self.sheet_name_T
             self.comboxlist.current(0)
             self.entry.delete(0, END)
-            self.entry.insert('insert', file_text)
+            self.entry.insert('insert', var_file_path)
         except xlrd.biffh.XLRDError:
             self.text_update('错误提示：文件格式错误，现在就只能处理Excel文档\n')
 
     def open_combox(self, *args):
-        file_name_0 = self.entry.get()
-        sheet_name_0 = self.comboxlist.get()
-        self.col = self.get_col(file_name_0, sheet_name_0)
-        self.comboxlist1["values"] = self.col
+        var_file_path = self.entry.get()
+        var_sheet_name = self.comboxlist.get()
+        self.var_col = self.get_col(var_file_path, var_sheet_name)
+        self.comboxlist1["values"] = self.var_col
         self.comboxlist1.current(0)
 
     def open_file2(self):
@@ -154,29 +154,27 @@ class Windows_NODE(YokoRead.FILE_NODE):
         try:
             self.entry2.delete(0, END)
             if self.ckeckchange:
-                file_path = self.entry.get()
+                var_file_path = self.entry.get()
             else:
-                file_path = filedialog.askopenfilename(title=u'选择数据列表', initialdir=self.here)
-            file_text = file_path
-            self.entry2.insert('insert', file_text)
-            sheet_name = self.get_sheet(file_text)
-            self.sheet_nameR = tuple(sheet_name)
-            self.comboxlist2["values"] = self.sheet_nameR
+                var_file_path = filedialog.askopenfilename(title=u'选择数据列表', initialdir=self.here)
+            self.entry2.insert('insert', var_file_path)
+            var_sheet_name = self.get_sheet(var_file_path)
+            self.sheet_name_R = tuple(var_sheet_name)
+            self.comboxlist2["values"] = self.sheet_name_R
             self.comboxlist2.current(0)
         except xlrd.biffh.XLRDError:
             self.text_update('错误提示：文件格式错误，现在就只能处理Excel文档\n')
 
     def open_combox2(self,*args):
-        file_name = self.entry2.get()
-        sheet_name = self.comboxlist2.get()
-        file_name_0 = self.entry.get()
-        sheet_name_0 = self.comboxlist.get()
-
-        self.col2 = self.get_col(file_name, sheet_name)
-        self.comboxlist3["values"] = self.col2
+        var_file = self.entry2.get()
+        var_sheet = self.comboxlist2.get()
+        var_file_0 = self.entry.get()
+        var_sheet_0 = self.comboxlist.get()
+        self.var_col2 = self.get_col(var_file, var_sheet)
+        self.comboxlist3["values"] = self.var_col2
         self.comboxlist3.current(0)
 
-        if file_name == file_name_0 and sheet_name == sheet_name_0:
+        if var_file == var_file_0 and var_sheet == var_sheet_0:
             self.text_update("不是用重复文件\n")
         else:
             self.Text.delete(0.0, END)
@@ -192,14 +190,14 @@ class Windows_NODE(YokoRead.FILE_NODE):
             T_Sheet_Num = self.sheet_name_T.index(self.TSheet)
             # print (T_Sheet_Num)
             T_tag = self.comboxlist1.get()
-            T_tag_ColNum = self.col.index(T_tag)
+            T_tag_ColNum = self.var_col.index(T_tag)
             # print (T_tag_ColNum)
             R_Excle_Name = self.entry2.get()
             R_Sheet = self.comboxlist2.get()
-            R_Sheet_Num = self.sheet_nameR.index(R_Sheet)
+            R_Sheet_Num = self.sheet_name_R.index(R_Sheet)
             # print (R_Sheet_Num)
             R_tag = self.comboxlist3.get()
-            R_tag_ColNum = self.col2.index(R_tag)
+            R_tag_ColNum = self.var_col2.index(R_tag)
             # print (R_tag_ColNum)
 
             T_file_path = os.path.join(os.getcwd(), T_Excle_Name)
@@ -269,14 +267,14 @@ class Windows_NODE(YokoRead.FILE_NODE):
             T_Sheet_Num = self.sheet_name_T.index(self.TSheet)
             # print (T_Sheet_Num)
             T_tag = self.comboxlist1.get()
-            T_tag_ColNum = self.col.index(T_tag)
+            T_tag_ColNum = self.var_col.index(T_tag)
             # print (T_tag_ColNum)
             R_Excle_Name = self.entry2.get()
             R_Sheet = self.comboxlist2.get()
-            R_Sheet_Num = self.sheet_nameR.index(R_Sheet)
+            R_Sheet_Num = self.sheet_name_R.index(R_Sheet)
             # print (R_Sheet_Num)
             R_tag = self.comboxlist3.get()
-            R_tag_ColNum = self.col2.index(R_tag)
+            R_tag_ColNum = self.var_col2.index(R_tag)
             # print (R_tag_ColNum)
 
             T_file_path = os.path.join(os.getcwd(), T_Excle_Name)
@@ -366,15 +364,18 @@ class Windows_NODE(YokoRead.FILE_NODE):
         #self.text_update('STOP_')
         pass
 
+    def func_test_init(self):
+        """
+        功能块说明：快速测试初始化
+        """
+        self.here = f'C:/Users/Administrator/Documents/python/0.输出文件/TaglistTool'
+
+
 if __name__ == "__main__":
     root = Tk()
     root.geometry('640x600+100+200')  # 窗口尺寸
     Windows_NODE(root)
-    # limit_time = YokoRead._ALRM_NODE_.limited_time(root)
-    if str_ != '-S':
-        limit_time = YokoRead.ALRM_NODE.limited_time(root)
-    else:
-        limit_time = '3020/1/1'
+    limit_time = YokoRead.ALRM_NODE.limited_time(root)
     root.title("Tag_list维护工具  Ver1.0" + "    到期日:" + limit_time)
     root.mainloop()
     pass

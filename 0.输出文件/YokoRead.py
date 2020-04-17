@@ -15,29 +15,39 @@ import calendar
 
 
 class FILE_NODE:
-    # 读取模块
+    """
+    功能块说明：读取模块
+    """
     #    def __init__(self):
     def read_txt(self, txt_file_name):
-        # 读取txt文档
+        """
+        功能块说明：读取txt文档
+        """
         with open(txt_file_name, 'r') as file_data:
-            file_detail = file_data.read()
-        return file_detail
+            var_txt_detail = file_data.read()
+        return var_txt_detail
 
     def out_txt(self, txt_file_name, out_result):
-        out_file_name = txt_file_name
-        with open(out_file_name, 'w+', encoding='GBK') as out_file:  # 保存为ANSI格式
+        """
+        功能块说明：输出txt文档
+        """
+        with open(txt_file_name, 'w+', encoding='GBK') as out_file:  # 保存为ANSI格式
             out_file.write(out_result)
         pass
 
-    def get_sheet(self, filename):
-        dir_case = filename
-        with xlrd.open_workbook(dir_case) as data:
-            sheetN = data.sheet_names()
-        return sheetN
+    def get_sheet(self, file_name):
+        """
+        功能块说明：读取excle 文档 的sheet 名字。
+        """
+        with xlrd.open_workbook(file_name) as var_data:
+            var_sheet_name = var_data.sheet_names()
+        return var_sheet_name
 
-    def get_data_Tag(self, filename, sheet_name):
-        dir_case = filename
-        data = xlrd.open_workbook(dir_case)
+    def get_data_Tag(self, file_name, sheet_name):
+        """
+        功能块说明：读取excle文档sheet下内容。
+        """
+        data = xlrd.open_workbook(file_name)
         table = data.sheet_by_name(sheet_name)
         # nor = table.nrows
         nol = table.ncols
@@ -50,8 +60,8 @@ class FILE_NODE:
             dict_r[title] = title
         yield dict_r
 
-    def get_data_2line(self, filename, sheet_name):
-        dir_case = filename
+    def get_data_2line(self, file_name, sheet_name):
+        dir_case = file_name
         data = xlrd.open_workbook(dir_case)
         table = data.sheet_by_name(sheet_name)
         nor = table.nrows
@@ -64,8 +74,8 @@ class FILE_NODE:
                 dict_r[title] = value
             yield dict_r
 
-    def get_data(self, filename, sheet_name):
-        dir_case = filename
+    def get_data(self, file_name, sheet_name):
+        dir_case = file_name
         data = xlrd.open_workbook(dir_case)
         table = data.sheet_by_name(sheet_name)
         nor = table.nrows
