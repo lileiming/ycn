@@ -1,0 +1,55 @@
+@PRODUCTS,YOKOGAWA,CENTUM
+@ID,BKEEdtIOMDef
+@DATE,2020/04/21,14:19
+@SHEET,1,Analog Data
+@Terminal,Signal,Conversion,Service Comment,Low Limit,High Limit,Unit,Set Details,P&ID Tag Name,Label
+%Z033101,2,1,A塔石膏排出泵A变频转速,4,20,mA,1,6200YAOP1812A,%%OYAOP1812A,FBEN=CONT
+%Z033102,2,1,A塔石膏排出泵B变频转速,4,20,mA,1,6200YAOP1812B,%%OYAOP1812B,FBEN=CONT
+%Z033103,2,1,,4,20,mA,1,,,FBEN=CONT
+%Z033104,2,1,,4,20,mA,1,,,FBEN=CONT
+%Z033105,2,1,,4,20,mA,1,,,FBEN=CONT
+%Z033106,2,1,,4,20,mA,1,,,FBEN=CONT
+%Z033107,2,1,,4,20,mA,1,,,FBEN=CONT
+%Z033108,2,1,,4,20,mA,1,,,FBEN=CONT
+%Z033109,2,1,,4,20,mA,1,,,FBEN=CONT
+%Z033110,2,1,,4,20,mA,1,,,FBEN=CONT
+%Z033111,2,1,,4,20,mA,1,,,FBEN=CONT
+%Z033112,2,1,,4,20,mA,1,,,FBEN=CONT
+%Z033113,2,1,,4,20,mA,1,,,FBEN=CONT
+%Z033114,2,1,,4,20,mA,1,,,FBEN=CONT
+%Z033115,2,1,,4,20,mA,1,,,FBEN=CONT
+%Z033116,2,1,,4,20,mA,1,,,FBEN=CONT
+@SHEET,2,HART Variable
+@Terminal,Channel,Data,Polling Address,Service Comment,P&ID Tag Name,Label
+%Z033201,,,,,,
+%Z033202,,,,,,
+%Z033203,,,,,,
+%Z033204,,,,,,
+%Z033205,,,,,,
+%Z033206,,,,,,
+%Z033207,,,,,,
+%Z033208,,,,,,
+%Z033209,,,,,,
+%Z033210,,,,,,
+%Z033211,,,,,,
+%Z033212,,,,,,
+%Z033213,,,,,,
+%Z033214,,,,,,
+%Z033215,,,,,,
+%Z033216,,,,,,
+%Z033217,,,,,,
+%Z033218,,,,,,
+%Z033219,,,,,,
+%Z033220,,,,,,
+%Z033221,,,,,,
+%Z033222,,,,,,
+%Z033223,,,,,,
+%Z033224,,,,,,
+%Z033225,,,,,,
+%Z033226,,,,,,
+%Z033227,,,,,,
+%Z033228,,,,,,
+%Z033229,,,,,,
+%Z033230,,,,,,
+%Z033231,,,,,,
+%Z033232,,,,,,

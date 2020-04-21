@@ -11,13 +11,13 @@ from tkinter import ttk,filedialog
 class Windows_NODE:
     def __init__(self, master):
         self.master = master
-        self.here = r'C:\Users\Administrator\Documents\python\shiyan\allCSV'
+        self.here = r'C:\Users\Administrator\Documents\python\shiyan\MergeCSV'
         self.initWidgets()
         pass
 
     def initWidgets(self):
         # 创建顶部
-        top_frame = LabelFrame(self.master, text='图片目录', height=150, width=615)
+        top_frame = LabelFrame(self.master, text='目录', height=150, width=615)
         top_frame.pack(fill=X, padx=15, pady=5)
         self.e1 = StringVar()
         self.entry = ttk.Entry(top_frame, width=65, textvariable=self.e1)

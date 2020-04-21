@@ -48,40 +48,42 @@ class Windows_NODE(YokoRead.FILE_NODE):
         bot_frame.pack(fill=X, side=TOP, padx=15, pady=2)
 
         self.e = StringVar()
-        ttk.Label(bot_frame, width=10, textvariable=self.e).pack(side=LEFT)
-        self.e.set("导出数量:")
+        ttk.Label(bot_frame, width=15, textvariable=self.e).pack(side=LEFT)
+        self.e.set("导入/导出数量:")
 
         self.e1 = StringVar()
-        self.entry = ttk.Entry(bot_frame, width=20, textvariable=self.e1)
+        self.entry = ttk.Entry(bot_frame, width=15, textvariable=self.e1)
         self.e1.set("0")
         self.entry.pack(side=LEFT, pady=10)
         #yoko_fn = YokoRead._FILE_NODE_
-        ttk.Button(bot_frame, text='导出', command=self.start_dr).pack(side=RIGHT, padx=10)
+        ttk.Button(bot_frame, text='导出', command=lambda:self.func_start_dr(1)).pack(side=RIGHT, padx=10)
+        ttk.Button(bot_frame, text='导入', command=lambda:self.func_start_dr(0)).pack(side=RIGHT, padx=10)
 
     #lambda: self.thread_it(self.start)
     @thread_Decorator
     @time_Decorator
-    def start_dr(self):
+    def func_start_dr(self,parm_mode):
         try:
-            export_num = int(self.entry.get())
-            #print(export_num)
+            var_num = int(self.entry.get())
+            #print(var_num)
         except ValueError :
-            self.text_update("请输入数字.\n")
+            self.func_text_update("请输入数字.\n")
             self.entry.delete(0,END)
-            export_num = 0
-        self.circuit(export_num)
-        #self.circuit(export_num)
-        EnumWindows(self.scan_windows, 0)  # 遍历所有窗口
+            var_num = 0
+        self.func_circuit(var_num,parm_mode)
+        #self.func_circuit(var_num)
+        EnumWindows(self.func_scan_windows, 0)  # 遍历所有窗口
         pass
 
-
-    def text_update(self,show):
+    def func_text_update(self,show):
         if show == 'START_':
             self.Text.insert(END, "=============程序开始=============\n")
         elif show == 'STOP_':
             self.Text.insert(END, "=============程序结束=============\n")
         elif show == 'filename':
             self.Text.insert(END, f'INFO:{self.short_name} 导出完成\n')
+        elif show == 'filename_in':
+            self.Text.insert(END, f'INFO:{self.short_name} 导入完成\n')
         else:
             self.Text.insert(END,show)
             self.Text.insert(END, "=============程序终止=============\n")
@@ -89,7 +91,7 @@ class Windows_NODE(YokoRead.FILE_NODE):
         self.Text.update()
         self.Text.see(END)
 
-    def all_windows_name(self,hwnd, mouse):
+    def func_all_windows_name(self,hwnd, mouse):
         if IsWindow(hwnd) and IsWindowEnabled(hwnd) and IsWindowVisible(hwnd):
             #print(GetClassName(hwnd)+'==>'+GetWindowText(hwnd))
             # DR文件部分
@@ -126,98 +128,130 @@ class Windows_NODE(YokoRead.FILE_NODE):
                 self.dr_class_name = GetClassName(hwnd)
                 self.short_name = f'{self.sw_num}SW' #因为中文输入容易错
 
-    def command(self):
+    def func_command(self):
         self.sv_window_text = ''
         self.sv_class_name = ''
         self.dr_window_text = ''
         self.dr_class_name = ''
-        EnumWindows(self.all_windows_name, 0)
+        EnumWindows(self.func_all_windows_name, 0)
         #print("=" * 20)
 
-    def active_dr_builder (self):
+    def func_active_builder (self):
         if self.dr_window_text != '' :
             dr_builder_window = win32gui.FindWindow(self.dr_class_name, self.dr_window_text)
             win32gui.SetForegroundWindow(dr_builder_window)
             if self.dr_window_text == 'BKESysView':
-                self.press_key(Key.enter,Key.down, Key.enter)
+                self.func_press_key(Key.enter,Key.down, Key.enter)
                 pass
         else:
             err_text = "Windows not Open !1\n"
-            self.text_update(err_text)
+            self.func_text_update(err_text)
             exit()
 
-    def close_dr_builder(self):
-        self.__delay()
+    def func_close_builder(self):
+        self.func_delay()
         if self.dr_window_text != '' :
             dr_builder_window = win32gui.FindWindow(self.dr_class_name, self.dr_window_text)
             win32gui.PostMessage(dr_builder_window, win32con.WM_CLOSE, 0, 0)
         else:
             err_text = "Windows is not Open !2\n"
-            self.text_update(err_text)
+            self.func_text_update(err_text)
             exit()
 
-    def active_function_block (self):
-        self.__delay()
+    def func_active_function_block (self):
+        self.func_delay()
         if self.sv_window_text != '' :
             function_block_window = win32gui.FindWindow(self.sv_class_name, self.sv_window_text)
             win32gui.SetForegroundWindow(function_block_window)
         else:
             err_text = "Windows is not Open !3\n"
-            self.text_update(err_text)
+            self.func_text_update(err_text)
             exit()
 
-    def press_key(self,combination = '',*abc):
-        self.__delay()
+    def func_press_key(self,combination = '',*abc):
+        self.func_delay()
         self.keyboard = Controller()
         if combination != '':
             self.keyboard.press(combination)
 
         for _ in abc:
             #print(_)
-            self.press_abc(_)
-            self.__delay()
+            self.func_press_abc(_)
+            self.func_delay()
 
         if combination != '':
             self.keyboard.release(combination)
 
-    def press_abc(self,_character):
+    def func_press_abc(self,_character):
         yo_keyboard = Controller()
         yo_keyboard.press(_character)
         yo_keyboard.release(_character)
 
-    def __delay(self,delay_time = 0.2):
+    def func_delay(self,delay_time = 0.2):
         sleep(delay_time)
 
-    def out_txt(self):
-        self.press_key(Key.alt,'f','e','e')
-        self.__delay(1)
+    def func_out_txt(self):
+        self.func_press_key(Key.alt,'f','e','e')
+        self.func_delay(1)
         #print(self.short_name)
-        self.text_update('filename')
+        self.func_text_update('filename')
         self.keyboard.type(self.short_name)
-        self.__delay(1)
+        self.func_delay(1)
         self.short_name = ''
-        self.press_key(Key.alt, 's')
-        self.press_key(Key.left,Key.enter)
-        #self.press_key(Key.enter)
+        self.func_press_key(Key.alt, 's')
+        self.func_press_key(Key.left,Key.enter)
+        #self.func_press_key(Key.enter)
 
-    def circuit(self,count):   #循环流程
-        self.text_update('START_')
-        for _ in range(count):
+    def func_import_txt(self):
+        self.func_Listener()
+        self.func_press_key(Key.alt, 'f', 'e', 'p')
+        self.func_delay(1)
+        # print(self.short_name)
+        self.func_text_update('filename_in')
+        self.keyboard.type(f'{self.short_name}.txt')
+        self.func_delay(1)
+        self.short_name = ''
+        self.func_press_key(Key.tab, Key.down, Key.down, Key.down, Key.tab, Key.enter, Key.enter)
+        self.func_delay(1)
+        self.func_press_key(Key.alt, 'f', 'w')
+        self.func_press_key(Key.alt, 'f', 'x')
+        self.func_press_key(Key.right, Key.enter)
+        self.func_delay(1)
+
+    def func_Listener(self):
+        def func_on_release(key):
+            # print('{0} released'.format(key))
+            if key == Key.space:
+                return False
+
+        # 监听键盘按键
+        with keyboard.Listener(on_release=func_on_release) as self.listener:
+            self.listener.join()
+        pass
+
+    def func_circuit(self,parm_count,parm_mode):   #循环流程
+        self.func_text_update('START_')
+
+        for _ in range(parm_count):
             self.sw_num = str(_+1)
-            self.__delay(1)
-            self.command()
-            self.active_dr_builder()
+            self.func_delay(1)
+            self.func_command()
+            self.func_active_builder()
             if self.dr_window_text == 'BKESysView':
                 continue
-            self.out_txt()
-            self.close_dr_builder()
-            self.active_function_block()
-            #self.__delay(5)  or  self.listener_() # 按空格键 程序继续
-            self.__delay(1)
-            self.press_key(Key.down,Key.enter)
-        self.text_update('STOP_')
+            if parm_mode:
+                self.func_out_txt()
+            else:
+                self.Text.insert(END, "空格键 开始 输入法切换至英文\n")
+                self.func_import_txt()
+            self.func_close_builder()
+            self.func_active_function_block()
+            self.func_delay(1)
+            self.func_press_key(Key.down,Key.enter)
 
-    def scan_windows(self,hwnd, mouse):
+        self.func_text_update('STOP_')
+
+    def func_scan_windows(self,hwnd, mouse):
         #遍历所有打开窗口
         if IsWindow(hwnd) and IsWindowEnabled(hwnd) and IsWindowVisible(hwnd):
              print(GetClassName(hwnd)+'==>'+GetWindowText(hwnd))
@@ -231,14 +265,6 @@ class Windows_NODE(YokoRead.FILE_NODE):
     #     shell.Run("C:\CENTUMVP\program\BKHCallSysFunc O " + '18-PDISA-18103 TUN -SM')
     #     #pass
     #
-    # def listener_(self): #未使用
-    #     def on_release(key):
-    #         #print('{0} released'.format(key))
-    #         if key == keyboard.Key.space:
-    #             return False
-    #
-    #     with keyboard.Listener(on_release=on_release) as listener:
-    #             listener.join()
 
 if __name__ == "__main__":
 
@@ -249,6 +275,6 @@ if __name__ == "__main__":
     root.geometry('640x400+100+200')  # 窗口尺寸
     Windows_NODE(root)
     limit_time = YokoRead.ALRM_NODE.limited_time(root)
-    root.title("DR文件导出工具 V1.00"+"    到期日:"+limit_time)
+    root.title("导入导出工具 V1.00"+"    到期日:"+limit_time)
     root.mainloop()
 
