@@ -2,6 +2,7 @@
 #!/usr/bin/python
 # python 3.8
 #############################################################
+#操作站自定义 热键
 from pynput.keyboard import Key, Controller
 from pynput import keyboard
 import threading, time

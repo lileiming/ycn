@@ -168,6 +168,13 @@ def thread_Decorator(func):
  #全部找出来
 
  #start_Serial = fileCsv.index('%') #字符转在文本的第几个位置
+
+
+# 窗口有3中状态，iconic：最小化；normal：正常显示；zoomed：最大化(Win系统)
+#self.master.state('normal')
+#self.master.state('icon')
+#self.master.state('zoomed')
+
 # =============================
 
 class ALRM_NODE:
@@ -179,7 +186,7 @@ class ALRM_NODE:
         month_sec = month_range[1] * 3600 *24
         ticks = time()
         print(ticks)
-        limitTime = 1585583784 + month_sec
+        limitTime = 1589183535 + month_sec
         localtime_var = strftime("%Y/%m/%d", localtime(limitTime))
         #print(localtime)
 

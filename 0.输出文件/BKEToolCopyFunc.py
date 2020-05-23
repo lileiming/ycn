@@ -67,7 +67,7 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         self.e = StringVar()
         self.e.set('程序员美德：懒惰、不耐烦、傲慢')
         ttk.Label(bot_frame,width = 60,textvariable = self.e).pack(side=LEFT, fill=BOTH, expand=YES,pady=10)
-        ttk.Button(bot_frame, text='开始', command=self.get_entry).pack(side=RIGHT, padx=10)
+        ttk.Button(bot_frame, text='确定', command=self.get_entry).pack(side=RIGHT, padx=10)
 
     def open_file(self):
         file_path = filedialog.askopenfilename(title=u'选择参考文档', initialdir=self.here)

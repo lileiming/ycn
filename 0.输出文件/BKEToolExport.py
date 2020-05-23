@@ -13,6 +13,7 @@ from tkinter import ttk
 from time import sleep
 import YokoCustomlibrary   #自定义模块
 from YokoCustomlibrary import time_Decorator,thread_Decorator
+import sys
 
 
 class Windows_NODE(YokoCustomlibrary.FILE_NODE):
@@ -189,6 +190,7 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         sleep(delay_time)
 
     def func_out_txt(self):
+        self.master.state('icon')
         self.func_press_key(Key.alt,'f','e','e')
         self.func_delay(1)
         #print(self.short_name)
@@ -201,6 +203,7 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         #self.func_press_key(Key.enter)
 
     def func_import_txt(self):
+        self.master.state('icon')
         self.func_Listener()
         self.func_press_key(Key.alt, 'f', 'e', 'p')
         self.func_delay(1)
@@ -218,6 +221,9 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
 
     def func_Listener(self):
         def func_on_release(key):
+            if key == Key.esc:
+                print("exit")
+                exit()
             # print('{0} released'.format(key))
             if key == Key.space:
                 return False
@@ -247,7 +253,9 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
             self.func_delay(1)
             self.func_press_key(Key.down,Key.enter)
 
+        self.master.state('normal')
         self.func_text_update('STOP_')
+
 
     def func_scan_windows(self,hwnd, mouse):
         #遍历所有打开窗口

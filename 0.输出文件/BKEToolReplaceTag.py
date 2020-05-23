@@ -42,24 +42,33 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         """
         功能块说明：GUI界面
         """
+        # top_frame1 ===================================
+        top_frame1 = LabelFrame(self.master, text='目标文件目录', height=150, width=615)
+        top_frame1.pack(fill=X, padx=15, pady=0)
+        self.e1 = StringVar()
+        self.entry = ttk.Entry(top_frame1, width=65, textvariable=self.e1)
+        self.e1.set('ReplaceTag\IN')
+        self.entry.pack(fill=X, expand=YES, side=LEFT, pady=10)
+        ttk.Button(top_frame1, text='文件目录', command=self.open_dir).pack(side=LEFT)
+
         # top_frame ===================================
         top_frame = LabelFrame(self.master,text='数据列表')
         top_frame.pack(fill=X,padx=15,pady=0)
         self.e2 = StringVar()
         self.entry2 = ttk.Entry(top_frame,width=45,textvariable = self.e2)
         self.e2.set("replaceExc.xlsx")
-        self.entry2.pack(fill=X,expand=YES,side=LEFT,pady=10)
+        self.entry2.pack(fill=X, expand=YES, side=LEFT, pady=10)
         self.e3 = StringVar()
-        self.comboxlist = ttk.Combobox(top_frame,width=18,textvariable = self.e3)
+        self.comboxlist = ttk.Combobox(top_frame,width=15,textvariable = self.e3)
         self.comboxlist.pack(side=LEFT)
         self.e3.set("DATE")
         ttk.Button(top_frame, text='数据列表', command=self.open_file2).pack(side=LEFT)
 
         # mid_frame1 ===================================
         mid_frame = LabelFrame(self.master,text='结果:')
-        mid_frame.pack(fill=X,side=TOP,padx=15,pady=10)
+        mid_frame.pack(fill=X,side=TOP,padx=15,pady=0)
         self.Scroll = Scrollbar(mid_frame)
-        self.Text = Text(mid_frame,width=83, height=16, yscrollcommand=self.Scroll.set)
+        self.Text = Text(mid_frame,width=83, height=13, yscrollcommand=self.Scroll.set)
         self.Text.pack(side=LEFT,fill = BOTH)
         self.Scroll = Scrollbar(mid_frame)
         self.Scroll.pack(side = RIGHT, fill = Y)
@@ -68,8 +77,8 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         # bot_frame ===================================
         bot_frame = LabelFrame(self.master)
         bot_frame.pack(fill=X,side=TOP,padx=15,pady=10)
-        ttk.Button(bot_frame, text='选择目标文件夹', command=self.open_dir).pack(side=LEFT, padx=10, pady=10)
-        ttk.Button(bot_frame, text='替换 CSV 文件', command=self.func_csv_process).pack(side=RIGHT, padx=10)
+        #ttk.Button(bot_frame, text='选择目标文件夹', command=self.open_dir).pack(side=LEFT, padx=10, pady=10)
+        ttk.Button(bot_frame, text='替换 CSV 文件', command=self.func_csv_process).pack(side=RIGHT, padx=10, pady=10)
         ttk.Button(bot_frame, text='替换 Txt 文件', command=self.func_txt_process).pack(side=RIGHT, padx=10)
         ttk.Button(bot_frame, text='分析TAG', command=self.func_findEtag_process).pack(side=RIGHT, padx=10)
 
@@ -80,7 +89,8 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         self.Text.delete(0.0,END)
         self.path0 = filedialog.askdirectory(title=u'选择文件夹', initialdir=self.here)
         self.path1 = self.path0+'/'
-        self.func_text_insert_show('path1')
+        self.entry.delete(0, END)
+        self.entry.insert('insert', self.path1)
 
     def open_file2(self):
         """
@@ -363,6 +373,7 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         """
         功能块说明：快速测试初始化
         """
+        #self.e1.set(r'C:/Users/Administrator/Documents/python/0.输出文件/ReplaceTag/IN')
         self.e2.set(r'C:\Users\Administrator\Documents\python\0.输出文件\ReplaceTag\replaceExc.xlsx')
         self.e3.set('不替换')
         self.here = 'C:/Users/Administrator/Documents/python/0.输出文件/ReplaceTag/IN'

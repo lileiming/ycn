@@ -81,7 +81,7 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         self.entry14.pack(side=LEFT, pady=5)
         self.e14.set('15')
 
-        ttk.Button(bot_frame, text='开始', command=self.command).pack(side=RIGHT)
+        ttk.Button(bot_frame, text='确定', command=self.command).pack(side=RIGHT)
         pass
 
     def open_file(self):
