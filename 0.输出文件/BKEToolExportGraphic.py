@@ -19,7 +19,7 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
     def __init__(self, master):
         self.master = master
         self.here = 'C:\CENTUMVP\eng\BKProject'
-        self.copy_here = os.getcwd()
+        self.var_dst_here = os.getcwd()
         self.initWidgets()
         help_doc = '本程序为流程图快速导出工具 \n'
         self.text_update(help_doc)
@@ -40,7 +40,7 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         mid_frame.pack(fill=X, padx=15, pady=0)
         self.e2 = StringVar()
         self.entry2 = ttk.Entry(mid_frame, width=65, textvariable=self.e2)
-        self.e2.set(self.copy_here)
+        self.e2.set(self.var_dst_here)
         self.entry2.pack(fill=X, expand=YES, side=LEFT, pady=10)
         ttk.Button(mid_frame, text='目标目录', command=self.open_dir2).pack(side=LEFT)
 
@@ -71,34 +71,36 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
 
     def open_dir2(self):
         self.entry2.delete(0,END)
-        dir_path = filedialog.askdirectory(title=u'选择HIS流程图目标文件夹',initialdir = self.copy_here)
+        dir_path = filedialog.askdirectory(title=u'选择HIS流程图目标文件夹',initialdir = self.var_dst_here)
         path0 = dir_path
         path1 = path0+'/'
         self.entry2.insert('insert', path1)
 
-    def get_filelist(self):
-        Filelist = []
-        path = self.entry.get()
-        for home, dirs, files in os.walk(path):
-            for filename in files:
-                Filelist.append(os.path.join(home, filename))
-        return Filelist
+    def func_get_file_list(self):
+        list_File_Name = []
+        var_src_path = self.entry.get()
+        for var_src_home, var_src_dirs, var_src_files in os.walk(var_src_path):
+            for var_file_name in var_src_files:
+                list_File_Name.append(os.path.join(var_src_home, var_file_name))
+        return list_File_Name
 
     @thread_Decorator
     @time_Decorator
     def command(self):
+        # src = source 源
+        # dst = destination 目的
         self.text_update('START_')
-        Filelist = self.get_filelist()
-        copypath = self.entry2.get()
-        for file in Filelist:
-            if 'Main.xaml' in file:
-                print(file)
-                script_dir = os.path.dirname(file)
-                var_short_dir = (re.findall(r'[a-zA-Z0-9]*(?=~EDF)', script_dir))
+        list_File_Name = self.func_get_file_list()
+        var_dst_path = self.entry2.get()
+        for var_file in list_File_Name:
+            if 'Main.xaml' in var_file:
+                print(var_file)
+                var_script_dir = os.path.dirname(var_file)
+                var_short_dir = (re.findall(r'[a-zA-Z0-9]*(?=~EDF)', var_script_dir))
                 #print(var_short_dir[0])
-                filename = f'{copypath}{var_short_dir[0]}.xaml'
-                self.text_update(f'{filename}\n')
-                copyfile(file, filename)
+                var_file_name = f'{var_dst_path}{var_short_dir[0]}.xaml'
+                self.text_update(f'{var_file_name}\n')
+                copyfile(var_file, var_file_name) #复制命令
         pass
         self.text_update('STOP_')
         sleep(2)

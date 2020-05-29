@@ -93,17 +93,16 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         #读取界面 文件信息
         file_name = self.entry2.get()
         sheet_name = self.comboxlist.get()
-
-        Keywords = list(next(self.get_data_Tag(file_name, sheet_name)))
-        Key_index = Keywords.index('TAG')
-        for i in self.get_data(file_name, sheet_name):
-            tag_key = i[Keywords[Key_index]]
+        list_Key_words = list(next(self.get_data_Tag(file_name, sheet_name)))
+        Key_index = list_Key_words.index('TAG')
+        for list_Details in self.get_data(file_name, sheet_name):
+            tag_key = list_Details[list_Key_words[Key_index]]
             self.dict_tag[tag_key] = 0
 
         self.list_tag = (list(self.dict_tag.keys()))
-        list_file = self.func_get_file_list()
+        list_File_Name = self.func_get_file_list()
 
-        for var_file_name in list_file:
+        for var_file_name in list_File_Name:
             # print(var_file_name)
             with open(var_file_name, 'r', encoding='utf-8') as Maintxt:
                 allContent = Maintxt.read()
@@ -112,33 +111,30 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
                 head_find = (re.findall(f'{var_tag}"', allContent))
                 var_num = int(self.dict_tag[var_tag]) + len(head_find)
                 self.dict_tag[var_tag] = var_num
-
         self.func_dict_out_txt()
-
         #结束
         self.text_update('STOP_')
         sleep(2)
 
-
     def func_get_file_list(self):
-        list_file = []
-        var_path = self.entry.get()
-        for var_home, var_dirs, var_files in os.walk(var_path):
-            for var_file_name in var_files:
-                list_file.append(os.path.join(var_home, var_file_name))
-        return list_file
+        list_File_Name = []
+        var_src_path = self.entry.get()
+        for var_src_home, var_src_dirs, var_src_files in os.walk(var_src_path):
+            for var_file_name in var_src_files:
+                list_File_Name.append(os.path.join(var_src_home, var_file_name))
+        return list_File_Name
 
     def func_dict_out_txt(self):
-        line = ''
+        var_line_Details = ''
         for var_tag in self.list_tag:
             if self.dict_tag[var_tag] == 0:
-                line = line + f'{var_tag}\n'
+                var_line_Details = var_line_Details + f'{var_tag}\n'
                 self.text_update(var_tag)
 
-        file_name = self.entry2.get()
-        filepath, fullflname = os.path.split(file_name)
-        result_last = os.path.join(filepath, 'OUT.txt')
-        self.out_txt(result_last, line)
+        var_file_name = self.entry2.get()
+        var_file_path, var_full_file_name = os.path.split(var_file_name)
+        result_latest = os.path.join(var_file_path, 'OUT.txt')
+        self.out_txt(result_latest, var_line_Details)
         pass
 
     def text_update(self,show):
