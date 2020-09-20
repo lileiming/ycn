@@ -25,7 +25,7 @@ class Windows_NODE():
     def initWidgets(self):
         # 创建顶部
         top_frame = LabelFrame(self.master, text='DR导出文件目录', height=150, width=615)
-        top_frame.pack(fill=X, padx=15, pady=30)
+        top_frame.pack(fill=X, padx=15, pady=0)
         self.e1 = StringVar()
         self.entry = ttk.Entry(top_frame, width=65, textvariable=self.e1)
         print(self.here)
@@ -36,7 +36,7 @@ class Windows_NODE():
         bot_frame1 = LabelFrame(self.master, text='结果')
         bot_frame1.pack(fill=X, side=TOP, padx=15, pady=0)
         self.Scroll = Scrollbar(bot_frame1)
-        self.Text = Text(bot_frame1, width=83, height=13, yscrollcommand=self.Scroll.set)
+        self.Text = Text(bot_frame1, width=83, height=18, yscrollcommand=self.Scroll.set)
         self.Text.pack(side=LEFT, padx=0, pady=5)
         self.Scroll = Scrollbar(bot_frame1)
         self.Scroll.pack(side=LEFT, fill=Y)
