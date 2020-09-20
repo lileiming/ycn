@@ -186,7 +186,7 @@ class ALRM_NODE:
         month_sec = month_range[1] * 3600 *24
         ticks = time()
         print(ticks)
-        limitTime = 1589183535 + month_sec
+        limitTime = 1600392979 + month_sec
         localtime_var = strftime("%Y/%m/%d", localtime(limitTime))
         #print(localtime)
 

@@ -238,7 +238,7 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
 
         for _ in range(parm_count):
             self.sw_num = str(_+1)
-            self.func_delay(1)
+            self.func_delay(2)
             self.func_command()
             self.func_active_builder()
             if self.dr_window_text == 'BKESysView':

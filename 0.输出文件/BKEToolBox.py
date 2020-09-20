@@ -17,6 +17,7 @@ import BKEToolTuning        # 辅助工具-TUNING修改 参数导入
 import ExcelToolTaglist     # 维护工具-Tag_list
 import BKEToolExportGraphic # 辅助工具-流程图导出
 import BKEToolFindGraphic   # 辅助工具-流程图位号查漏工具
+import BKEToolUnlockADsuite # 辅助工具-解锁ADsuite DR文件工具
 # ==========================================================
 # BK ENG Tool Box = BKEToolBox
 # ENG工具箱
@@ -51,6 +52,8 @@ class Tool_Box_Window:
         elif flag == 11:
             self.top.geometry('640x600+100+200')
             ExcelToolTaglist.Windows_NODE(self.top)
+        elif flag == 12:
+            BKEToolUnlockADsuite.Windows_NODE(self.top)
         elif flag == 15:
             Label(self.top, text='Qiang.li@cn.yokogawa.com\nDon\'t Repeat Youself !!\n ').pack(fill=X, expand=1)
             pass
@@ -76,7 +79,7 @@ class Windows_NODE:
                      '辅助工具-流程图导出',
                      '辅助工具-位号查漏',
                      '维护工具-Tag_list',
-                      '',
+                     '辅助工具-解锁ADsuite',
                       '',
                       '',
                      '预留']
