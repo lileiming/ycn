@@ -1,0 +1,491 @@
+﻿<!--PlatformRevisionProperties.PlatformFileRevision:0x0002-->
+<!--SolutionRevisionProperties.CENTUMFileRevision:0x0001-->
+<Canvas
+    MaxHeight="10000"
+    MaxWidth="10000"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Center"
+    Width="1226"
+    Height="821"
+    Background="#FFA9A9A9"
+    yiapcspvgbdc:ComponentProperties.Name="Canvas0"
+    yiapcspvgbd:GridOptions.GridType="True"
+    yiapcspvgbd:GridOptions.GridSize="10"
+    yiapcspvgbd:GridOptions.GridColor="#FF696969"
+    yiapcspvgbd:GridOptions.GridVisibility="Visible"
+    yiapcspvgbd:GridOptions.GridIsActive="True"
+    yiapcspvgcp:GraphicFileProperties.RefreshRate="1"
+    yiapcspvgcp:GraphicFileProperties.GraphicFileType="Graphic"
+    yiapcspvgcp:GraphicFileProperties.ScalingMode="FixedRatio" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:rcsr="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Common.BrushExtension;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Common.iPCSBrushExtension" xmlns:yiapcspvggn="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.GenericName;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.GenericName" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:yiapcspvgbdc="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer.Component;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer" xmlns:yiapcspvgdl="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.DataLink;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.DataLink" xmlns:yiapcspvgflc="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.FunctionLink.Control;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.FunctionLink.Control" xmlns:yiapcspvgbdc0="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer.Component;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer.Component" xmlns:yiapcspvgccbsc="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Components.Controls.BasicShapeControls;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Components.Controls.BasicShapeControls" xmlns:yiapcspvgccd="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Components.Common.Data;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Components.Common" xmlns:yiapcspvgccdc="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Components.Controls.DomainControls;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Components.Controls.DomainControls" xmlns:yiapcspvggnc="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.GenericName.Common;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.GenericName" xmlns:yiapcspvgdldm="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.DataLink.DataModel;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.DataLink.DataModel" xmlns:s="clr-namespace:System;assembly=mscorlib,Version=4.0.0.0,Culture=neutral,PublicKeyToken=b77a5c561934e089" xmlns:yiapcspvgbmdg="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Module.Designer.Group;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Module" xmlns:yiapcspvgbd="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Designer" xmlns:yiapcspvgcp="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Common.Persistency;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Common.Persistency" xmlns:yiapcspvgbml="clr-namespace:Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Module.Layer;assembly=Yokogawa.IA.iPCS.Platform.View.Graphic.Builder.Module.Core">
+    <yiapcspvgbml:CanvasLayerProperty.Layers>
+        <yiapcspvgbml:CanvasLayers
+            ActiveLayerID="Normal Drawing Layer 1">
+            <yiapcspvgbml:CanvasLayers.NormalDrawingLayers>
+                <yiapcspvgbml:LayerCollection
+                    Capacity="4">
+                    <yiapcspvgbml:Layer
+                        Name="Layer 1"
+                        ID="Normal Drawing Layer 1"
+                        LayerType="NormalDrawingLayer"
+                        ExtendedInformation="{x:Null}" />
+                </yiapcspvgbml:LayerCollection>
+            </yiapcspvgbml:CanvasLayers.NormalDrawingLayers>
+            <yiapcspvgbml:CanvasLayers.TracingLayer>
+                <yiapcspvgbml:Layer
+                    Name="Tracing Layer"
+                    ID="Tracing Layer"
+                    LayerType="TracingLayer"
+                    ExtendedInformation="&lt;ArrayList Capacity=&quot;0&quot; xmlns=&quot;clr-namespace:System.Collections;assembly=mscorlib&quot; /&gt;" />
+            </yiapcspvgbml:CanvasLayers.TracingLayer>
+            <yiapcspvgbml:CanvasLayers.NonVisualLayer>
+                <yiapcspvgbml:Layer
+                    Name="Non-Visual Layer"
+                    ID="Non-Visual Layer"
+                    LayerType="NonVisualLayer"
+                    ExtendedInformation="{x:Null}" />
+            </yiapcspvgbml:CanvasLayers.NonVisualLayer>
+        </yiapcspvgbml:CanvasLayers>
+    </yiapcspvgbml:CanvasLayerProperty.Layers>
+    <yiapcspvggn:GenericNameComponent
+        Name="{x:Null}"
+        yiapcspvgbdc:ComponentProperties.Name="GenericNameComponent0">
+        <yiapcspvggn:GenericNameComponent.GenericName>
+            <yiapcspvggn:GenericName />
+        </yiapcspvggn:GenericNameComponent.GenericName>
+    </yiapcspvggn:GenericNameComponent>
+    <yiapcspvgdl:DataLinkComponent
+        Name="DataLink0"
+        Selector.IsSelected="True"
+        yiapcspvgbdc:ComponentProperties.Name="DataLink0"
+        yiapcspvgbdc:ComponentProperties.LayerID="Non-Visual Layer" />
+    <yiapcspvgflc:FunctionLinkControl
+        yiapcspvgbdc:ComponentProperties.Name="Function Link Component0" />
+    <yiapcspvgbdc0:GroupComponent
+        Tag=""
+        Visibility="Visible"
+        Width="141.7602890625"
+        Height="52"
+        Canvas.Left="70"
+        Canvas.Top="60"
+        Panel.ZIndex="101"
+        yiapcspvgbdc:ComponentProperties.Name="LinkedPart - YXSY_MLD_DV0"
+        yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1">
+        <yiapcspvgbdc0:GroupComponent.Information>
+            <yiapcspvgbmdg:LinkedPartInformation
+                Name="YXSY_MLD_DV"
+                OriginalWidth="141.7602890625"
+                OriginalHeight="52"
+                CreationDateTime="26/08/2020 09:01:26"
+                LastModifiedDateTime="27/08/2020 06:03:01"
+                LinkedPartId="61451e68-b525-4860-bef7-c657dc056e8b"
+                Magnification="0"
+                FileFormatRev="0" />
+        </yiapcspvgbdc0:GroupComponent.Information>
+        <yiapcspvgccbsc:IPCSRectangle
+            Visibility="Visible"
+            Focusable="False"
+            ShapeHeight="32"
+            ShapeWidth="104"
+            Stroke="#FF666666"
+            StrokeThickness="1"
+            Tag="Id=2"
+            Fill="#FFFFFFFF"
+            Canvas.Left="8"
+            Canvas.Top="16"
+            Panel.ZIndex="102"
+            yiapcspvgbdc:ComponentProperties.Name="Rectangle_0001"
+            yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1"
+            yiapcspvgccd:DebuggerProperties.SetDebugData="False">
+            <yiapcspvggn:GenericNameComponent.GenericName>
+                <yiapcspvggn:GenericName />
+            </yiapcspvggn:GenericNameComponent.GenericName>
+        </yiapcspvgccbsc:IPCSRectangle>
+        <yiapcspvgccbsc:IPCSLine
+            Visibility="Visible"
+            Focusable="False"
+            StrokeThickness="1"
+            Tag="Id=3"
+            Fill="{x:Null}"
+            X1="0"
+            X2="104"
+            Y1="0"
+            Y2="0"
+            Stroke="#FF666666"
+            Canvas.Left="8"
+            Canvas.Top="32"
+            Panel.ZIndex="103"
+            yiapcspvgbdc:ComponentProperties.Name="StraightLine_0002"
+            yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1"
+            yiapcspvgccd:DebuggerProperties.SetDebugData="False">
+            <yiapcspvggn:GenericNameComponent.GenericName>
+                <yiapcspvggn:GenericName />
+            </yiapcspvggn:GenericNameComponent.GenericName>
+        </yiapcspvgccbsc:IPCSLine>
+        <yiapcspvgccdc:ProcessDataCharacter
+            FontSize="14"
+            FontWeight="Bold"
+            Visibility="Visible"
+            Focusable="False"
+            FontFamily="Arial"
+            Height="16.1"
+            Width="121.32"
+            Tag="Id=4"
+            ActualDisplayType="String"
+            Alignment="left"
+            Background="{x:Null}"
+            BorderBrush="#FF000000"
+            DecimalPlaces="0"
+            DisplayType="String"
+            Foreground="#FF000000"
+            LeadingZeros="False"
+            NumberOfDigit="12"
+            ShowEngineerUnit="Hidden"
+            TrailingZeros="True"
+            Value=""
+            IsAdvancedAlignment="False"
+            IsSpecifiedAlignment="True"
+            Canvas.Left="7"
+            Canvas.Top="0.5"
+            Panel.ZIndex="104"
+            yiapcspvgbdc:ComponentProperties.Name="ProcessData_0003"
+            yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1"
+            yiapcspvgccd:DebuggerProperties.SetDebugData="False">
+            <yiapcspvggn:GenericNameComponent.GenericName>
+                <yiapcspvggn:GenericName
+                    Name="Default"
+                    Type="Individual"
+                    GenericNames="$TAG">
+                    <yiapcspvggn:GenericName.BindingSets>
+                        <yiapcspvggnc:BindingSetList
+                            Capacity="4">
+                            <yiapcspvggn:BindingSet
+                                SetNumber="1">
+                                <yiapcspvggn:BindingSet.Bindings>
+                                    <yiapcspvggnc:GNBindingList
+                                        Capacity="4">
+                                        <yiapcspvggn:GNBinding
+                                            GenericName="$TAG"
+                                            Value="AAABBBCCC" />
+                                    </yiapcspvggnc:GNBindingList>
+                                </yiapcspvggn:BindingSet.Bindings>
+                            </yiapcspvggn:BindingSet>
+                        </yiapcspvggnc:BindingSetList>
+                    </yiapcspvggn:GenericName.BindingSets>
+                </yiapcspvggn:GenericName>
+            </yiapcspvggn:GenericNameComponent.GenericName>
+            <yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
+                <yiapcspvgdldm:DataLinkModifiers
+                    Capacity="4">
+                    <yiapcspvgdldm:DataLinkModifier
+                        Name="DataLink0">
+                        <yiapcspvgdldm:DataLinkModifier.DataLinks>
+                            <yiapcspvgdldm:DataLinkList
+                                Capacity="4">
+                                <yiapcspvgdldm:SimpleDataLink
+                                    PropertyName="Value"
+                                    Value="&quot;$TAG&quot;" />
+                            </yiapcspvgdldm:DataLinkList>
+                        </yiapcspvgdldm:DataLinkModifier.DataLinks>
+                    </yiapcspvgdldm:DataLinkModifier>
+                </yiapcspvgdldm:DataLinkModifiers>
+            </yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
+        </yiapcspvgccdc:ProcessDataCharacter>
+        <yiapcspvgccdc:TouchTarget
+            Visibility="Visible"
+            BorderBrush="#FFFFFFFF"
+            Focusable="True"
+            Height="52"
+            Width="115.6"
+            Tag="Id=5"
+            Canvas.Left="0"
+            Canvas.Top="0"
+            Panel.ZIndex="105"
+            yiapcspvgbdc:ComponentProperties.Name="Button_0001"
+            yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1"
+            yiapcspvgccd:DebuggerProperties.SetDebugData="False">
+            <yiapcspvgccdc:TouchTarget.CommandParameter>
+                <yiapcspvgflc:FunctionLinkControlCommandParameter
+                    FunctionAndParameter="type=callWindow;target=faceplate;parameter=$CTRTAG;chkWinSize=0;size=large;chkWinDisp=0;chkWinCoordinates=0;chkMonitorNum=0;x=1140;y=48;monitorNo="
+                    Provider="HIS" />
+            </yiapcspvgccdc:TouchTarget.CommandParameter>
+            <yiapcspvggn:GenericNameComponent.GenericName>
+                <yiapcspvggn:GenericName
+                    Name="Default"
+                    Type="Individual"
+                    GenericNames="$CTRTAG">
+                    <yiapcspvggn:GenericName.BindingSets>
+                        <yiapcspvggnc:BindingSetList
+                            Capacity="4">
+                            <yiapcspvggn:BindingSet
+                                SetNumber="1">
+                                <yiapcspvggn:BindingSet.Bindings>
+                                    <yiapcspvggnc:GNBindingList
+                                        Capacity="4">
+                                        <yiapcspvggn:GNBinding
+                                            GenericName="$CTRTAG"
+                                            Value="DDDEEEFFF" />
+                                    </yiapcspvggnc:GNBindingList>
+                                </yiapcspvggn:BindingSet.Bindings>
+                            </yiapcspvggn:BindingSet>
+                        </yiapcspvggnc:BindingSetList>
+                    </yiapcspvggn:GenericName.BindingSets>
+                </yiapcspvggn:GenericName>
+            </yiapcspvggn:GenericNameComponent.GenericName>
+        </yiapcspvgccdc:TouchTarget>
+        <yiapcspvgccbsc:IPCSLine
+            Visibility="Visible"
+            Focusable="False"
+            StrokeThickness="1"
+            Tag="Id=6"
+            Fill="{x:Null}"
+            X1="0"
+            X2="0"
+            Y1="0"
+            Y2="32"
+            Stroke="#FF666666"
+            Canvas.Left="8"
+            Canvas.Top="16"
+            Panel.ZIndex="106"
+            yiapcspvgbdc:ComponentProperties.Name="StraightLine_0001"
+            yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1"
+            yiapcspvgccd:DebuggerProperties.SetDebugData="False">
+            <yiapcspvggn:GenericNameComponent.GenericName>
+                <yiapcspvggn:GenericName />
+            </yiapcspvggn:GenericNameComponent.GenericName>
+        </yiapcspvgccbsc:IPCSLine>
+        <yiapcspvgccdc:ProcessDataCharacter
+            FontSize="14"
+            FontWeight="Bold"
+            Visibility="Visible"
+            FontFamily="Arial"
+            Height="16.1"
+            Width="111.6002890625"
+            Tag="Id=8"
+            ActualDisplayType="Unknown"
+            Alignment="LeftTight"
+            Background="{x:Null}"
+            DisplayType="TagList"
+            EngineerUnitColor="#FF000000"
+            EngineerUnitLength="2"
+            Foreground="#FF000000"
+            NumberOfDigit="7"
+            ShowEngineerUnit="Visible"
+            IsSpecifiedAlignment="True"
+            Canvas.Left="30.16"
+            Canvas.Top="33"
+            Panel.ZIndex="107"
+            yiapcspvgbdc:ComponentProperties.Name="DataCharacter0"
+            yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1">
+            <yiapcspvgccdc:ProcessDataCharacter.Value>
+                <s:Double>NaN</s:Double>
+            </yiapcspvgccdc:ProcessDataCharacter.Value>
+            <yiapcspvggn:GenericNameComponent.GenericName>
+                <yiapcspvggn:GenericName
+                    GenericNames="$CTRTAG">
+                    <yiapcspvggn:GenericName.BindingSets>
+                        <yiapcspvggnc:BindingSetList
+                            Capacity="4">
+                            <yiapcspvggn:BindingSet
+                                SetNumber="1">
+                                <yiapcspvggn:BindingSet.Bindings>
+                                    <yiapcspvggnc:GNBindingList
+                                        Capacity="4">
+                                        <yiapcspvggn:GNBinding
+                                            GenericName="$CTRTAG"
+                                            Value="DDDEEEFFF" />
+                                    </yiapcspvggnc:GNBindingList>
+                                </yiapcspvggn:BindingSet.Bindings>
+                            </yiapcspvggn:BindingSet>
+                        </yiapcspvggnc:BindingSetList>
+                    </yiapcspvggn:GenericName.BindingSets>
+                </yiapcspvggn:GenericName>
+            </yiapcspvggn:GenericNameComponent.GenericName>
+            <yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
+                <yiapcspvgdldm:DataLinkModifiers
+                    Capacity="4">
+                    <yiapcspvgdldm:DataLinkModifier
+                        Name="DataLink0">
+                        <yiapcspvgdldm:DataLinkModifier.DataLinks>
+                            <yiapcspvgdldm:DataLinkList
+                                Capacity="4">
+                                <yiapcspvgdldm:SimpleDataLink
+                                    PropertyName="Value"
+                                    Value="$CTRTAG.MV" />
+                            </yiapcspvgdldm:DataLinkList>
+                        </yiapcspvgdldm:DataLinkModifier.DataLinks>
+                        <yiapcspvgdldm:DataLinkModifier.Modifier>
+                            <yiapcspvgdldm:Modifier>
+                                <yiapcspvgdldm:Modifier.Conditions>
+                                    <yiapcspvgdldm:ConditionsList
+                                        Capacity="4">
+                                        <yiapcspvgdldm:Condition
+                                            Expression="$CTRTAG.ALRM==&quot;NR&quot;  AND  $CTRTAG.AOFS&lt;&gt;&quot;AOF&quot;"
+                                            ID="1">
+                                            <yiapcspvgdldm:Condition.ActionTypes>
+                                                <yiapcspvgdldm:ColorChange
+                                                    PropertyName="Foreground" />
+                                                <yiapcspvgdldm:Blinking
+                                                    TypeBlinking="AlarmSpecificBlinking"
+                                                    PropertyName="Foreground" />
+                                            </yiapcspvgdldm:Condition.ActionTypes>
+                                        </yiapcspvgdldm:Condition>
+                                        <yiapcspvgdldm:Condition
+                                            Expression="$CTRTAG"
+                                            ID="2">
+                                            <yiapcspvgdldm:Condition.ActionTypes>
+                                                <yiapcspvgdldm:ColorChange
+                                                    ColorChangeType="ChangeAlarmSpecificColor"
+                                                    PropertyName="Foreground" />
+                                                <yiapcspvgdldm:Blinking
+                                                    TypeBlinking="AlarmSpecificBlinking"
+                                                    PropertyName="Foreground" />
+                                            </yiapcspvgdldm:Condition.ActionTypes>
+                                        </yiapcspvgdldm:Condition>
+                                    </yiapcspvgdldm:ConditionsList>
+                                </yiapcspvgdldm:Modifier.Conditions>
+                            </yiapcspvgdldm:Modifier>
+                        </yiapcspvgdldm:DataLinkModifier.Modifier>
+                    </yiapcspvgdldm:DataLinkModifier>
+                </yiapcspvgdldm:DataLinkModifiers>
+            </yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
+        </yiapcspvgccdc:ProcessDataCharacter>
+        <yiapcspvgccdc:ProcessDataCharacter
+            FontSize="14"
+            FontWeight="Bold"
+            Visibility="Visible"
+            FontFamily="Arial"
+            Height="16.1"
+            Width="111.6002890625"
+            Tag="Id=9"
+            ActualDisplayType="Unknown"
+            Alignment="LeftTight"
+            Background="{x:Null}"
+            DisplayType="TagList"
+            EngineerUnitColor="#FF000000"
+            EngineerUnitLength="2"
+            Foreground="#FF000000"
+            NumberOfDigit="7"
+            ShowEngineerUnit="Visible"
+            IsSpecifiedAlignment="True"
+            Canvas.Left="30.16"
+            Canvas.Top="16"
+            Panel.ZIndex="108"
+            yiapcspvgbdc:ComponentProperties.Name="DataCharacter0"
+            yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1">
+            <yiapcspvgccdc:ProcessDataCharacter.Value>
+                <s:Double>NaN</s:Double>
+            </yiapcspvgccdc:ProcessDataCharacter.Value>
+            <yiapcspvggn:GenericNameComponent.GenericName>
+                <yiapcspvggn:GenericName
+                    GenericNames="$TAG">
+                    <yiapcspvggn:GenericName.BindingSets>
+                        <yiapcspvggnc:BindingSetList
+                            Capacity="4">
+                            <yiapcspvggn:BindingSet
+                                SetNumber="1">
+                                <yiapcspvggn:BindingSet.Bindings>
+                                    <yiapcspvggnc:GNBindingList
+                                        Capacity="4">
+                                        <yiapcspvggn:GNBinding
+                                            GenericName="$TAG"
+                                            Value="AAABBBCCC" />
+                                    </yiapcspvggnc:GNBindingList>
+                                </yiapcspvggn:BindingSet.Bindings>
+                            </yiapcspvggn:BindingSet>
+                        </yiapcspvggnc:BindingSetList>
+                    </yiapcspvggn:GenericName.BindingSets>
+                </yiapcspvggn:GenericName>
+            </yiapcspvggn:GenericNameComponent.GenericName>
+            <yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
+                <yiapcspvgdldm:DataLinkModifiers
+                    Capacity="4">
+                    <yiapcspvgdldm:DataLinkModifier
+                        Name="DataLink0">
+                        <yiapcspvgdldm:DataLinkModifier.DataLinks>
+                            <yiapcspvgdldm:DataLinkList
+                                Capacity="4">
+                                <yiapcspvgdldm:SimpleDataLink
+                                    PropertyName="Value"
+                                    Value="$TAG.PV" />
+                            </yiapcspvgdldm:DataLinkList>
+                        </yiapcspvgdldm:DataLinkModifier.DataLinks>
+                        <yiapcspvgdldm:DataLinkModifier.Modifier>
+                            <yiapcspvgdldm:Modifier>
+                                <yiapcspvgdldm:Modifier.Conditions>
+                                    <yiapcspvgdldm:ConditionsList
+                                        Capacity="4">
+                                        <yiapcspvgdldm:Condition
+                                            Expression="$TAG.ALRM==&quot;NR&quot;  AND  $TAG.AOFS&lt;&gt;&quot;AOF&quot;"
+                                            ID="1">
+                                            <yiapcspvgdldm:Condition.ActionTypes>
+                                                <yiapcspvgdldm:ColorChange
+                                                    Color="#FFFF0000"
+                                                    PropertyName="Foreground" />
+                                                <yiapcspvgdldm:Blinking
+                                                    TypeBlinking="AlarmSpecificBlinking"
+                                                    PropertyName="Foreground" />
+                                            </yiapcspvgdldm:Condition.ActionTypes>
+                                        </yiapcspvgdldm:Condition>
+                                        <yiapcspvgdldm:Condition
+                                            Expression="$TAG"
+                                            ID="2">
+                                            <yiapcspvgdldm:Condition.ActionTypes>
+                                                <yiapcspvgdldm:ColorChange
+                                                    ColorChangeType="ChangeAlarmSpecificColor"
+                                                    Color="#FFFF0000"
+                                                    PropertyName="Foreground" />
+                                                <yiapcspvgdldm:Blinking
+                                                    TypeBlinking="AlarmSpecificBlinking"
+                                                    PropertyName="Foreground" />
+                                            </yiapcspvgdldm:Condition.ActionTypes>
+                                        </yiapcspvgdldm:Condition>
+                                    </yiapcspvgdldm:ConditionsList>
+                                </yiapcspvgdldm:Modifier.Conditions>
+                            </yiapcspvgdldm:Modifier>
+                        </yiapcspvgdldm:DataLinkModifier.Modifier>
+                    </yiapcspvgdldm:DataLinkModifier>
+                </yiapcspvgdldm:DataLinkModifiers>
+            </yiapcspvgdl:DataLinkComponent.DataLinkModifiers>
+        </yiapcspvgccdc:ProcessDataCharacter>
+        <yiapcspvgccbsc:Text
+            FontSize="12"
+            FontWeight="Bold"
+            Focusable="False"
+            FontFamily="Arial"
+            MinHeight="0"
+            MinWidth="0"
+            Padding="0,0,0,0"
+            Foreground="#FF000000"
+            Tag="Id=10"
+            ScaleX="1"
+            ScaleY="1"
+            Canvas.Left="9.98503613281196"
+            Canvas.Top="17"
+            Panel.ZIndex="109"
+            yiapcspvgbdc:ComponentProperties.Name="Text0"
+            yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1">
+            <yiapcspvggn:GenericNameComponent.GenericName>
+                <yiapcspvggn:GenericName />
+            </yiapcspvggn:GenericNameComponent.GenericName>PV</yiapcspvgccbsc:Text>
+        <yiapcspvgccbsc:Text
+            FontSize="12"
+            FontWeight="Bold"
+            Focusable="False"
+            FontFamily="Arial"
+            MinHeight="0"
+            MinWidth="0"
+            Padding="0,0,0,0"
+            Foreground="#FF000000"
+            Tag="Id=11"
+            ScaleX="1"
+            ScaleY="1"
+            Canvas.Left="9.15999999999997"
+            Canvas.Top="33.396551724138"
+            Panel.ZIndex="110"
+            yiapcspvgbdc:ComponentProperties.Name="Text0"
+            yiapcspvgbdc:ComponentProperties.LayerID="Normal Drawing Layer 1">
+            <yiapcspvggn:GenericNameComponent.GenericName>
+                <yiapcspvggn:GenericName />
+            </yiapcspvggn:GenericNameComponent.GenericName>MV</yiapcspvgccbsc:Text>
+    </yiapcspvgbdc0:GroupComponent>
+</Canvas>
