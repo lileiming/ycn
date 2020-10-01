@@ -282,7 +282,7 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
 
             while TAG_index < len(list_TAG):
                 TAG_XY = list_TAG[TAG_index]
-                # print TAG_XY
+                #print (TAG_XY)
                 TAG_Z = new_tag[TAG_XY]
                 # print TAG_Z # 7.0
                 Nokey = dict_tag.get(TAG_XY, 0)  # 处理Yget 不存在的key
@@ -324,7 +324,6 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
             os.startfile(self.entry.get())
         except FileNotFoundError:
             self.text_update('错误提示：文件不存在')
-
             pass
 
     def text_update(self,show):
