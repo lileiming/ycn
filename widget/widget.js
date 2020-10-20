@@ -23,7 +23,7 @@ var widgetInputRAW = args.widgetParameter;
 try {
 	widgetInputRAW.toString();
 } catch(e) {
-	widgetInputRAW = "50|#ffffff";
+	widgetInputRAW = "50|#f0f8ff";
 }
 
 var widgetInput = widgetInputRAW.toString();
@@ -346,7 +346,7 @@ if (config.runsInWidget) {
  // Greeting label
  let hello = widgetHello.addText(greeting);
  hello.font = Font.boldSystemFont(35);
- hello.textColor = new Color('#000000');
+ hello.textColor = new Color('#f0f8ff');
  hello.leftAlignText();
  
 //Spacing between greeting and yearprogress
@@ -362,14 +362,14 @@ hStack0.addSpacer(0)
 // Year icon in stack
 const YearProgressicon = hStack0.addText("◕ ")
 YearProgressicon.font = new Font('Menlo', 12)
-YearProgressicon.textColor = new Color('#000000')
+YearProgressicon.textColor = new Color('#f0f8ff')
 YearProgressicon.textOpacity = (1);
 YearProgressicon.leftAlignText();
 
 // Year label in stack
 const YearProgress = hStack0.addText("年度 "+renderYearProgress())
 YearProgress.font = new Font('Menlo', 12)
-YearProgress.textColor = new Color('#000000')
+YearProgress.textColor = new Color('#f0f8ff')
  YearProgress.textOpacity = (1);
 YearProgress.leftAlignText();
 
@@ -385,13 +385,13 @@ hStack1.addSpacer(0)
 
 // Battery icon in stack 
 const batteryicon = hStack1.addText("⚡ 电能");
-batteryicon.textColor = new Color("#000000"); 
+batteryicon.textColor = new Color("#f0f8ff"); 
 batteryicon.font = new Font('Menlo', 12); 
 batteryicon.leftAlignText();
 
 // Battery Progress in stack 
 const batteryLine = hStack1.addText(renderBattery());
-batteryLine.textColor = new Color("#000000"); 
+batteryLine.textColor = new Color("#f0f8ff"); 
 batteryLine.font = new Font("Menlo", 12); 
 batteryLine.leftAlignText();
 function renderBattery() { 
@@ -403,23 +403,27 @@ return batteryAscii; }
 
 // Battery Status in stack
 var battery =  getBatteryLevel();
+var batcolor = new Color('#097C25')
 if(Device.isCharging() && !Device.isFullyCharged()){
   battery = battery + " , 充电中...";
+  batcolor = new Color('#dc0000')
 }
+
 if(Device.isFullyCharged()){
   battery = battery + " , 已充满电!请拔下电源!";
+  batcolor = new Color('#ff00ff')
 }
 let batterytext = hStack1.addText(battery);
 batterytext.font = new Font("Menlo", 12);
-batterytext.textColor = new Color('FF0000');
+batterytext.textColor = batcolor;
 
 //Spacing between battery and summary
 widgetHello.addSpacer(5);
 
 // Widget feel temp
-let feel = weathername + " today" + "." + " It feels like " + Math.round(feel_like) + "\u2103" + ";" + " the high will be " + Math.round(highTemp) + "\u2103";//"H:"+highTemp+"\u00B0"+" L:"+lowTemp+"\u00B0"
+let feel = weathername + " today" + "." + " 体感温度: " + Math.round(feel_like) + "\u2103" + ";" + " 最高温度: " + Math.round(highTemp) + "\u2103";//"H:"+highTemp+"\u00B0"+" L:"+lowTemp+"\u00B0"
 var hltemptext = widgetHello.addText(feel);
-hltemptext.textColor = new Color('#000000');
+hltemptext.textColor = new Color('#f0f8ff');
 hltemptext.font = Font.regularSystemFont(12);
 hltemptext.leftAlignText();
 hltemptext.textOpacity = (0.7);
@@ -434,7 +438,7 @@ hStack2.addSpacer(0)
 // Date label
 const datetext = hStack2.addText(datefull + "  ");
 datetext.font = Font.regularSystemFont(30);
-datetext.textColor = new Color('#000000');
+datetext.textColor = new Color('#f0f8ff');
 datetext.textOpacity = (1);
 datetext.leftAlignText();
 
@@ -449,7 +453,7 @@ widgetimg.leftAlignImage();
 //tempeture label in stack
 let temptext = hStack2.addText('\xa0\xa0'+ Math.round(curTemp).toString()+"\u2103");
 temptext.font = Font.boldSystemFont(30);
-temptext.textColor = new Color('#000000');
+temptext.textColor = new Color('#f0f8ff');
 //temptext.textOpacity = (0.5);
 temptext.leftAlignText();
 
