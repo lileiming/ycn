@@ -205,7 +205,7 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
                                 op_table.cell(index_temp[0] + index_bias, col_temp + col_bias).value = var_new_data
                                 op_table.cell(index_temp[0] + index_bias, col_temp + col_bias).fill = sty.PatternFill(fill_type='solid',
                                                                                                 fgColor="00FFFF")       # 对更新数据进行标注颜色
-                                self.text_update(str(var_new_data) + '\n')
+                                self.text_update(f'{Var_diff_Tag}===={var_new_data}' + '\n')
                         pass
                     pass
                 pass
@@ -262,7 +262,7 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
                                 col_temp = self.var_col.index(self.var_col2[col_i])                                     #定位
                                 op_table.cell(index_temp[0] + index_bias, col_temp + col_bias).fill = sty.PatternFill(fill_type='solid',
                                                                                             fgColor="FF00FF")           # 对更新数据进行标注颜色
-                                self.text_update(str(var_new_data) + '\n')
+                                self.text_update(f'{Var_diff_Tag}===={var_new_data}' + '\n')
                         pass
                     pass
                 pass
