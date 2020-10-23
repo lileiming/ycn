@@ -22,6 +22,10 @@ from time import sleep
 import YokoCustomlibrary   #自定义模块
 from YokoCustomlibrary import time_Decorator,thread_Decorator
 
+# 问题说明
+# 基本的读取 比较 已经完成，而且速度比之前的版本快很多。
+# 问题1    就是无法写回原来的Sheet，暂时只能把结果写入一个新Sheet.
+# 问题2    原来sheet中的公式丢失。
 
 # 计时装饰器
 
@@ -160,61 +164,11 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
     def ExcelSave(self):  # 替换功能
         try:
             self.Text.delete(0.0, END)
-            self.text_update("=============校队中===============\n")
-            T_Excle_Name = self.entry.get()
-            self.TSheet = self.comboxlist.get()
-            T_Sheet_Num = self.sheet_name_T.index(self.TSheet)
-                                                                                                                        #从UI界面读取 目标文件信息
-            R_Excle_Name = self.entry2.get()
-            self.RSheet = self.comboxlist2.get()
-            R_Sheet_Num = self.sheet_name_R.index(self.RSheet)
-            R_Tag = self.comboxlist3.get()
-                                                                                                                        #从UI界面读取 参考文件信息
-            #=================================
-            DataFrame_T = pd.read_excel(T_Excle_Name, T_Sheet_Num)                                                      #目标文件 EXCLE to DataFrame
-            DataFrame_R = pd.read_excel(R_Excle_Name,R_Sheet_Num)                                                       #参考文件 EXCLE to DataFrame
-            op_data = openpyxl.load_workbook(T_Excle_Name)
-            op_table = op_data.worksheets[T_Sheet_Num]
-
-            DataFrame_Temp = DataFrame_R.append(DataFrame_T)
-            DataFrame_Temp = DataFrame_Temp.append(DataFrame_T)                                                         #两次导入 目标Sheet 再去重 就会留下需要更新内容
-            #print(self.var_col2)                                                                                       #参考Sheet keys()
-            DataFrame_Diff = DataFrame_Temp.drop_duplicates(subset=self.var_col2, keep=False)                           #去重
-            DataFrame_Diff.reset_index(inplace=True,drop=True)                                                          #重置index
-            #print(DataFrame_Diff)
-            dict_Diff = DataFrame_Diff.to_dict(orient='index')                                                          #DataFrame 转 dict
-            #print(dict_Diff)
-            var_diff_len = len(dict_Diff)                                                                               #更新内容字典长度
-            #print(var_diff_len)
-            index_bias = 2
-            col_bias = 1
-            for diff_i in range(var_diff_len):
-                Var_diff_Tag = dict_Diff[diff_i][R_Tag]                                                                 #读取更新内容TAG
-                index_temp = DataFrame_T[(DataFrame_T[R_Tag] == Var_diff_Tag)].index.tolist()                           #读取更新内容TAG 在目标文件中定位 index
-                #print(index_temp)
-                if len(index_temp) != 0:
-                    for col_i in range(1, len(self.var_col2)):
-                        if self.var_col.__contains__(self.var_col2[col_i]):
-                            var_old_data = DataFrame_T.at[index_temp[0], self.var_col2[col_i]]                          # 目标文件 原来数据
-                            var_new_data = dict_Diff[diff_i][self.var_col2[col_i]]                                      # 更新内容 新数据
-                            if var_old_data != var_new_data and str(var_new_data) != 'nan' :                            # 两者有区别 再更新
-                                col_temp = self.var_col.index(self.var_col2[col_i])                                     #定位
-                                #print(index_temp[0],col_temp)
-                                #temp = op_table.cell(index_temp[0]+index_bias,col_temp+col_bias).value
-                                #print(temp)
-                                op_table.cell(index_temp[0] + index_bias, col_temp + col_bias).value = var_new_data
-                                op_table.cell(index_temp[0] + index_bias, col_temp + col_bias).fill = sty.PatternFill(fill_type='solid',
-                                                                                                fgColor="00FFFF")       # 对更新数据进行标注颜色
-                                self.text_update(str(var_new_data) + '\n')
-                        pass
-                    pass
-                pass
-            op_data.save(T_Excle_Name)
-            pass
-            self.text_update("=============校队结束=============\n")
+            self.text_update("=============替换中===============\n")
+            self.text_update("=============替换结束=============\n")
         except Exception as e:
             self.text_update(e)
-        sleep(1)
+        sleep(2)
 
     @thread_Decorator
     @time_Decorator
@@ -234,9 +188,6 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
             #=================================
             DataFrame_T = pd.read_excel(T_Excle_Name, T_Sheet_Num)                                                      #目标文件 EXCLE to DataFrame
             DataFrame_R = pd.read_excel(R_Excle_Name,R_Sheet_Num)                                                       #参考文件 EXCLE to DataFrame
-            op_data = openpyxl.load_workbook(T_Excle_Name)
-            op_table = op_data.worksheets[T_Sheet_Num]
-
             DataFrame_Temp = DataFrame_R.append(DataFrame_T)
             DataFrame_Temp = DataFrame_Temp.append(DataFrame_T)                                                         #两次导入 目标Sheet 再去重 就会留下需要更新内容
             #print(self.var_col2)                                                                                       #参考Sheet keys()
@@ -246,32 +197,46 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
             dict_Diff = DataFrame_Diff.to_dict(orient='index')                                                          #DataFrame 转 dict
             #print(dict_Diff)
             var_diff_len = len(dict_Diff)                                                                               #更新内容字典长度
-            #print(var_diff_len)
-            index_bias = 2
-            col_bias = 1
+            #print(var_diff_len)diff_
             for diff_i in range(var_diff_len):
                 Var_diff_Tag = dict_Diff[diff_i][R_Tag]                                                                 #读取更新内容TAG
                 index_temp = DataFrame_T[(DataFrame_T[R_Tag] == Var_diff_Tag)].index.tolist()                           #读取更新内容TAG 在目标文件中定位 index
                 #print(index_temp)
                 if len(index_temp) != 0:
-                    for col_i in range(1, len(self.var_col2)):
-                        if self.var_col.__contains__(self.var_col2[col_i]):
-                            var_old_data = DataFrame_T.at[index_temp[0], self.var_col2[col_i]]                          # 目标文件 原来数据
-                            var_new_data = dict_Diff[diff_i][self.var_col2[col_i]]                                      # 更新内容 新数据
-                            if var_old_data != var_new_data and str(var_new_data) != 'nan' :                            # 两者有区别 再更新
-                                col_temp = self.var_col.index(self.var_col2[col_i])                                     #定位
-                                op_table.cell(index_temp[0] + index_bias, col_temp + col_bias).fill = sty.PatternFill(fill_type='solid',
-                                                                                            fgColor="FF00FF")           # 对更新数据进行标注颜色
-                                self.text_update(str(var_new_data) + '\n')
+                    for col_i in  range(1,len(self.var_col2)):
+                        var_old_data = DataFrame_T.at[index_temp[0], self.var_col2[col_i]]                                  #目标文件 原来数据
+                        var_new_data = dict_Diff[diff_i][self.var_col2[col_i]]                                              #更新内容 新数据
+                        if var_old_data != var_new_data :                                                                   #两者有区别 再更新
+                            DataFrame_T.at[index_temp[0], self.var_col2[col_i]] = var_new_data
                         pass
                     pass
                 pass
-            op_data.save(T_Excle_Name)
             pass
+            excel_writer = pd.ExcelWriter(T_Excle_Name, engine='openpyxl')
+            self.add_sheet(DataFrame_T, excel_writer, 'test')
+
             self.text_update("=============校队结束=============\n")
         except Exception as e:
             self.text_update(e)
-        sleep(1)
+        sleep(2)
+
+    def add_sheet(self, data, excel_writer, sheet_name):
+        """
+        不改变原有Excel的数据，新增sheet。
+        注：
+            使用openpyxl操作Excel时Excel必需存在，因此要新建空sheet
+            无论如何sheet页都会被新建，只是当sheet_name已经存在时会新建一个以1结尾的sheet，如：test已经存在时，新建sheet为test1，以此类推
+        :param data: DataFrame数据
+        :param excel_writer: 文件路径
+        :param sheet_name: 新增的sheet名称
+        :return:
+        """
+        book = openpyxl.load_workbook(excel_writer.path)
+        excel_writer.book = book
+        data.to_excel(excel_writer=excel_writer, sheet_name=sheet_name, header=True,index=None)
+        excel_writer.close()
+
+
 
     def OpenExcel(self):
         try:
