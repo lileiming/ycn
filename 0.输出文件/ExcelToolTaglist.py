@@ -25,14 +25,9 @@ from YokoCustomlibrary import time_Decorator,thread_Decorator
 
 # 计时装饰器
 
-class Windows_NODE(YokoCustomlibrary.FILE_NODE):
+class Windows_NODE:
     def __init__(self, master):
         self.master = master
-        self.here = os.getcwd()
-        self.initWidgets()
-        help_doc = 'Don\'t Repeat Youself!!\n '
-        self.text_update(help_doc)
-        self.func_test_init()
 
     def initWidgets(self):
         # 创建第一层
@@ -51,9 +46,14 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         self.tope2.set("目标sheet")
         #  目标文件PID_TAG框
         self.tope3 = StringVar()
-        self.comboxlist1 = ttk.Combobox(top_frame, width=25, textvariable=self.tope3)
+        self.comboxlist1 = ttk.Combobox(top_frame, width=20, textvariable=self.tope3)
         self.comboxlist1.pack(side=LEFT, padx=10, pady=10)
         self.tope3.set("目标TAG")
+        #  目标文件起始行
+        self.tope4 = StringVar()
+        self.entry3 = ttk.Entry(top_frame, width=5, textvariable=self.tope4)
+        self.tope4.set("0")
+        self.entry3.pack(side=LEFT, pady=10)
         ## 同文件选择框
         self.intVar = BooleanVar()
         # should_auto = BooleanVar()
@@ -78,10 +78,18 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         self.comboxlist2.bind("<<ComboboxSelected>>", self.open_combox2)
         self.mide2.set("参考sheet")
         self.mide3 = StringVar()
-        self.comboxlist3 = ttk.Combobox(mid_frame1, width=25, textvariable=self.mide3)
+        self.comboxlist3 = ttk.Combobox(mid_frame1, width=20, textvariable=self.mide3)
         self.comboxlist3.pack(side=LEFT, padx=10, pady=10)
         self.mide3.set("参考TAG")
+        #  参考文件起始行
+        self.mide4 = StringVar()
+        self.entry4 = ttk.Entry(mid_frame1, width=5, textvariable=self.mide4)
+        self.mide4.set("0")
+        self.entry4.pack(side=LEFT, pady=10)
+
+
         ttk.Button(mid_frame1, text='参考文件', command=self.open_file2).pack(side=RIGHT, padx=5)
+
 
         # 创建第三层
         mid_frame2 = LabelFrame(self.master, height=60, width=615, text="结果")
@@ -100,6 +108,15 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         ttk.Button(bot_frame, text='替换', command=self.ExcelSave).pack(side=LEFT, padx=10)
         ttk.Button(bot_frame, text='查看结果', command=self.OpenExcel).pack(side=LEFT, padx=10)
 
+class Function_NODE:
+    def __init__(self):
+        self.here = os.getcwd()
+        self.initWidgets()
+        help_doc = 'Don\'t Repeat Youself!!\n '
+        self.text_update(help_doc)
+        #self.func_test_init()
+
+
     @thread_Decorator
     def change(self):
         self.entry2.delete(0, END)
@@ -117,14 +134,18 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
             self.entry.delete(0, END)
             self.entry.insert('insert', var_file_path)
         except xlrd.biffh.XLRDError:
-             self.text_update('错误提示：文件格式错误，现在就只能处理Excel文档\n')
+            self.text_update('错误提示：文件格式错误，现在就只能处理Excel文档\n')
+        except FileNotFoundError:
+            pass
 
     def open_combox(self, *args):
+        self.var_header_T = int(self.entry3.get())
         var_file_path = self.entry.get()
         var_sheet_name = self.comboxlist.get()
-        self.var_col = list(pd.ExcelFile(var_file_path).parse(var_sheet_name).keys())
+        self.var_col = list(pd.ExcelFile(var_file_path).parse(var_sheet_name,self.var_header_T).keys())
         self.comboxlist1["values"] = self.var_col
         self.comboxlist1.current(0)
+
 
     def open_file2(self):
         self.Text.delete(0.0, END)
@@ -142,13 +163,16 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
             self.comboxlist2.current(0)
         except xlrd.biffh.XLRDError:
             self.text_update('错误提示：文件格式错误，现在就只能处理Excel文档\n')
+        except FileNotFoundError:
+            pass
 
     def open_combox2(self,*args):
+        self.var_header_R = int(self.entry4.get())
         var_file = self.entry2.get()
         var_sheet = self.comboxlist2.get()
         var_file_0 = self.entry.get()
         var_sheet_0 = self.comboxlist.get()
-        self.var_col2 = list(pd.ExcelFile(var_file).parse(var_sheet).keys())
+        self.var_col2 = list(pd.ExcelFile(var_file).parse(var_sheet,self.var_header_R).keys())
         self.comboxlist3["values"] = self.var_col2
         self.comboxlist3.current(0)
         if var_file == var_file_0 and var_sheet == var_sheet_0:
@@ -171,8 +195,8 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
             R_Tag = self.comboxlist3.get()
                                                                                                                         #从UI界面读取 参考文件信息
             #=================================
-            DataFrame_T = pd.read_excel(T_Excle_Name, T_Sheet_Num)                                                      #目标文件 EXCLE to DataFrame
-            DataFrame_R = pd.read_excel(R_Excle_Name,R_Sheet_Num)                                                       #参考文件 EXCLE to DataFrame
+            DataFrame_T = pd.read_excel(T_Excle_Name, T_Sheet_Num,self.var_header_T)                                    #目标文件 EXCLE to DataFrame
+            DataFrame_R = pd.read_excel(R_Excle_Name,R_Sheet_Num,self.var_header_R)                                     #参考文件 EXCLE to DataFrame
             op_data = openpyxl.load_workbook(T_Excle_Name)
             op_table = op_data.worksheets[T_Sheet_Num]
 
@@ -202,8 +226,8 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
                                 #print(index_temp[0],col_temp)
                                 #temp = op_table.cell(index_temp[0]+index_bias,col_temp+col_bias).value
                                 #print(temp)
-                                op_table.cell(index_temp[0] + index_bias, col_temp + col_bias).value = var_new_data
-                                op_table.cell(index_temp[0] + index_bias, col_temp + col_bias).fill = sty.PatternFill(fill_type='solid',
+                                op_table.cell(index_temp[0] + index_bias + self.var_header_T, col_temp + col_bias).value = var_new_data
+                                op_table.cell(index_temp[0] + index_bias+ self.var_header_T, col_temp + col_bias).fill = sty.PatternFill(fill_type='solid',
                                                                                                 fgColor="00FFFF")       # 对更新数据进行标注颜色
                                 self.text_update(f'{Var_diff_Tag}===={var_new_data}' + '\n')
                         pass
@@ -232,8 +256,8 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
             R_Tag = self.comboxlist3.get()
                                                                                                                         #从UI界面读取 参考文件信息
             #=================================
-            DataFrame_T = pd.read_excel(T_Excle_Name, T_Sheet_Num)                                                      #目标文件 EXCLE to DataFrame
-            DataFrame_R = pd.read_excel(R_Excle_Name,R_Sheet_Num)                                                       #参考文件 EXCLE to DataFrame
+            DataFrame_T = pd.read_excel(T_Excle_Name, T_Sheet_Num,header=self.var_header_T)                                    #目标文件 EXCLE to DataFrame
+            DataFrame_R = pd.read_excel(R_Excle_Name,R_Sheet_Num,header=self.var_header_R)                                     #参考文件 EXCLE to DataFrame
             op_data = openpyxl.load_workbook(T_Excle_Name)
             op_table = op_data.worksheets[T_Sheet_Num]
 
@@ -260,7 +284,7 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
                             var_new_data = dict_Diff[diff_i][self.var_col2[col_i]]                                      # 更新内容 新数据
                             if var_old_data != var_new_data and str(var_new_data) != 'nan' :                            # 两者有区别 再更新
                                 col_temp = self.var_col.index(self.var_col2[col_i])                                     #定位
-                                op_table.cell(index_temp[0] + index_bias, col_temp + col_bias).fill = sty.PatternFill(fill_type='solid',
+                                op_table.cell(index_temp[0] + index_bias + self.var_header_T, col_temp + col_bias).fill = sty.PatternFill(fill_type='solid',
                                                                                             fgColor="FF00FF")           # 对更新数据进行标注颜色
                                 self.text_update(f'{Var_diff_Tag}===={var_new_data}' + '\n')
                         pass
@@ -298,13 +322,26 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         功能块说明：快速测试初始化
         """
         self.here = f'C:/Users/Administrator/Documents/python/0.输出文件/TaglistTool'
+    pass
 
+    def initWidgets(self):
+        pass
+
+
+class SHOW_NODE(Windows_NODE,Function_NODE,YokoCustomlibrary.FILE_NODE):
+    """
+    多类继承
+    """
+    def __init__(self,master):
+        Windows_NODE.__init__(self, master)
+        Function_NODE.__init__(self)
+    pass
 
 if __name__ == "__main__":
     root = Tk()
     root.geometry('640x600+100+200')  # 窗口尺寸
-    Windows_NODE(root)
+    SHOW_NODE(root)
     limit_time = YokoCustomlibrary.ALRM_NODE.limited_time(root)
-    root.title("Tag_list维护工具  Ver1.0" + "    到期日:" + limit_time)
+    root.title("Tag_list维护工具  Ver1.1" + "    到期日:" + limit_time)
     root.mainloop()
     pass
