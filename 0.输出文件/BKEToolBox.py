@@ -56,7 +56,7 @@ class Tool_Box_Window:
             BKEToolFindGraphic.Windows_NODE(self.top)
         elif flag == 11:
             self.top.geometry('640x600+100+200')
-            ExcelToolTaglist.Windows_NODE(self.top)
+            ExcelToolTaglist.SHOW_NODE(self.top)
         elif flag == 12:
             BKEToolUnlockADsuite.Windows_NODE(self.top)
         elif flag == 13:
