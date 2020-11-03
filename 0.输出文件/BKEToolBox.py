@@ -5,6 +5,7 @@
 import tkinter
 from tkinter import *
 from sys import argv
+import platform
 # ===================自定义模块==============================
 import YokoCustomlibrary
 import BKEToolCopyGraphic   # 复制工具-流程图
@@ -12,13 +13,16 @@ import BKEToolCopyFunc      # 复制工具-功能块
 import BKEToolReplaceESCL   # 替换工具-量程
 import BKEToolReplaceTag    # 替换工具-位号
 import BKEToolScreenshot    # 辅助工具-截图反色
-import BKEToolExport        # 辅助工具-导入导出
+
 import BKEToolTuning        # 辅助工具-TUNING修改 参数导入
 import ExcelToolTaglist     # 维护工具-Tag_list
 import BKEToolExportGraphic # 辅助工具-流程图导出
 import BKEToolFindGraphic   # 辅助工具-流程图位号查漏工具
 import BKEToolUnlockADsuite # 辅助工具-解锁ADsuite DR文件工具
 import BKEToolTrend         # 辅助工具-趋势检查表格生成工具、趋势组态文件生成工具
+if(platform.system()=='Windows'):
+    import BKEToolExport        # 辅助工具-导入导出
+
 # ==========================================================
 # BK ENG Tool Box = BKEToolBox
 # ENG工具箱
@@ -42,7 +46,7 @@ class Tool_Box_Window:
             BKEToolReplaceTag.Windows_NODE(self.top)
         elif flag == 6:
             BKEToolScreenshot.Windows_NODE(self.top)
-        elif flag == 7:
+        elif flag == 7 and platform.system()=='Windows':
             BKEToolExport.Windows_NODE(self.top)
         elif flag == 8:
             BKEToolTuning.Windows_NODE(self.top)
