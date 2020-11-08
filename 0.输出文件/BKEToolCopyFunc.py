@@ -176,6 +176,7 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
                         if 'ETAG' in i:
                             ETAG = i['ETAG']
                             in_Value = self.get_linestr(sample_content,'PIO','RCNC')
+                            #out_Value = f':RCNC:1::{ETAG}.OUT:I;'
                             out_Value = f':RCNC:1::{ETAG}.IN:O;'
                             result_line = result_line.replace (in_Value,out_Value)
                 ### PIO地址
