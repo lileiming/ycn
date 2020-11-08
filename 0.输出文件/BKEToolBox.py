@@ -20,7 +20,7 @@ import BKEToolExportGraphic # 辅助工具-流程图导出
 import BKEToolFindGraphic   # 辅助工具-流程图位号查漏工具
 import BKEToolUnlockADsuite # 辅助工具-解锁ADsuite DR文件工具
 import BKEToolTrend         # 辅助工具-趋势检查表格生成工具、趋势组态文件生成工具
-if(platform.system()=='Windows'):
+if platform.system()== 'Windows':
     import BKEToolExport        # 辅助工具-导入导出
 
 # ==========================================================
@@ -62,7 +62,7 @@ class Tool_Box_Window:
         elif flag == 13:
             BKEToolTrend.Windows_NODE(self.top)
         elif flag == 15:
-            Label(self.top, text='Qiang.li@cn.yokogawa.com\nDon\'t Repeat Youself !!\n ').pack(fill=X, expand=1)
+            Label(self.top, text='Qiang.li@cn.yokogawa.com\nDon\'t Repeat Yourself !!\n ').pack(fill=X, expand=1)
             pass
         pass
 
@@ -95,7 +95,7 @@ class Windows_NODE:
                 self.button_app(list_title[i], i + 1)
                 pass
             pass
-        Label(root,text='Don\'t Repeat Youself !!     \n ').pack(side='bottom',anchor='se')
+        Label(root,text='Don\'t Repeat Yourself !!     \n ').pack(side='bottom',anchor='se')
 
     def button_app(self, title, window_num):
         x_index = int((window_num - 1) / 5)

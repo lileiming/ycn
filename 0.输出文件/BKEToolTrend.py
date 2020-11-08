@@ -5,7 +5,6 @@
 # BK ENG Tool Trend = BKEToolTrend
 # 趋势检查表格生成工具、趋势组态文件生成工具
 # **********************************************************
-
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
@@ -23,7 +22,14 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         self.master = master
         self.here = os.getcwd()
         self.initWidgets()
-        help_doc = '本程序为趋势检查表格生成工具、趋势组态文件生成工具 \n'
+        help_doc = '本程序为趋势检查表格生成工具、趋势组态文件生成工具 \n' \
+                   '\n' \
+                   'Trend_temp(位号列表) 转化 Checksheet(检查表)\n' \
+                   'Checksheet(检查表) 转化 Csvsheet（组态文件）\n' \
+                   '\n' \
+                   '分成两步目的:\n' \
+                   '如果用户返回Checksheet(检查表)，我们就执行第二步\n' \
+                   '如果不提供就两步都执行！\n'
         self.text_update(help_doc)
     pass
 

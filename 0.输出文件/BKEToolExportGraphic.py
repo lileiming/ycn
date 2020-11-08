@@ -48,7 +48,7 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         bot_frame1 = LabelFrame(self.master, text='结果')
         bot_frame1.pack(fill=X, side=TOP, padx=15, pady=0)
         self.Scroll = Scrollbar(bot_frame1)
-        self.Text = Text(bot_frame1, width=83, height=13, yscrollcommand=self.Scroll.set)
+        self.Text = Text(bot_frame1, width=83, height=12, yscrollcommand=self.Scroll.set)
         self.Text.pack(side=LEFT, padx=0, pady=5)
         self.Scroll = Scrollbar(bot_frame1)
         self.Scroll.pack(side=LEFT, fill=Y)

@@ -2,7 +2,7 @@
 #!/usr/bin/python
 # python 3.8
 # **********************************************************
-# BK ENG Tool Del ADsuite
+# BK ENG Tool Unlock ADsuite
 # **********************************************************
 from tkinter import *
 from tkinter import ttk
@@ -13,7 +13,7 @@ import os
 # from time import sleep
 # from YokoCustomlibrary import time_Decorator,thread_Decorator
 
-class Windows_NODE():
+class Windows_NODE:
     def __init__(self, master):
         self.master = master
         self.here = 'C:/Users/Administrator/Documents/python/0.输出文件/ToolUnlockADsuite'
@@ -70,6 +70,7 @@ class Windows_NODE():
         #self.text_update('STOP_')
         pass
 
+    @property
     def command(self):
         def read_txt(txt_file_name):
             # 读取txt文档
