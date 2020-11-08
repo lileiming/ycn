@@ -1,12 +1,14 @@
-from PyQt5.QtWidgets import QMainWindow, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QComboBox
 from PyQt5 import QtCore, QtGui, QtWidgets
-
-import os
+from PyQt5.QtCore import pyqtSignal
 import re
 import math
+import os
 from time import sleep
 
-from YokoCustomlibrary import time_Decorator, thread_Decorator, FILE_NODE
+from YokoCustomlibrary import time_Decorator, thread_Decorator, FILE_NODE, DropLineEdit, ClickedComboBox
+
+
 
 class Ui(QMainWindow,FILE_NODE):
     def __init__(self):
@@ -23,7 +25,7 @@ class Ui(QMainWindow,FILE_NODE):
         self.Top_groupBox.setFont(font)
         self.Top_groupBox.setObjectName("Top_groupBox")
         #Top_lineEdit
-        self.Top_lineEdit = QtWidgets.QLineEdit(self.Top_groupBox)
+        self.Top_lineEdit = DropLineEdit(self.Top_groupBox)
         self.Top_lineEdit.setGeometry(QtCore.QRect(10, 23, 431, 20))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
@@ -31,6 +33,7 @@ class Ui(QMainWindow,FILE_NODE):
         sizePolicy.setHeightForWidth(self.Top_lineEdit.sizePolicy().hasHeightForWidth())
         self.Top_lineEdit.setSizePolicy(sizePolicy)
         self.Top_lineEdit.setObjectName("Top_lineEdit")
+        self.Top_lineEdit.setDragEnabled(True)
         #Top_pushButton
         self.Top_pushButton = QtWidgets.QPushButton(self.Top_groupBox)
         self.Top_pushButton.setGeometry(QtCore.QRect(450, 19, 91, 28))
@@ -60,7 +63,7 @@ class Ui(QMainWindow,FILE_NODE):
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         #Mid_lineEdit
-        self.Mid_lineEdit = QtWidgets.QLineEdit(self.horizontalLayoutWidget_2)
+        self.Mid_lineEdit = DropLineEdit(self.horizontalLayoutWidget_2)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -69,7 +72,7 @@ class Ui(QMainWindow,FILE_NODE):
         self.Mid_lineEdit.setObjectName("Mid_lineEdit")
         self.horizontalLayout_2.addWidget(self.Mid_lineEdit)
         #Mid_comboBox
-        self.Mid_comboBox = QtWidgets.QComboBox(self.horizontalLayoutWidget_2)
+        self.Mid_comboBox = ClickedComboBox(self.horizontalLayoutWidget_2)
         self.Mid_comboBox.setObjectName("Mid_comboBox")
         self.horizontalLayout_2.addWidget(self.Mid_comboBox)
         #Mid_pushButton
@@ -159,24 +162,32 @@ class Ui(QMainWindow,FILE_NODE):
         self.Top_pushButton.clicked.connect(lambda: self.openFileNameDialog('Top_txt'))
         self.Mid_pushButton.clicked.connect(lambda: self.openFileNameDialog('Mid_excel'))
         self.Bottom_pushButton.clicked.connect(lambda: self.get_entry())
+        self.Mid_comboBox.clicked.connect(lambda:self.comboBoxCharger(self.Mid_lineEdit.text()))
         pass
 
     def openFileNameDialog(self,position):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
         if position == 'Top_txt':
-            fileName, _ = QFileDialog.getOpenFileName(self,"打开参考文档", "","All Files (*);;Template Files (*.txt)", options=options)
+            fileName, _ = QFileDialog.getOpenFileName(self, "打开参考文档", "", "Template Files (*.txt)",
+                                                      options=options)
             if fileName:
                 #print(fileName)
                 self.Top_lineEdit.setText(fileName)
         if position == 'Mid_excel':
-            fileName, _ = QFileDialog.getOpenFileName(self,"打开数据文档", "","All Files (*);;Excel Files (*.xls *.xlsx)", options=options)
+            #fileName, _ = QFileDialog.getOpenFileName(self,"打开数据文档", "","All Files (*);;Excel Files (*.xls *.xlsx)", options=options)
+            fileName, _ = QFileDialog.getOpenFileName(self, "打开数据文档", "", "Excel Files (*.xls *.xlsx)",
+                                                      options=options)
             if fileName:
                 #print(fileName)
                 self.Mid_lineEdit.setText(fileName)
-                sheet_Name = self.get_sheet(fileName)
-                sheet_Name_T = tuple(sheet_Name)
-                self.Mid_comboBox.addItems(sheet_Name_T)
+                # self.comboBoxCharger(fileName)
+
+    def comboBoxCharger(self,fileName):
+        sheet_Name = self.get_sheet(fileName)
+        sheet_Name_T = tuple(sheet_Name)
+        self.Mid_comboBox.addItems(sheet_Name_T)
+        pass
 
     def text_update(self, show):
         if show == 'START_':

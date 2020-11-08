@@ -11,7 +11,9 @@ import tkinter.messagebox
 import threading
 from time import sleep,time,strftime,localtime
 import calendar
-# **********************************************************
+import sys
+from PyQt5.QtWidgets import QLineEdit, QComboBox
+from PyQt5.QtCore import pyqtSignal
 # YOKOGAWA Custom library  = YokoCustomlibrary
 # 自定义library
 # **********************************************************
@@ -194,3 +196,35 @@ class ALRM_NODE:
             tkinter.messagebox.showinfo('提示', '软件过期需要重新编译'+localtime_var)
             exit()
         return localtime_var
+
+
+
+class DropLineEdit(QLineEdit):
+    '''
+    QLineEdit带拖拽功能的增强控件
+    '''
+    def __init__(self, parent=None):
+        super(DropLineEdit, self).__init__(parent)
+        self.setDragEnabled(True)  # 拖拽是否启用
+
+    def dragEnterEvent(self, e):
+        print('文件所有的路径',e.mimeData().urls())  # 文件所有的路径
+        print('文件路径',e.mimeData().text()[7: ],type(e.mimeData().text()))  # 文件路径
+        print(e.mimeData().hasText())  # 是否文本文件格式
+        if e.mimeData().hasText():   #是否文本文件格式
+            self.clear()
+            #e.accept()   #是就接受--把文本在QLineEdit显示出来--文件路径显示出来
+            self.setText(e.mimeData().text()[7: ])
+        else:
+            e.ignore()   #不是就忽略
+
+
+class ClickedComboBox(QComboBox):
+    '''
+    ComboBox 点击 增强控件
+    '''
+    clicked = pyqtSignal()          #创建一个信号
+    def showPopup(self):            #重写showPopup函数
+        self.clear()
+        self.clicked.emit()         #发送信号
+        super(ClickedComboBox, self).showPopup()     # 调用父类的showPopup()
