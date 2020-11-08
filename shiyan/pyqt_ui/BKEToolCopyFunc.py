@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow,QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QFileDialog
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 import os
@@ -6,7 +6,7 @@ import re
 import math
 from time import sleep
 
-from YokoCustomlibrary import time_Decorator,thread_Decorator,FILE_NODE
+from YokoCustomlibrary import time_Decorator, thread_Decorator, FILE_NODE
 
 class Ui(QMainWindow,FILE_NODE):
     def __init__(self):
@@ -188,6 +188,8 @@ class Ui(QMainWindow,FILE_NODE):
             pass
         pass
 
+
+
     @thread_Decorator
     @time_Decorator
     def get_entry(self):
@@ -312,9 +314,9 @@ class Ui(QMainWindow,FILE_NODE):
                         result_file.write(result_line)
                         pass
                     ### Text显示
-                    self.text_update(f">>>{ETAG}\n")
+                    self.text_update(f">>>{ETAG}")
                 result_file.write(foot)
-                self.text_update(f"=============导出文件:{str(result_DR_filename)}\n")
+                self.text_update(f"=============导出文件:{str(result_DR_filename)}")
 
             # self.e.set("复制结束：结果已输出至 DR_output.txt")
             self.text_update('STOP_')

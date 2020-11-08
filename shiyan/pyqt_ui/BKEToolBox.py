@@ -1,5 +1,3 @@
-#https://blog.csdn.net/shangxiaqiusuo1/article/details/85253264
-
 # -*- coding: utf-8 -*-
 """
 #=============================
@@ -8,17 +6,20 @@
 
 # ENG工具箱
 
+#https://blog.csdn.net/shangxiaqiusuo1/article/details/85253264
+
 #=============================
 """
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import QtCore, QtWidgets
-import BKEToolCopyGraphic   # 复制工具-流程图
-import BKEToolCopyFunc      # 复制工具-功能块
+import BKEToolCopyGraphic  # 复制工具-流程图
+import BKEToolCopyFunc  # 复制工具-功能块
 
-class Ui_Menu_Windows(QMainWindow):
+
+class UiMenuWindows(QMainWindow):
     def __init__(self):
-        super(Ui_Menu_Windows, self).__init__()
+        super(UiMenuWindows, self).__init__()
         self.setupUi()
 
     def setupUi(self):
@@ -31,6 +32,7 @@ class Ui_Menu_Windows(QMainWindow):
         self.centralwidget.setObjectName("centralwidget")
         self.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(self)
+        self.menubar.setNativeMenuBar(False)   #MacOS
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 22))
         self.menubar.setObjectName("menubar")
         self.Menu1 = QtWidgets.QMenu(self.menubar)
@@ -68,7 +70,7 @@ class Ui_Menu_Windows(QMainWindow):
         self.MenuCopy2.triggered.connect(lambda: self.slot_btn_function('MenuCopy2'))
         pass
 
-    def slot_btn_function(self,var_Menu_name):
+    def slot_btn_function(self, var_Menu_name):
         """
         Menu 按钮的跳转程序
         """
@@ -82,31 +84,36 @@ class Ui_Menu_Windows(QMainWindow):
         self.Class_Page.show()
 
 
-class MENU_COPY1_SHOW(BKEToolCopyGraphic.Ui,Ui_Menu_Windows):
+class MENU_COPY1_SHOW(UiMenuWindows, BKEToolCopyGraphic.Ui):
     """
     MENU_COPY1 复制工具-流程图
     """
+
     def __init__(self):
         super(MENU_COPY1_SHOW, self).__init__()
         BKEToolCopyGraphic.Ui.__init__(self)
+
     pass
 
 
-class MENU_COPY2_SHOW(BKEToolCopyFunc.Ui,Ui_Menu_Windows):
+class MENU_COPY2_SHOW(BKEToolCopyFunc.Ui, UiMenuWindows):
     """
     MENU_COPY2 复制工具-功能块
     """
+
     def __init__(self):
         super(MENU_COPY2_SHOW, self).__init__()
         BKEToolCopyFunc.Ui.__init__(self)
+
     pass
+
 
 def main():
     """
     主线程序
     """
     app = QApplication(sys.argv)
-    Windows_UI = Ui_Menu_Windows()
+    Windows_UI = UiMenuWindows()
     Windows_UI.show()
     sys.exit(app.exec_())
 

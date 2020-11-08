@@ -8,5 +8,7 @@ class Ui(QMainWindow):
     def init_ui(self):
         # self.resize(500, 350)
         # self.setWindowTitle('First Ui')
-        self.btn = QPushButton('流程图', self)
-        self.btn.setGeometry(50, 100, 100, 50)
+        self.btn_1 = QPushButton(self)
+        self.btn_1.setText('Emit')
+        self.btn_1.setGeometry(10, 10, 100, 40)
+        pass

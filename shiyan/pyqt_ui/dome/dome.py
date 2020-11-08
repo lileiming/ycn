@@ -13,6 +13,7 @@ class Ui_ENGTools(object):
         self.centralwidget.setObjectName("centralwidget")
         ENGTools.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(ENGTools)
+        self.menubar.setNativeMenuBar(False)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 22))
         self.menubar.setObjectName("menubar")
         self.Menu1 = QtWidgets.QMenu(self.menubar)
