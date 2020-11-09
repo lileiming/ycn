@@ -10,5 +10,5 @@ class Ui(QMainWindow):
         # self.setWindowTitle('First Ui')
         self.btn_1 = QPushButton(self)
         self.btn_1.setText('Emit')
-        self.btn_1.setGeometry(10, 10, 100, 40)
+        self.btn_1.setGeometry(100, 100, 100, 40)
         pass

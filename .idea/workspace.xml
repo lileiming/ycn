@@ -21,7 +21,28 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.customizations" />
   </component>
-  <component name="RunManager" selected="Python.BKEToolBox">
+  <component name="RunManager" selected="Python.BKEToolBox (1)">
+    <configuration name="BKEToolBox (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ycn" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/shiyan/pyqt_ui" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/shiyan/pyqt_ui/BKEToolBox.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="BKEToolBox" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="ycn" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -67,9 +88,11 @@
     <list>
       <item itemvalue="Python.BKEToolBox" />
       <item itemvalue="Python.ExcelToolTaglist" />
+      <item itemvalue="Python.BKEToolBox (1)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.BKEToolBox (1)" />
         <item itemvalue="Python.ExcelToolTaglist" />
       </list>
     </recent_temporary>
@@ -93,21 +116,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1604393831836" />
-    <state width="1899" height="282" key="GridCell.Tab.0.bottom" timestamp="1604394863681">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1859" height="254" key="GridCell.Tab.0.bottom" timestamp="1604897639875">
+      <screen x="-1880" y="84" width="1880" height="956" />
     </state>
     <state width="1899" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1604394863681" />
-    <state width="1899" height="282" key="GridCell.Tab.0.center" timestamp="1604394863681">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1859" height="254" key="GridCell.Tab.0.bottom/40.84.1880.956/-1880.84.1880.956@-1880.84.1880.956" timestamp="1604897639875" />
+    <state width="1859" height="254" key="GridCell.Tab.0.center" timestamp="1604897639875">
+      <screen x="-1880" y="84" width="1880" height="956" />
     </state>
     <state width="1899" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1604394863681" />
-    <state width="1899" height="282" key="GridCell.Tab.0.left" timestamp="1604394863681">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1859" height="254" key="GridCell.Tab.0.center/40.84.1880.956/-1880.84.1880.956@-1880.84.1880.956" timestamp="1604897639875" />
+    <state width="1859" height="254" key="GridCell.Tab.0.left" timestamp="1604897639875">
+      <screen x="-1880" y="84" width="1880" height="956" />
     </state>
     <state width="1899" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1604394863681" />
-    <state width="1899" height="282" key="GridCell.Tab.0.right" timestamp="1604394863681">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1859" height="254" key="GridCell.Tab.0.left/40.84.1880.956/-1880.84.1880.956@-1880.84.1880.956" timestamp="1604897639875" />
+    <state width="1859" height="254" key="GridCell.Tab.0.right" timestamp="1604897639875">
+      <screen x="-1880" y="84" width="1880" height="956" />
     </state>
     <state width="1899" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1604394863681" />
+    <state width="1859" height="254" key="GridCell.Tab.0.right/40.84.1880.956/-1880.84.1880.956@-1880.84.1880.956" timestamp="1604897639875" />
   </component>
 </project>

@@ -13,8 +13,6 @@ import math
 import os
 from time import sleep
 from YokoCustomlibrary import time_Decorator, thread_Decorator, FILE_NODE, DropLineEdit, ClickedComboBox
-from PyQt5.QtCore import Qt, QThread,pyqtSignal
-
 
 class Ui(QMainWindow,FILE_NODE):
     def __init__(self):
@@ -171,18 +169,11 @@ class Execute(Ui):
         #self.init_ui()
         pass
 
-    def foo(self):
-        self.count_func("A")
-        pass
-
     def command(self):
         self.Top_pushButton.clicked.connect(lambda: self.openFileNameDialog('Top_txt'))
         self.Mid_pushButton.clicked.connect(lambda: self.openFileNameDialog('Mid_excel'))
         self.Bottom_pushButton.clicked.connect(lambda: self.get_entry())
-        #self.Bottom_pushButton.clicked.connect(lambda: self.foo())
         self.Mid_comboBox.clicked.connect(lambda:self.comboBoxCharger(self.Mid_lineEdit.text()))
-        self.my_thread = MyThread()#实例化线程对象
-        self.my_thread.my_signal.connect(self.text_update)
         pass
 
     def openFileNameDialog(self,position):
@@ -211,23 +202,15 @@ class Execute(Ui):
         except Exception as e:
             print(e)
 
-    def count_func(self,show):
-        self.my_thread.is_on = True
-        self.my_thread.start()#启动线程
-        self.my_thread.show = show
-
     def text_update(self, show):
         if show == 'START_':
             self.Low_textEdit.append("=============程序开始=============\n")
         elif show == 'STOP_':
             self.Low_textEdit.append("=============程序结束=============\n")
         else:
-            print(show)
             self.Low_textEdit.append(show)
             pass
-        self.my_thread.is_on = False
         pass
-
 
     @thread_Decorator
     @time_Decorator
@@ -247,7 +230,7 @@ class Execute(Ui):
             # 剥离结果
             head = sample_stripping_head[0]
             foot = "::::SOURCE"
-            self.count_func('START_')
+            self.text_update('START_')
             # ================
             model = 'PVI'
             # ================
@@ -353,15 +336,15 @@ class Execute(Ui):
                         result_file.write(result_line)
                         pass
                     ### Text显示
-                    self.count_func(f">>>{ETAG}")
+                    self.text_update(f">>>{ETAG}")
                 result_file.write(foot)
-                self.count_func(f"=============导出文件:{str(result_DR_filename)}")
+                self.text_update(f"=============导出文件:{str(result_DR_filename)}")
 
             # self.e.set("复制结束：结果已输出至 DR_output.txt")
-            self.count_func('STOP_')
+            self.text_update('STOP_')
 
         except Exception as e:
-            self.count_func(e)
+            self.text_update(e)
         sleep(2)
         pass
 
@@ -395,17 +378,3 @@ class Execute(Ui):
         pass
         return find_all_str
         pass
-
-class MyThread(QThread):#线程类
-    my_signal = pyqtSignal(str)  #自定义信号对象。参数str就代表这个信号可以传一个字符串
-    def __init__(self):
-        super(MyThread, self).__init__()
-        self.is_on = True
-
-    def run(self): #线程执行函数
-        while self.is_on :
-            #print(self.show)
-            self.my_signal.emit(str(self.show))  #释放自定义的信号
-            #通过自定义信号把str(self.count)传递给槽函数
-
-            self.sleep(1)  #本线程睡眠n秒【是QThread函数】

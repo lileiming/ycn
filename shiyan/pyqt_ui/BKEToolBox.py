@@ -84,7 +84,7 @@ class UiMenuWindows(QMainWindow):
         self.Class_Page.show()
 
 
-class MENU_COPY1_SHOW(UiMenuWindows, BKEToolCopyGraphic.Ui):
+class MENU_COPY1_SHOW(BKEToolCopyGraphic.Ui, UiMenuWindows):
     """
     MENU_COPY1 复制工具-流程图
     """
@@ -96,14 +96,14 @@ class MENU_COPY1_SHOW(UiMenuWindows, BKEToolCopyGraphic.Ui):
     pass
 
 
-class MENU_COPY2_SHOW(BKEToolCopyFunc.Ui, UiMenuWindows):
+class MENU_COPY2_SHOW(BKEToolCopyFunc.Execute, UiMenuWindows):
     """
     MENU_COPY2 复制工具-功能块
     """
 
     def __init__(self):
         super(MENU_COPY2_SHOW, self).__init__()
-        BKEToolCopyFunc.Ui.__init__(self)
+        BKEToolCopyFunc.Execute.__init__(self)
 
     pass
 
