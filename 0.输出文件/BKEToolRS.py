@@ -2,8 +2,8 @@
 #!/usr/bin/python
 # python 3.8
 # **********************************************************
-# BK ENG Tool Tuning  = BKEToolTuning
-# 参数修改，SFC语句生成工具
+# BK ENG Tool Recipe Set = BKEToolRS
+# 配方转换SFC矩阵修改工具
 # **********************************************************
 
 from tkinter import *
