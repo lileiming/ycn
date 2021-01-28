@@ -102,9 +102,6 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
                 self.text_update(f'{var_file_name}\n')
                 copyfile(var_file, var_file_name) #复制命令
         pass
-        self.text_update('STOP_')
-        sleep(2)
-
 
     def text_update(self,show):
         if show == 'START_':

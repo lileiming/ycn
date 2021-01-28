@@ -143,6 +143,7 @@ class Function_NODE:
         var_file_path = self.entry.get()
         var_sheet_name = self.comboxlist.get()
         self.var_col = list(pd.ExcelFile(var_file_path).parse(var_sheet_name,self.var_header_T).keys())
+        #self.var_col = [element for element in self.var_col if not "Unnamed" in element]
         self.comboxlist1["values"] = self.var_col
         self.comboxlist1.current(0)
 
@@ -173,6 +174,7 @@ class Function_NODE:
         var_file_0 = self.entry.get()
         var_sheet_0 = self.comboxlist.get()
         self.var_col2 = list(pd.ExcelFile(var_file).parse(var_sheet,self.var_header_R).keys())
+        #self.var_col2 = [element for element in self.var_col2 if not "Unnamed" in element]
         self.comboxlist3["values"] = self.var_col2
         self.comboxlist3.current(0)
         if var_file == var_file_0 and var_sheet == var_sheet_0:
@@ -195,8 +197,8 @@ class Function_NODE:
             R_Tag = self.comboxlist3.get()
                                                                                                                         #从UI界面读取 参考文件信息
             #=================================
-            DataFrame_T = pd.read_excel(T_Excle_Name, T_Sheet_Num,self.var_header_T)                                    #目标文件 EXCLE to DataFrame
-            DataFrame_R = pd.read_excel(R_Excle_Name,R_Sheet_Num,self.var_header_R)                                     #参考文件 EXCLE to DataFrame
+            DataFrame_T = pd.read_excel(T_Excle_Name, sheet_name = T_Sheet_Num, header = self.var_header_T)             #目标文件 EXCLE to DataFrame
+            DataFrame_R = pd.read_excel(R_Excle_Name, sheet_name = R_Sheet_Num, header = self.var_header_R)             #参考文件 EXCLE to DataFrame
             op_data = openpyxl.load_workbook(T_Excle_Name)
             op_table = op_data.worksheets[T_Sheet_Num]
 
@@ -256,8 +258,8 @@ class Function_NODE:
             R_Tag = self.comboxlist3.get()
                                                                                                                         #从UI界面读取 参考文件信息
             #=================================
-            DataFrame_T = pd.read_excel(T_Excle_Name, T_Sheet_Num,header=self.var_header_T)                                    #目标文件 EXCLE to DataFrame
-            DataFrame_R = pd.read_excel(R_Excle_Name,R_Sheet_Num,header=self.var_header_R)                                     #参考文件 EXCLE to DataFrame
+            DataFrame_T = pd.read_excel(T_Excle_Name, sheet_name = T_Sheet_Num, header = self.var_header_T)             #目标文件 EXCLE to DataFrame
+            DataFrame_R = pd.read_excel(R_Excle_Name, sheet_name = R_Sheet_Num, header = self.var_header_R)             #参考文件 EXCLE to DataFrame
             op_data = openpyxl.load_workbook(T_Excle_Name)
             op_table = op_data.worksheets[T_Sheet_Num]
 
@@ -345,3 +347,8 @@ if __name__ == "__main__":
     root.title("Tag_list维护工具  Ver1.1" + "    到期日:" + limit_time)
     root.mainloop()
     pass
+
+# 原因是最近xlrd更新到了2.0.1版本，只支持.xls文件。所以pandas.read_excel(‘xxx.xlsx’)会报错。
+# 可以安装旧版xlrd，在cmd中运行：
+# pip uninstall xlrd
+# pip install xlrd==1.2.0
