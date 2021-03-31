@@ -7,7 +7,7 @@ from tkinter import *
 from sys import argv
 import platform
 # ===================自定义模块==============================
-import YokoCustomlibrary
+from YokoCustomlibrary import  ALRM_NODE
 import BKEToolCopyGraphic   # 复制工具-流程图
 import BKEToolCopyFunc      # 复制工具-功能块
 import BKEToolReplaceESCL   # 替换工具-量程
@@ -22,6 +22,7 @@ import BKEToolUnlockADsuite # 辅助工具-解锁ADsuite DR文件工具
 import BKEToolTrend         # 辅助工具-趋势检查表格生成工具、趋势组态文件生成工具
 if platform.system()== 'Windows':
     import BKEToolExport        # 辅助工具-导入导出
+
 
 # ==========================================================
 # BK ENG Tool Box = BKEToolBox
@@ -123,7 +124,7 @@ if __name__ == "__main__":
     root.geometry('640x400+100+200')  # 窗口尺寸
     Windows_NODE(root)
     if str_super != '-S':
-        limit_time = YokoCustomlibrary.ALRM_NODE.limited_time(root)
+        limit_time = ALRM_NODE.limited_time(root)
     else:
         limit_time = '3020/1/1'
     root.title("组态ENG工具箱 V1.0" + "    到期日:" + limit_time)

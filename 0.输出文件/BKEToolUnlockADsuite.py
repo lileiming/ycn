@@ -9,14 +9,14 @@ from tkinter import ttk
 from tkinter import filedialog
 import re
 import os
-# import YokoCustomlibrary   #自定义模块
-# from time import sleep
-# from YokoCustomlibrary import time_Decorator,thread_Decorator
+import YokoCustomlibrary   #自定义模块
+from time import sleep
+from YokoCustomlibrary import time_Decorator,thread_Decorator
 
 class Windows_NODE:
     def __init__(self, master):
         self.master = master
-        self.here = 'C:/Users/Administrator/Documents/python/0.输出文件/ToolUnlockADsuite'
+        self.here = 'C:/Users/Administrator/Documents/python/0.输出文件/ToolUnlockADsuite/'
         self.initWidgets()
         help_doc = '本程序用于大量解锁ADsuite生成的DR文件，使其不再为绑定状态。\n'
         self.text_update(help_doc)
@@ -70,8 +70,10 @@ class Windows_NODE:
         #self.text_update('STOP_')
         pass
 
-    @property
+    @thread_Decorator
+    @time_Decorator
     def command(self):
+
         def read_txt(txt_file_name):
             # 读取txt文档
             with open(txt_file_name, 'r') as file_data:
@@ -83,7 +85,6 @@ class Windows_NODE:
             with open(out_file_name, 'w+', encoding='GBK') as out_file:  # 保存为ANSI格式
                 out_file.write(out_result)
             pass
-
 
         self.text_update('START_')
         path = self.entry.get()
@@ -102,7 +103,11 @@ class Windows_NODE:
         self.text_update('STOP_')
 
 if __name__ == "__main__":
+
     root = Tk()
-    root.geometry('640x400+640+0')  # 窗口尺寸
+    root.title("V1.00")
+    root.geometry('640x400')  # 窗口尺寸
     Windows_NODE(root)
+    limit_time = YokoCustomlibrary.ALRM_NODE.limited_time(root)
+    root.title("Unlock ADsuite修改工具" + "    到期日:" + limit_time)
     root.mainloop()

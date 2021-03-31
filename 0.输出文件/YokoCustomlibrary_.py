@@ -9,7 +9,7 @@ import xlrd
 import time
 import tkinter.messagebox
 import threading
-from time import sleep,time,strftime,localtime
+from time import time,strftime,localtime
 import calendar
 # **********************************************************
 # YOKOGAWA Custom library  = YokoCustomlibrary

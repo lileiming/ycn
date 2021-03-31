@@ -408,10 +408,7 @@ class Function_NODE:
             self.var_ini_mide2 = "Sheet"
             self.var_ini_mide3 = "PID_TAG"
             self.var_ini_mide4 = "0"
-
-    #
-    # def initWidgets(self):
-    #     pass
+        pass
 
     def func_Rang_HI(self,lower_input, upper_input):
         # input = 0.0

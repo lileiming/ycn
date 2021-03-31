@@ -101,6 +101,8 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
                 var_file_name = f'{var_dst_path}{var_short_dir[0]}.xaml'
                 self.text_update(f'{var_file_name}\n')
                 copyfile(var_file, var_file_name) #复制命令
+        self.text_update('STOP_')
+        sleep(2)
         pass
 
     def text_update(self,show):

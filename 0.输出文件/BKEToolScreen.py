@@ -9,7 +9,6 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 import os
-import re
 from time import sleep
 import time
 from shutil import copyfile
@@ -22,7 +21,11 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
         self.here = 'C:\CENTUMVP\his\save\\bmp'
         self.var_dst_here = os.getcwd()
         self.initWidgets()
-        help_doc = '本程序为流程图快速导出工具 \n'
+        help_doc = '本程序为流程图快速导出工具 \n 使用方法：\n1.通过按钮选择需要反色的图片目录，默认为IN目录。\n2.点击确认按钮开始执行图片反色\n\n\n**********************\n' \
+                   '截图10张数量限制修改方法：\n' \
+                   'WIN+R 输入 regedit \n' \
+                   '找到 HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\YOKOGAWA\CS3K\HIS\PRINTER\HDCPCNT\n' \
+                   '将HDCPCNT 的原来的值（10进制）修改即可\n'
         self.text_update(help_doc)
         pass
 
@@ -105,7 +108,7 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
 
                 #print(var_file_create_date,var_file_create_time)
                 var_file_basename = os.path.basename(var_file)
-                split_name = os.path.splitext(var_file_basename)
+                #split_name = os.path.splitext(var_file_basename)
 
                 var_dst_path_c = f'{var_dst_path}\\{var_file_create_date}'
 
@@ -113,10 +116,14 @@ class Windows_NODE(YokoCustomlibrary.FILE_NODE):
                 if not isExists:
                     os.makedirs(var_dst_path_c)
 
+                var_dst_listdir = os.listdir(var_dst_path_c)                                           #遍历目标文件已有文件，防止重复
+
                 var_file_new_name = f'{var_dst_path_c}\\{var_file_create_time}_{var_file_basename}'
                 # var_file_new_name = f'{var_dst_path_c}\\{var_file_create_time}_{split_name[0]}.png'
-                print(var_file_new_name)
-                copyfile(var_file, var_file_new_name)  # 复制命令
+                if f'{var_file_create_time}_{var_file_basename}' not in var_dst_listdir:
+                    copyfile(var_file, var_file_new_name)  # 复制命令
+                    print(var_file_new_name)
+
 
         pass
         self.text_update('STOP_')
